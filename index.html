@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Three Counties Solar — Sales Navigator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css?v=20260325" />
+</head>
+<body>
+<div id="app">
+
+  <div id="view-home" class="view active">
+    <div class="home-wrap">
+      <div class="home-topbar">
+        <span class="home-topbar-pill"><i class="fas fa-solar-panel"></i> Solar Panel Specialists</span>
+        <span><i class="fas fa-phone"></i> 01344 777515</span>
+        <span>www.threecountiessolar.com</span>
+      </div>
+      <div class="home-hero">
+        <img src="logo.png" alt="Three Counties Solar" class="home-logo" />
+        <h1 class="home-title">Solar Sales <span>Navigator</span></h1>
+        <p class="home-subtitle">The guided consultation tool for Three Counties Solar advisors. Build a personalised presentation deck, run it live, and share with your customer.</p>
+        <div class="home-grid" id="home-module-grid">
+          <div class="home-action-card" onclick="App.startNewDeck()">
+            <div class="home-card-icon orange"><i class="fas fa-layer-group"></i></div>
+            <div class="home-card-name">Build New Deck</div>
+            <div class="home-card-sub">Choose & order modules</div>
+            <i class="fas fa-arrow-right home-card-arrow"></i>
+          </div>
+          <div class="home-action-card" onclick="App.toggleDecksPanel()">
+            <div class="home-card-icon green"><i class="fas fa-folder-open"></i></div>
+            <div class="home-card-name">Open Saved Deck</div>
+            <div class="home-card-sub">Continue a customer quote</div>
+            <i class="fas fa-arrow-right home-card-arrow"></i>
+          </div>
+          <div class="home-action-card" onclick="App.showView('proof-hub')">
+            <div class="home-card-icon green-outline"><i class="fas fa-star"></i></div>
+            <div class="home-card-name">Customer Proof Hub</div>
+            <div class="home-card-sub">Reviews & credentials</div>
+            <i class="fas fa-arrow-right home-card-arrow"></i>
+          </div>
+          <div class="home-action-card" onclick="App.showAdmin()">
+            <div class="home-card-icon orange-outline"><i class="fas fa-lock"></i></div>
+            <div class="home-card-name">Admin Panel</div>
+            <div class="home-card-sub">Edit content & settings</div>
+            <i class="fas fa-arrow-right home-card-arrow"></i>
+          </div>
+        </div>
+      </div>
+      <div class="home-footer">
+        <span><i class="fas fa-globe"></i> www.threecountiessolar.com</span>
+        <span><i class="fas fa-phone"></i> 01344 777515</span>
+        <span><i class="fas fa-map-marker-alt"></i> Surrey · Berkshire · Hampshire</span>
+      </div>
+    </div>
+    <div id="decks-overlay" class="decks-overlay hidden">
+      <div class="decks-panel">
+        <div class="decks-panel-header">
+          <h3><i class="fas fa-folder-open"></i> Saved Decks</h3>
+          <button class="icon-btn" id="btn-close-decks" onclick="App.closeDecksPanel()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="decks-list" class="decks-list">
+          <div class="loading"><i class="fas fa-circle-notch fa-spin"></i> Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-builder" class="view">
+    <div class="builder-page">
+      <div class="builder-header">
+        <button class="back-nav-btn" onclick="App.goBack('builder')" title="Back to Home">
+          <i class="fas fa-arrow-left"></i> Home
+        </button>
+        <img src="logo.png" alt="Three Counties Solar" class="builder-logo" />
+        <h1 class="builder-title">Build Customer Deck</h1>
+        <input type="text" id="deck-name-input" class="deck-name-input"
+          placeholder="Customer name / deck title — e.g. Smith Family Quote" />
+      </div>
+      <div class="presets-bar">
+        <span class="presets-label">Quick start:</span>
+        <button class="preset-pill" data-preset="savings">💰 Savings Focus</button>
+        <button class="preset-pill" data-preset="battery">🔋 Battery + Tariff</button>
+        <button class="preset-pill" data-preset="trust">🤝 Trust Builder</button>
+        <button class="preset-pill" data-preset="ev">⚡ EV Owner</button>
+        <button class="preset-pill" data-preset="all">✅ Full Deck</button>
+        <button class="preset-pill preset-clear" id="btn-clear-all">✕ Clear</button>
+      </div>
+      <div class="module-grid" id="module-grid"></div>
+      <div id="order-section" class="order-section hidden">
+        <div class="order-section-header">
+          <span><i class="fas fa-list-ol"></i> Presentation order <span class="hint">(drag to reorder)</span></span>
+          <span id="selected-count-badge" class="count-badge">0 selected</span>
+        </div>
+        <div id="sortable-list" class="sortable-list"></div>
+      </div>
+      <div class="builder-footer">
+        <div class="builder-footer-left">
+          <span class="footer-site">www.threecountiessolar.com</span>
+          <span class="footer-phone">01344 777515</span>
+        </div>
+        <div style="display:flex;gap:0.65rem;align-items:center;">
+          <button class="btn-save-deck" id="btn-save-deck">
+            <i class="fas fa-floppy-disk"></i> Save Deck
+          </button>
+          <button class="btn-next" id="btn-start-presentation" disabled>
+            START <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-presentation" class="view">
+    <div class="pres-shell">
+      <div class="pres-bar">
+        <div class="pres-bar-left">
+          <button class="back-nav-btn back-nav-btn--pres" onclick="App.goBack('presentation')" title="Back to Builder">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <img src="logo.png" alt="Three Counties Solar" class="pres-bar-logo" />
+          <span class="pres-bar-name" id="pres-deck-name"></span>
+        </div>
+        <div class="pres-bar-center">
+          <button class="pres-pill-btn" id="pres-btn-menu">
+            <i class="fas fa-bars"></i> Sections
+          </button>
+        </div>
+        <div class="pres-bar-right">
+          <span class="pres-counter" id="pres-progress-text">1 / 1</span>
+          <button class="pres-exit-btn" id="pres-btn-exit">
+            <i class="fas fa-times"></i> Exit
+          </button>
+        </div>
+      </div>
+      <div class="pres-progress-track">
+        <div class="pres-progress-fill" id="pres-progress-bar"></div>
+      </div>
+      <div id="jump-menu-overlay" class="jump-overlay hidden">
+        <div class="jump-panel">
+          <div class="jump-panel-header">
+            <span><i class="fas fa-map"></i> Jump to Section</span>
+            <button class="icon-btn" id="jump-menu-close"><i class="fas fa-times"></i></button>
+          </div>
+          <div id="jump-menu-list" class="jump-list"></div>
+        </div>
+      </div>
+      <div class="pres-slide-area" id="pres-slide-container"></div>
+      <div class="pres-nav">
+        <button class="nav-btn nav-prev" id="pres-btn-prev" disabled>
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <div class="nav-dots" id="pres-nav-dots"></div>
+        <button class="nav-btn nav-next" id="pres-btn-next">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-proof-hub" class="view">
+    <div class="proof-hub-wrap">
+      <div class="proof-hub-topbar">
+        <button class="back-nav-btn" onclick="App.goBack('proof-hub')" title="Back to Home">
+          <i class="fas fa-arrow-left"></i> Home
+        </button>
+        <img src="logo.png" alt="Three Counties Solar" style="height:44px;" />
+        <button class="icon-btn" onclick="App.showView('home')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="proof-hub-hero">
+        <h1>Explore Three Counties Solar</h1>
+        <p>Whilst your consultant prepares your personalised quote, browse who we are and what our customers say.</p>
+      </div>
+      <div class="proof-tabs">
+        <button class="proof-tab active" data-tab="about">About Us</button>
+        <button class="proof-tab" data-tab="reviews">Reviews</button>
+        <button class="proof-tab" data-tab="accreditations">Accreditations</button>
+        <button class="proof-tab" data-tab="videos">Videos</button>
+      </div>
+      <div id="proof-hub-content" class="proof-content"></div>
+    </div>
+  </div>
+
+  <div id="view-admin" class="view">
+    <div id="admin-login" class="admin-login-wrap">
+      <div class="admin-login-box">
+        <img src="logo.png" alt="Three Counties Solar"
+          style="height:52px;margin-bottom:1.5rem;margin-left:auto;margin-right:auto;" />
+        <h2>Admin Access</h2>
+        <p>Sign in with your admin account to continue.</p>
+        <form onsubmit="event.preventDefault();App.adminLogin();" style="width:100%;">
+          <div class="admin-login-field">
+            <label class="admin-login-label" for="admin-email-input">
+              <i class="fas fa-envelope"></i> Email
+            </label>
+            <input type="email" id="admin-email-input" class="admin-login-input"
+              placeholder="admin@threecountiessolar.com"
+              autocomplete="username email" required />
+          </div>
+          <div class="admin-login-field">
+            <label class="admin-login-label" for="admin-password-input">
+              <i class="fas fa-lock"></i> Password
+            </label>
+            <div class="admin-pw-wrap">
+              <input type="password" id="admin-password-input" class="admin-login-input"
+                placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="admin-pw-toggle" id="btn-pw-toggle"
+                onclick="App.togglePasswordVisibility()" tabindex="-1" title="Show / hide password">
+                <i class="fas fa-eye" id="pw-toggle-icon"></i>
+              </button>
+            </div>
+          </div>
+          <div id="admin-login-error" class="pin-error hidden">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="admin-login-error-msg">Incorrect email or password.</span>
+          </div>
+          <button type="submit" class="btn-primary admin-login-submit" id="btn-admin-login">
+            <span id="btn-admin-login-label">Sign In <i class="fas fa-arrow-right"></i></span>
+            <span id="btn-admin-login-loading" class="hidden">
+              <i class="fas fa-circle-notch fa-spin"></i> Signing in...
+            </span>
+          </button>
+        </form>
+        <div class="forgot-pw-link-row">
+          <button type="button" class="forgot-pw-link" id="btn-forgot-pw" onclick="App.toggleForgotPassword()">
+            <i class="fas fa-key"></i> Forgot password?
+          </button>
+        </div>
+        <div id="forgot-pw-panel" class="forgot-pw-panel hidden">
+          <div class="forgot-pw-divider"><span>Reset your password</span></div>
+          <div id="forgot-pw-success" class="forgot-pw-success hidden">
+            <div class="forgot-pw-success-icon"><i class="fas fa-envelope-circle-check"></i></div>
+            <h4>Check your email</h4>
+            <p>A password reset link has been sent to <strong id="forgot-pw-sent-to"></strong>.</p>
+            <button type="button" class="forgot-pw-back-link" onclick="App.resetForgotPasswordPanel()">
+              Back to sign in
+            </button>
+          </div>
+          <div id="forgot-pw-form">
+            <p class="forgot-pw-hint">Enter the email address for your admin account and we'll send you a reset link.</p>
+            <form onsubmit="event.preventDefault();App.forgotPassword();" style="width:100%;">
+              <div class="admin-login-field" style="margin-bottom:0.75rem;">
+                <label class="admin-login-label" for="forgot-pw-email">
+                  <i class="fas fa-envelope"></i> Email address
+                </label>
+                <input type="email" id="forgot-pw-email" class="admin-login-input"
+                  placeholder="admin@threecountiessolar.com" autocomplete="email" />
+              </div>
+              <div id="forgot-pw-error" class="pin-error hidden">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="forgot-pw-error-msg">Something went wrong. Please try again.</span>
+              </div>
+              <button type="submit" class="btn-primary admin-login-submit" id="btn-send-reset">
+                <span id="btn-send-reset-label"><i class="fas fa-paper-plane"></i> Send Reset Link</span>
+                <span id="btn-send-reset-loading" class="hidden">
+                  <i class="fas fa-circle-notch fa-spin"></i> Sending...
+                </span>
+              </button>
+            </form>
+          </div>
+        </div>
+        <p class="admin-note"><i class="fas fa-info-circle"></i> Internal use only. Not for customers.</p>
+        <br/>
+        <button class="btn-outline" onclick="App.showView('home')" style="width:100%;justify-content:center;">
+          Back to Home
+        </button>
+      </div>
+    </div>
+    <div id="admin-panel" class="admin-panel hidden">
+      <div class="admin-sidebar">
+        <div class="admin-sidebar-top">
+          <button class="back-nav-btn back-nav-btn--admin" onclick="App.goBack('admin-panel')" title="Back to Home">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </button>
+          <div class="admin-sidebar-logo-row">
+            <img src="logo.png" alt="Three Counties Solar" style="height:32px;" />
+            <span class="admin-chip">Admin</span>
+          </div>
+        </div>
+        <nav class="admin-nav">
+          <button class="admin-nav-btn active" data-section="calculator">
+            <i class="fas fa-calculator"></i> Calculator
+          </button>
+          <button class="admin-nav-btn" data-section="faqs">
+            <i class="fas fa-circle-question"></i> FAQs
+          </button>
+          <button class="admin-nav-btn" data-section="reviews">
+            <i class="fas fa-star"></i> Reviews
+          </button>
+          <button class="admin-nav-btn" data-section="tariffs">
+            <i class="fas fa-bolt"></i> Tariffs
+          </button>
+          <button class="admin-nav-btn" data-section="journey">
+            <i class="fas fa-road"></i> Journey
+          </button>
+          <button class="admin-nav-btn" data-section="videos">
+            <i class="fas fa-play-circle"></i> Videos
+          </button>
+          <button class="admin-nav-btn" data-section="customer_hub">
+            <i class="fas fa-users"></i> Customer Hub
+          </button>
+          <button class="admin-nav-btn" data-section="ev_charging_admin">
+            <i class="fas fa-car-battery"></i> EV Charging
+          </button>
+          <button class="admin-nav-btn" data-section="moving_house_admin">
+            <i class="fas fa-house-chimney-crack"></i> Moving House
+          </button>
+          <button class="admin-nav-btn" data-section="decks_admin">
+            <i class="fas fa-folder"></i> Saved Decks
+          </button>
+        </nav>
+        <button class="admin-logout-btn" id="btn-admin-logout">
+          <i class="fas fa-sign-out-alt"></i> Log Out
+        </button>
+      </div>
+      <div class="admin-body" id="admin-content"></div>
+    </div>
+  </div>
+
+  <div id="view-customer" class="view">
+    <div class="cust-banner">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <i class="fas fa-solar-panel"></i>
+        <span id="customer-banner-text">Your personalised solar estimate</span>
+      </div>
+      <span class="cust-banner-contact" style="display:flex;align-items:center;gap:1rem;">
+        <i class="fas fa-phone"></i> 01344 777515 &nbsp;|&nbsp; www.threecountiessolar.com
+      </span>
+    </div>
+    <div id="view-customer-inner"></div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-head" id="modal-header"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-footer"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="data.js?v=20260325"></script>
+<script src="calculator.js?v=20260325"></script>
+<script src="modules.js?v=20260325"></script>
+<script src="builder.js?v=20260325"></script>
+<script src="presentation.js?v=20260325"></script>
+<script src="admin.js?v=20260325"></script>
+<script src="app.js?v=20260325"></script>
+</body>
+</html>
