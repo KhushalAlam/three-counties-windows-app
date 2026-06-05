@@ -1,19 +1,15 @@
 /* ============================================================
    MAIN APP CONTROLLER
-   Routing, initialisation, view switching, global events
+   Three Counties Windows Sales Navigator
    ============================================================ */
 
 const App = {
 
   /* ---- Bootstrap ---- */
   async init() {
-    // Load all data
     await App.loadAllData();
-
-    // Silently delete decks older than 90 days — no await, runs in background
     API.deleteOldDecks();
 
-    // Check for customer share link (?deck=xxx)
     const params = new URLSearchParams(window.location.search);
     const deckId = params.get('deck');
     if (deckId) {
@@ -21,7 +17,6 @@ const App = {
       return;
     }
 
-    // Normal app boot
     App.showView('home');
     App.bindGlobalEvents();
     App.renderProofHubTab('about');
@@ -37,20 +32,17 @@ const App = {
 
   /* ---- Bind all top-level UI events ---- */
   bindGlobalEvents() {
-    // Builder preset pills
     document.querySelectorAll('.preset-pill[data-preset]').forEach(btn => {
       btn.addEventListener('click', () => Builder.applyPreset(btn.dataset.preset));
     });
     const clearBtn = document.getElementById('btn-clear-all');
     if (clearBtn) clearBtn.addEventListener('click', Builder.clearAll);
 
-    // Builder save & start
     const saveBtn = document.getElementById('btn-save-deck');
     if (saveBtn) saveBtn.addEventListener('click', Builder.saveDeck);
     const startBtn = document.getElementById('btn-start-presentation');
     if (startBtn) startBtn.addEventListener('click', () => App.startPresentation());
 
-    // Presentation controls
     const prevBtn = document.getElementById('pres-btn-prev');
     const nextBtn = document.getElementById('pres-btn-next');
     const menuBtn = document.getElementById('pres-btn-menu');
@@ -69,16 +61,13 @@ const App = {
       });
     }
 
-    // Admin logout
     const logoutBtn = document.getElementById('btn-admin-logout');
     if (logoutBtn) logoutBtn.addEventListener('click', App.adminLogout);
 
-    // Admin nav (sidebar buttons)
     document.querySelectorAll('.admin-nav-btn').forEach(btn => {
       btn.addEventListener('click', () => Admin.renderSection(btn.dataset.section));
     });
 
-    // Proof hub tabs
     document.querySelectorAll('.proof-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.proof-tab').forEach(t => t.classList.remove('active'));
@@ -87,7 +76,6 @@ const App = {
       });
     });
 
-    // Modal close on overlay click
     const modalOverlay = document.getElementById('modal-overlay');
     if (modalOverlay) {
       modalOverlay.addEventListener('click', (e) => {
@@ -95,7 +83,6 @@ const App = {
       });
     }
 
-    // Keyboard navigation in presentation mode
     document.addEventListener('keydown', (e) => {
       if (AppState.currentView !== 'presentation') return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') Presentation.next();
@@ -115,20 +102,11 @@ const App = {
   /* ---- Back navigation ---- */
   goBack(fromView) {
     switch (fromView) {
-      case 'builder':
-        App.showView('home');
-        break;
-      case 'presentation':
-        App.exitPresentation();
-        break;
-      case 'proof-hub':
-        App.showView('home');
-        break;
-      case 'admin-panel':
-        App.showView('home');
-        break;
-      default:
-        App.showView('home');
+      case 'builder':      App.showView('home'); break;
+      case 'presentation': App.exitPresentation(); break;
+      case 'proof-hub':    App.showView('home'); break;
+      case 'admin-panel':  App.showView('home'); break;
+      default:             App.showView('home');
     }
   },
 
@@ -197,7 +175,6 @@ const App = {
     try {
       const deck = await API.getDeck(deckId);
       if (!deck) { showToast('Deck not found.', 'error'); return; }
-
       AppState.currentDeck = {
         ...deck,
         modules_selected: Array.isArray(deck.modules_selected) ? deck.modules_selected : []
@@ -215,10 +192,8 @@ const App = {
     try {
       const deck = await API.getDeck(deckId);
       if (!deck) { showToast('Deck not found.', 'error'); return; }
-
       let customerInputs = null;
       try { customerInputs = deck.customer_inputs ? JSON.parse(deck.customer_inputs) : null; } catch (e) {}
-
       AppState.currentDeck = {
         ...deck,
         modules_selected: Array.isArray(deck.modules_selected) ? deck.modules_selected : []
@@ -238,11 +213,8 @@ const App = {
       showToast('Select at least one module first.', 'error');
       return;
     }
-
     const deckName = document.getElementById('deck-name-input')?.value?.trim()
-      || AppState.currentDeck?.deck_name
-      || '';
-
+      || AppState.currentDeck?.deck_name || '';
     let calcInputs = customerInputsOverride || null;
     if (!calcInputs) {
       calcInputs = Calculator.getDefaultInputs();
@@ -250,7 +222,6 @@ const App = {
         try { calcInputs = JSON.parse(AppState.currentDeck.customer_inputs); } catch (e) {}
       }
     }
-
     App.showView('presentation');
     await Presentation.init(modules, calcInputs, deckName, false);
   },
@@ -260,7 +231,6 @@ const App = {
     App.showView('builder');
   },
 
-  /* ---- Jump to a module in current presentation ---- */
   jumpToModule(moduleId) {
     Presentation.goToModule(moduleId);
   },
@@ -275,51 +245,50 @@ const App = {
         content.innerHTML = `
           <div class="why-layout">
             <div>
-              <img src="solar-house.jpg"
-                alt="Solar installation"
+              <img src="windows-hero.jpg"
+                alt="Three Counties Windows"
                 style="border-radius:var(--r-lg);width:100%;box-shadow:var(--shadow-md);margin-bottom:1.25rem;" />
               <div style="font-size:0.87rem;color:var(--text-soft);line-height:1.7;margin-bottom:0.85rem;">
-                <p style="margin-bottom:0.75rem;">We've spent years building our reputation as trusted local solar installers across Surrey, Berkshire and Hampshire. Our focus is simple — deliver high-quality installations, honest advice and a smooth experience from first consultation through to long-term support.</p>
-                <p style="margin-bottom:0.75rem;">At Three Counties Solar, we work with both residential and commercial clients, helping homeowners make confident, informed decisions about their energy. We don't just install systems — we build long-term relationships with our customers and support them well beyond installation.</p>
+                <p style="margin-bottom:0.75rem;">We've spent over 20 years building our reputation as trusted local window and door installers across Surrey, Berkshire and Hampshire. Our focus is simple — deliver high-quality installations, honest advice and a smooth experience from first consultation through to long-term support.</p>
+                <p style="margin-bottom:0.75rem;">At Three Counties, we work with both residential and commercial clients, helping homeowners make confident, informed decisions about their homes. We don't just install windows — we build long-term relationships with our customers and support them well beyond installation.</p>
               </div>
               <div class="service-strip" style="margin-bottom:1rem;">
                 <strong><i class="fas fa-map-marker-alt"></i> Service Area:</strong>
-                Based in Camberley — solar panels, EV charging, home battery storage across
+                Based in Camberley — windows, doors, conservatories and roofline across
                 <strong>Surrey, Berkshire &amp; Hampshire</strong>.
               </div>
-              <!-- UK Solar Stats -->
               <div style="background:var(--green);border-radius:var(--r-md);padding:1.25rem;color:#fff;margin-bottom:1rem;">
                 <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;opacity:0.8;margin-bottom:0.85rem;">
-                  <i class="fas fa-chart-bar"></i> Solar in the UK — Did You Know?
+                  <i class="fas fa-chart-bar"></i> Why New Windows Matter
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;">
                   <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.85rem;text-align:center;">
-                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">1.4M+</div>
-                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Solar installations across UK homes</div>
+                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">75%</div>
+                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Less energy lost with low-e glass vs standard</div>
                   </div>
                   <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.85rem;text-align:center;">
-                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">£1,000+</div>
-                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Average annual savings for solar homes</div>
+                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">£5,000</div>
+                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Secure Living cover included at no extra cost</div>
                   </div>
                   <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.85rem;text-align:center;">
-                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">25 yrs</div>
-                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Typical panel performance lifespan</div>
+                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">10 yrs</div>
+                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Guarantee on installations</div>
                   </div>
                   <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.85rem;text-align:center;">
-                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">4–7 yrs</div>
-                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Typical payback period in the UK</div>
+                    <div style="font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;">1,500+</div>
+                    <div style="font-size:0.72rem;opacity:0.85;margin-top:0.2rem;">Verified Checkatrade reviews</div>
                   </div>
                 </div>
               </div>
             </div>
             <div>
               <div class="usp-list">
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-certificate"></i></div><div><h4>MCS Certified</h4><p>Industry benchmark for quality solar installation</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-user-shield"></i></div><div><h4>RECC Member</h4><p>Independent consumer protection for your peace of mind</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-plug"></i></div><div><h4>NIC EIC Approved</h4><p>Giving you added confidence in safe, compliant electrical installation standards.</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-map-pin"></i></div><div><h4>Genuinely Local</h4><p>Based in Camberley — quick response, personal service</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-clock-rotate-left"></i></div><div><h4>Years of Experience</h4><p>Many years installing solar, batteries and EV charge points</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-phone"></i></div><div><h4>01344 777515</h4><p>Give us a call — we're always happy to help</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-shield-halved"></i></div><div><h4>Zero Deposit Required</h4><p>Nothing to pay upfront, and nothing to lose.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-star"></i></div><div><h4>More Reviews Than Local Competitors</h4><p>Over double the positive reviews of anyone nearby.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-sterling-sign"></i></div><div><h4>Buy Now Pay Later</h4><p>Flexible finance across our entire range.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-certificate"></i></div><div><h4>10 Year Guarantee</h4><p>Real peace of mind, subject to terms.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-check-circle"></i></div><div><h4>FENSA &amp; GGF Members</h4><p>Fully accredited and registered for your protection.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-phone"></i></div><div><h4>01344 777515</h4><p>Give us a call — we're always happy to help.</p></div></div>
               </div>
             </div>
           </div>`;
@@ -344,84 +313,51 @@ const App = {
         break;
       }
 
-      case 'videos': {
-        const videos = AppState.getModuleItems('videos').filter(v => v.is_active && v.meta2);
-        if (!videos.length) {
-          content.innerHTML = '<div class="empty-state"><i class="fas fa-play-circle"></i><p>No videos available yet.</p></div>';
-          break;
-        }
-        const videoHTML = videos.map(v => {
-          const yt = v.meta2.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/);
-          const vm = v.meta2.match(/vimeo\.com\/(\d+)/);
-          const embedUrl = yt ? `https://www.youtube.com/embed/${yt[1]}` : vm ? `https://player.vimeo.com/video/${vm[1]}` : v.meta2;
-          return `<div style="margin-bottom:1.5rem;"><h3 style="margin-bottom:0.75rem;">${escHtml(v.title)}</h3><div style="position:relative;padding-bottom:56.25%;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-md);"><iframe src="${embedUrl}" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe></div></div>`;
-        }).join('');
-        content.innerHTML = `<div style="max-width:760px;">${videoHTML}</div>`;
-        break;
-      }
-
       case 'accreditations':
         content.innerHTML = `
           <div>
-            <h2 style="margin-bottom:0.5rem;font-size:1.2rem;font-weight:700;">Accreditations &amp; Certifications</h2>
+            <h2 style="margin-bottom:0.5rem;font-size:1.2rem;font-weight:700;">Accreditations &amp; Memberships</h2>
             <p style="color:var(--text-soft);margin-bottom:1.5rem;font-size:0.87rem;">
-              We hold the following industry certifications — giving you complete confidence in the quality and legitimacy of your installation.
+              We hold the following industry accreditations — giving you complete confidence in the quality and legitimacy of your installation.
             </p>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem;">
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <img src="MCS-LOGO.png" alt="MCS Certified" style="height:50px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:8px;flex-shrink:0;" />
+                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-certificate"></i></div>
                 <div>
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem;">MCS Certified</div>
-                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Microgeneration Certification Scheme</div>
-                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">The UK quality mark for small-scale renewable installations. MCS certification is required to access government incentives like the Smart Export Guarantee.</p>
+                  <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">FENSA Registered</div>
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Fenestration Self-Assessment Scheme</div>
+                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Government-authorised scheme ensuring window and door replacements comply with building regulations.</p>
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <img src="RECC-LOGO.png" alt="RECC Member" style="height:50px;object-fit:contain;background:white;padding:4px;border-radius:8px;flex-shrink:0;" />
+                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-shield-halved"></i></div>
                 <div>
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem;">RECC Member</div>
-                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Renewable Energy Consumer Code</div>
-                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Sets consumer protection standards for businesses selling renewable systems to households. Provides independent dispute resolution if needed.</p>
+                  <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">GGF Member</div>
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Glass &amp; Glazing Federation</div>
+                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">The leading trade association for the glass and glazing industry, ensuring high standards of workmanship.</p>
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <img src="NIC-EIC-.png" alt="NIC EIC Approved" style="height:50px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:8px;flex-shrink:0;" />
+                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-star"></i></div>
                 <div>
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem;">NIC EIC Approved</div>
-                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Electrical Installation Standards</div>
-                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Giving you added confidence in safe, compliant electrical installation standards.</p>
+                  <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Checkatrade Approved</div>
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">9.8/10 from 1,500+ reviews</div>
+                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Independently verified reviews from real customers across Surrey, Berkshire and Hampshire.</p>
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <img src="NAPIT.png" alt="NAPIT Registered" style="height:50px;object-fit:contain;background:white;padding:4px;border-radius:8px;flex-shrink:0;" />
+                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-lock"></i></div>
                 <div>
-                  <div style="font-weight:700;font-size:0.95rem;color:var(--text);margin-bottom:0.3rem;">NAPIT Registered</div>
-                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">National Association of Professional Inspectors</div>
-                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Registered with one of the UK's leading electrotechnical and building services certification bodies, confirming our electrical work meets required standards.</p>
-                </div>
-              </div>
-            </div>
-            <div style="background:var(--green);border-radius:var(--r-md);padding:1.25rem;color:#fff;margin-bottom:1rem;">
-              <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;opacity:0.8;margin-bottom:0.75rem;">Why Accreditations Matter</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;">
-                <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.75rem;text-align:center;font-size:0.78rem;">
-                  <i class="fas fa-pound-sign" style="font-size:1.1rem;margin-bottom:0.35rem;display:block;"></i>
-                  Access to Smart Export Guarantee payments
-                </div>
-                <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.75rem;text-align:center;font-size:0.78rem;">
-                  <i class="fas fa-gavel" style="font-size:1.1rem;margin-bottom:0.35rem;display:block;"></i>
-                  Independent dispute resolution if needed
-                </div>
-                <div style="background:rgba(255,255,255,0.12);border-radius:var(--r-sm);padding:0.75rem;text-align:center;font-size:0.78rem;">
-                  <i class="fas fa-home" style="font-size:1.1rem;margin-bottom:0.35rem;display:block;"></i>
-                  Protects your property value &amp; warranty
+                  <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Secure Living Warranty</div>
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Up to £5,000 cover included free</div>
+                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Security guarantee that pays you directly in the unlikely event of a break-in caused by hardware failure.</p>
                 </div>
               </div>
             </div>
             <div class="calc-disclaimer">
               <i class="fas fa-info-circle"></i>
               <span>Specific membership numbers and registration details are available on request.
-              Please call <strong>01344 777515</strong> or visit <strong>threecountiessolar.com</strong>.</span>
+              Please call <strong>01344 777515</strong> or visit <strong>threecounties.co.uk</strong>.</span>
             </div>
           </div>`;
         break;
@@ -434,7 +370,7 @@ const App = {
     if (AppState.isAdminLoggedIn) {
       document.getElementById('admin-login').style.display = 'none';
       document.getElementById('admin-panel').classList.remove('hidden');
-      Admin.renderSection('calculator');
+      Admin.renderSection('why_choose');
     } else {
       document.getElementById('admin-login').style.display = 'flex';
       document.getElementById('admin-panel').classList.add('hidden');
@@ -472,21 +408,15 @@ const App = {
         `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
         {
           method:  'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey':       SUPABASE_KEY
-          },
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
           body: JSON.stringify({ email, password })
         }
       );
-
       const json = await res.json();
-
       if (!res.ok || !json.access_token) {
         const raw = json?.error_description || json?.msg || json?.message || '';
         const msg = (raw.toLowerCase().includes('invalid') || raw.toLowerCase().includes('credentials') || raw === '')
-          ? 'Incorrect email or password. Please try again.'
-          : raw;
+          ? 'Incorrect email or password. Please try again.' : raw;
         if (errorMsg) errorMsg.textContent = msg;
         if (errorEl)  errorEl.classList.remove('hidden');
         if (passwordEl) { passwordEl.value = ''; passwordEl.focus(); }
@@ -497,7 +427,7 @@ const App = {
         if (errorEl) errorEl.classList.add('hidden');
         document.getElementById('admin-login').style.display  = 'none';
         document.getElementById('admin-panel').classList.remove('hidden');
-        Admin.renderSection('calculator');
+        Admin.renderSection('why_choose');
       }
     } catch (e) {
       console.error('adminLogin error', e);
@@ -514,13 +444,11 @@ const App = {
     try {
       if (AppState.adminAccessToken) {
         await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
-          method:  'POST',
+          method: 'POST',
           headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${AppState.adminAccessToken}` }
         });
       }
-    } catch (e) {
-      console.warn('signOut error (ignored)', e);
-    }
+    } catch (e) { console.warn('signOut error (ignored)', e); }
     AppState.adminAccessToken = null;
     AppState.isAdminLoggedIn = false;
     const emailEl    = document.getElementById('admin-email-input');
@@ -529,8 +457,8 @@ const App = {
     if (passwordEl) passwordEl.value = '';
     const icon = document.getElementById('pw-toggle-icon');
     const pwInput = document.getElementById('admin-password-input');
-    if (icon)    icon.className    = 'fas fa-eye';
-    if (pwInput) pwInput.type      = 'password';
+    if (icon)    icon.className = 'fas fa-eye';
+    if (pwInput) pwInput.type   = 'password';
     document.getElementById('admin-login').style.display = 'flex';
     document.getElementById('admin-panel').classList.add('hidden');
     App.showView('home');
@@ -546,10 +474,9 @@ const App = {
   },
 
   toggleForgotPassword() {
-    const panel  = document.getElementById('forgot-pw-panel');
-    const link   = document.getElementById('btn-forgot-pw');
+    const panel = document.getElementById('forgot-pw-panel');
+    const link  = document.getElementById('btn-forgot-pw');
     if (!panel) return;
-
     const isOpen = !panel.classList.contains('hidden');
     if (isOpen) {
       panel.classList.add('hidden');
@@ -558,8 +485,8 @@ const App = {
     } else {
       panel.classList.remove('hidden');
       if (link) link.innerHTML = '<i class="fas fa-chevron-up"></i> Hide';
-      const loginEmail  = document.getElementById('admin-email-input')?.value?.trim();
-      const resetEmail  = document.getElementById('forgot-pw-email');
+      const loginEmail = document.getElementById('admin-email-input')?.value?.trim();
+      const resetEmail = document.getElementById('forgot-pw-email');
       if (resetEmail && loginEmail) resetEmail.value = loginEmail;
       setTimeout(() => document.getElementById('forgot-pw-email')?.focus(), 60);
     }
@@ -572,7 +499,6 @@ const App = {
     const errEl   = document.getElementById('forgot-pw-error');
     const emailEl = document.getElementById('forgot-pw-email');
     const link    = document.getElementById('btn-forgot-pw');
-
     if (form)    form.classList.remove('hidden');
     if (success) success.classList.add('hidden');
     if (errEl)   errEl.classList.add('hidden');
@@ -593,35 +519,26 @@ const App = {
     const sentTo    = document.getElementById('forgot-pw-sent-to');
 
     const email = emailEl?.value?.trim() || '';
-
     if (!email) {
       if (errMsg) errMsg.textContent = 'Please enter your email address.';
       if (errEl)  errEl.classList.remove('hidden');
-      emailEl?.focus();
-      return;
+      emailEl?.focus(); return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (errMsg) errMsg.textContent = 'Please enter a valid email address.';
       if (errEl)  errEl.classList.remove('hidden');
-      emailEl?.focus();
-      return;
+      emailEl?.focus(); return;
     }
-
     if (btnLabel)  btnLabel.classList.add('hidden');
     if (btnLoad)   btnLoad.classList.remove('hidden');
     if (submitBtn) submitBtn.disabled = true;
     if (errEl)     errEl.classList.add('hidden');
-
     try {
       const res = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body:    JSON.stringify({
-          email,
-          redirectTo: window.location.origin + window.location.pathname
-        })
+        body: JSON.stringify({ email, redirectTo: window.location.origin + window.location.pathname })
       });
-
       if (!res.ok) {
         let raw = '';
         try { raw = (await res.json())?.msg || ''; } catch (_) {}
@@ -636,7 +553,6 @@ const App = {
         if (success) success.classList.remove('hidden');
       }
     } catch (e) {
-      console.error('forgotPassword error', e);
       if (errMsg) errMsg.textContent = 'Could not reach the server. Check your connection and try again.';
       if (errEl)  errEl.classList.remove('hidden');
     } finally {
@@ -650,25 +566,22 @@ const App = {
   async loadCustomerView(deckId) {
     try {
       const deck = await API.getDeck(deckId);
-      if (!deck || deck.is_archived) {
+      if (!deck) {
         document.body.innerHTML = `
           <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;
             flex-direction:column;gap:1rem;font-family:Inter,sans-serif;background:#F5F5F0;padding:2rem;text-align:center;">
-            <img src="logo.png" alt="Three Counties" style="height:50px;mix-blend-mode:multiply;" />
+            <img src="logo.png" alt="Three Counties" style="height:50px;" />
             <h2 style="color:#E87722;font-size:1.3rem;">Deck Not Found</h2>
             <p style="color:#666;font-size:0.9rem;">This link may have expired or been removed.</p>
             <p style="color:#2D6A2F;font-weight:700;font-size:1rem;">📞 01344 777515</p>
-            <p style="color:#999;font-size:0.8rem;">www.threecountiessolar.com</p>
+            <p style="color:#999;font-size:0.8rem;">threecounties.co.uk</p>
           </div>`;
         return;
       }
-
       deck.modules_selected = Array.isArray(deck.modules_selected) ? deck.modules_selected : [];
-
       App.showView('customer');
       App.bindGlobalEvents();
       await Presentation.initCustomerView(deck);
-
     } catch (e) {
       console.error('Customer view error', e);
     }
@@ -707,34 +620,16 @@ function closeModal() {
 function faqToggle(el, idx) {
   const isOpen = el.classList.contains('open');
   const grid = el.closest('.faqs-grid');
-  if (grid) {
-    grid.querySelectorAll('.faq-card.open').forEach(card => card.classList.remove('open'));
-  }
-  if (!isOpen) {
-    el.classList.add('open');
-  }
+  if (grid) grid.querySelectorAll('.faq-card.open').forEach(card => card.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
 }
 
-function evFaqToggle(el, idx) {
-  const isOpen = el.classList.contains('open');
-  const grid = el.closest('#ev-faqs-grid');
-  if (grid) {
-    grid.querySelectorAll('.faq-card.open').forEach(card => card.classList.remove('open'));
-  }
-  if (!isOpen) {
-    el.classList.add('open');
-  }
-}
-
-function mhFaqToggle(el, idx) {
-  const isOpen = el.classList.contains('open');
-  const col = el.closest('.mh-faq-col');
-  if (col) {
-    col.querySelectorAll('.faq-card.open').forEach(card => card.classList.remove('open'));
-  }
-  if (!isOpen) {
-    el.classList.add('open');
-  }
+function togglePriority(key) {
+  if (!AppState.priorities) AppState.priorities = new Set();
+  AppState.priorities.has(key) ? AppState.priorities.delete(key) : AppState.priorities.add(key);
+  document.querySelectorAll('.priority-chip').forEach(chip => {
+    chip.classList.toggle('selected', AppState.priorities.has(chip.dataset.priority));
+  });
 }
 
 /* ============================================================
