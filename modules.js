@@ -1,435 +1,245 @@
 /* ============================================================
-   MODULE RENDERERS — all use new CSS class names
+   MODULE RENDERERS — Three Counties Windows Sales Navigator
    ============================================================ */
 
 const Modules = {
 
   /* ============================================================
-     SAVINGS CALCULATOR
+     WELCOME
      ============================================================ */
-  renderCalculator(inputs, isReadOnly) {
-    const vals   = inputs || Calculator.getDefaultInputs();
-    const results= Calculator.compute(vals);
-    const fmt    = Calculator.format(results);
-    const ro     = isReadOnly ? 'readonly' : '';
-
+  renderWelcome() {
     return `
-<div class="slide" id="slide-calculator">
-  <div class="slide-eyebrow"><i class="fas fa-calculator"></i> Live Calculator</div>
-  <h1 class="slide-h1"><span class="accent">Live</span> Savings Calculator</h1>
-  <p class="slide-lead">Personalised to your home. Adjust the inputs to see your estimated savings in real time.</p>
-
-  <div class="calc-layout">
-    <div>
-      <!-- Panel 1: Bill -->
-      <div class="calc-panel">
-        <div class="calc-section-title">
-          <div class="step-dot">1</div> Current Electricity Bill
-        </div>
-        <div class="form-grp">
-          <label class="form-lbl">Annual Usage (kWh)</label>
-          <div class="input-wrap">
-            <input type="number" class="form-inp calc-inp" id="calc-annualUsage"
-              value="${vals.annualUsage}" min="500" max="30000" step="100" ${ro}/>
-            <span class="inp-sfx">kWh</span>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-grp">
-            <label class="form-lbl">Unit Price</label>
-            <div class="input-wrap">
-              <input type="number" class="form-inp calc-inp" id="calc-unitPrice"
-                value="${vals.unitPrice}" min="1" max="100" step="0.1" ${ro}/>
-              <span class="inp-sfx">p/kWh</span>
-            </div>
-          </div>
-          <div class="form-grp">
-            <label class="form-lbl">Standing Charge</label>
-            <div class="input-wrap">
-              <input type="number" class="form-inp calc-inp" id="calc-standingCharge"
-                value="${vals.standingCharge}" min="0" max="200" step="0.5" ${ro}/>
-              <span class="inp-sfx">p/day</span>
-            </div>
-          </div>
-        </div>
-        <div class="bill-display">
-          <div>
-            <div class="bill-label">CURRENT ANNUAL BILL</div>
-            <div class="bill-val" id="calc-current-bill">${fmt.currentBill}</div>
-          </div>
-          <i class="fas fa-file-invoice" style="font-size:1.3rem;opacity:0.35;"></i>
-        </div>
-      </div>
-
-      <!-- Panel 2: System -->
-      <div class="calc-panel" style="margin-top:0.85rem;">
-        <div class="calc-section-title">
-          <div class="step-dot">2</div> System Configuration
-        </div>
-        <div class="slider-grp">
-          <div class="slider-head">
-            <span class="slider-lbl">Solar Array Size</span>
-            <span class="slider-val" id="calc-arraySize-val">${parseFloat(vals.arraySize).toFixed(1)} kWp</span>
-          </div>
-          <input type="range" id="calc-arraySize" min="1.5" max="14" step="0.1" value="${vals.arraySize}" class="calc-input" ${ro}/>
-          <div class="slider-hints"><span>Small (1.5kW)</span><span>Large (14kW)</span></div>
-        </div>
-        <div class="slider-grp">
-          <div class="slider-head">
-            <span class="slider-lbl">Battery Storage</span>
-            <span class="slider-val" id="calc-battery-val">${parseFloat(vals.battery).toFixed(1)} kWh</span>
-          </div>
-          <input type="range" id="calc-battery" min="0" max="20" step="0.5" value="${vals.battery}" class="calc-input" ${ro}/>
-          <div class="slider-hints"><span>None</span><span>20 kWh</span></div>
-        </div>
-        <hr class="divider"/>
-        <div class="form-row">
-          <div class="form-grp">
-            <label class="form-lbl">Export Tariff</label>
-            <div class="input-wrap">
-              <input type="number" class="form-inp calc-inp" id="calc-exportTariff"
-                value="${vals.exportTariff}" min="0" max="50" step="0.5" ${ro}/>
-              <span class="inp-sfx">p/kWh</span>
-            </div>
-          </div>
-          <div class="form-grp">
-            <label class="form-lbl">System Cost</label>
-            <div class="input-wrap">
-              <input type="number" class="form-inp calc-inp" id="calc-systemCost"
-                value="${vals.systemCost}" min="1000" max="100000" step="100" ${ro}/>
-              <span class="inp-sfx">£</span>
-            </div>
-          </div>
-        </div>
-        ${!isReadOnly ? `<div style="margin-top:0.5rem;">
-          <button class="btn-ghost btn-sm" id="calc-reset-btn">
-            <i class="fas fa-rotate-left"></i> Reset to defaults
-          </button>
-        </div>` : ''}
-      </div>
-    </div>
-
-    <!-- Results -->
-    <div class="results-panel">
-      <div class="results-hero">
-        <div class="rh-label">TOTAL ANNUAL SAVINGS</div>
-        <div class="rh-val" id="res-total-saving">${fmt.totalAnnualSaving}</div>
-        <div class="rh-sub">Based on your inputs and system configuration</div>
-      </div>
-      <div class="results-grid">
-        <div class="res-card">
-          <div class="res-lbl">Payback Period</div>
-          <div class="res-val green" id="res-payback">${results.paybackYears !== null ? results.paybackYears + ' yrs' : 'N/A'}</div>
-          <div class="res-sub">${results.paybackYears !== null ? 'Years' : 'Enter system cost'}</div>
-        </div>
-        <div class="res-card">
-          <div class="res-lbl">Monthly Avg. Save</div>
-          <div class="res-val orange" id="res-monthly">${fmt.monthlyAvgSaving}</div>
-          <div class="res-sub">Per month on average</div>
-        </div>
-        <div class="res-card">
-          <div class="res-lbl">Solar Generation</div>
-          <div class="res-val" id="res-generation" style="font-size:1.15rem;">${fmt.generation}</div>
-          <div class="res-sub">Estimated annual output</div>
-        </div>
-        <div class="res-card">
-          <div class="res-lbl">Self-Use Rate</div>
-          <div class="res-val" id="res-selfuse" style="font-size:1.35rem;">${fmt.selfUsePct}</div>
-          <div class="res-sub">With ${results.battery} kWh battery</div>
-        </div>
-      </div>
-      <!-- Projection controls -->
-      <div class="form-row" style="margin-bottom:0.75rem;">
-        <div class="form-grp">
-          <label class="form-lbl">Projection Term</label>
-          <div class="input-wrap">
-            <select class="form-inp calc-inp" id="calc-proj-term" style="cursor:pointer;">
-              <option value="10">10 years</option>
-              <option value="15">15 years</option>
-              <option value="20">20 years</option>
-              <option value="25" selected>25 years</option>
-              <option value="30">30 years</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-grp">
-          <label class="form-lbl">Inflation Rate</label>
-          <div class="input-wrap">
-            <input type="number" class="form-inp calc-inp" id="calc-inflation-rate"
-              value="3.0" min="0" max="10" step="0.5" />
-            <span class="inp-sfx">%</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="results-long">
-        <div class="long-card orange-bg">
-          <div class="long-lbl" id="res-term-label"><i class="fas fa-chart-line"></i> 25 YEAR SAVINGS</div>
-          <div class="long-val" id="res-25yr">${fmt.savings25yr}</div>
-          <div class="long-note" id="res-inflation-note">Inflation adjusted @ ${(AppState.getSetting('savingsEscalationRate',0.03)*100).toFixed(0)}%</div>
-        </div>
-        <div class="long-card green-bg">
-          <div class="long-lbl"><i class="fas fa-leaf"></i> CO₂ AVOIDED</div>
-          <div class="long-val" id="res-co2">${fmt.co2Avoided}</div>
-          <div class="long-note">Per year approx.</div>
-        </div>
-      </div>
-      <div class="calc-disclaimer">
-        <i class="fas fa-circle-info"></i>
-        <span>Savings shown are estimates based on inputs provided and typical performance assumptions.
-        Actual savings will vary depending on roof orientation, shading, weather, system design, and
-        electricity tariffs. Final figures will be confirmed following a full design and site survey.</span>
-      </div>
-    </div>
+<div class="slide" id="slide-welcome" style="position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;">
+  <div class="slide-eyebrow green"><i class="fas fa-house"></i> Three Counties</div>
+  <h1 class="slide-h1" style="font-size:2rem;max-width:600px;">Let's find the <span class="accent">right windows</span> for your home</h1>
+  <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">No hassle, no pressure. Just clear, honest advice from a local team that has been doing this for over 20 years.</p>
+  <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">We will walk through everything that matters to you, from how the windows perform to what they cost and how to spread it. Take your time, ask anything, and we will only ever recommend what is right for your home.</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
 </div>`;
   },
 
   /* ============================================================
-     HOW SOLAR WORKS
+     PRIORITIES
      ============================================================ */
-  async renderHowSolarWorks() {
-    const steps = AppState.getModuleItems('how_solar_works');
-    const icons = ['fa-solar-panel','fa-battery-three-quarters','fa-house-chimney'];
-
-    const stepsHTML = steps.length ? steps.map((s, i) => {
-      const isLast = i === steps.length - 1;
-      return `
-        <div class="solar-step" style="position:relative;">
-          <div class="step-num-badge">${i + 1}</div>
-          <div class="step-icon-ring"><i class="fas ${icons[i] || 'fa-sun'}"></i></div>
-          <h3>${escHtml(s.title)}</h3>
-          <p>${escHtml(s.body)}</p>
-          <div class="key-benefit">
-            <i class="fas fa-circle-check"></i>
-            <span><strong>Key Benefit:</strong> ${escHtml(s.meta2 || '')}</span>
-          </div>
-          ${!isLast ? '<div class="step-chevron"><i class="fas fa-chevron-right"></i></div>' : ''}
-        </div>`;
-    }).join('') : '<p style="color:var(--text-soft);">No steps configured. Add them in Admin.</p>';
-
+  renderPriorities() {
+    const opts = [
+      { key: 'security',    label: 'Security',           icon: 'fa-shield-halved', desc: 'Keeping your home and family safe' },
+      { key: 'thermal',     label: 'Thermal Efficiency', icon: 'fa-temperature-half', desc: 'A warmer home and lower energy bills' },
+      { key: 'aesthetics',  label: 'Aesthetics',         icon: 'fa-eye',           desc: 'Windows that transform how your home looks' },
+      { key: 'maintenance', label: 'Easy Maintenance',   icon: 'fa-screwdriver-wrench', desc: 'Quality that lasts with very little upkeep' },
+    ];
     return `
-<div class="slide" id="slide-how-solar-works">
-  <div class="slide-eyebrow green"><i class="fas fa-gear"></i> Simple 3-Step Process</div>
-  <h1 class="slide-h1">From <span class="accent">Sunlight</span> to Savings</h1>
-  <p class="slide-lead">Your home becomes a mini power station. Clean, simple, and automatic.</p>
-  <div style='display:flex;justify-content:center;margin-bottom:1.75rem;'><div style='background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);max-width:580px;width:100%;text-align:center;'><img src='schematic-animated-new.gif' alt='How Solar Works' style='width:100%;max-width:500px;' /></div></div>
-  <div class="solar-steps">${stepsHTML}</div>
-  <div class="dyk-bar">
-    <div class="dyk-dot"><i class="fas fa-lightbulb"></i></div>
-    <div class="dyk-text">
-      <strong>Did you know?</strong>
-      With a smart tariff (like Octopus Flux), you can buy cheap energy at night to fill your battery and sell at peak times — stacking on top of your solar savings.
-    </div>
-    <button class="btn-secondary btn-sm" onclick="App.jumpToModule('tariffs')">
-      See Tariffs <i class="fas fa-arrow-right"></i>
-    </button>
+<div class="slide" id="slide-priorities">
+  <div class="slide-eyebrow green"><i class="fas fa-list-check"></i> Personalise Your Journey</div>
+  <h1 class="slide-h1">What <span class="accent">matters most</span> to you?</h1>
+  <p class="slide-lead">Tap the things that are important, and we will focus on those first.</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:640px;margin:0 auto;">
+    ${opts.map(o => `
+      <button class="priority-chip" data-priority="${o.key}" onclick="togglePriority('${o.key}')"
+        style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-md);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;">
+        <i class="fas ${o.icon}" style="font-size:1.8rem;color:var(--green);margin-bottom:0.65rem;display:block;"></i>
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">${o.label}</div>
+        <div style="font-size:0.75rem;color:var(--text-soft);">${o.desc}</div>
+      </button>`).join('')}
   </div>
+  <style>.priority-chip.selected{border-color:var(--green)!important;background:var(--green-light)!important;}</style>
 </div>`;
   },
 
   /* ============================================================
-     INSTALLATION JOURNEY
+     ECO VS ECO+
      ============================================================ */
-  async renderInstallationJourney() {
-    const steps = AppState.getModuleItems('installation_journey');
-    const iconMap = {
-      'phone':'fa-phone','drafting-compass':'fa-drafting-compass',
-      'clipboard-check':'fa-clipboard-check','tools':'fa-screwdriver-wrench',
-      'check-double':'fa-check-double','heart':'fa-heart'
-    };
-    const stepsHTML = steps.map((s, i) => `
-      <div class="journey-card">
-        <div class="j-num">${i + 1}</div>
-        <div class="j-icon"><i class="fas ${iconMap[s.meta2] || 'fa-circle'}"></i></div>
-        <h3>${escHtml(s.title)}</h3>
-        <div class="j-timing">${escHtml(s.meta1 || '')}</div>
-        <p>${escHtml(s.body)}</p>
-      </div>`).join('');
+  async renderEcoComparison() {
+    const items = AppState.getModuleItems('eco_vs_eco_plus');
+    const eco  = items.find(i => i.title === 'Eco')  || { title: 'Eco',  body: '', meta1: 'Centre pane U-value: 1.20 W/m²K', meta2: 'Finance: Buy Now Pay Later' };
+    const ecoP = items.find(i => i.title === 'Eco+') || { title: 'Eco+', body: '', meta1: 'Centre pane U-value: 1.0 W/m²K',  meta2: 'Finance: Buy Now Pay Later + Interest Free Credit (2 to 5 years)' };
 
     return `
-<div class="slide" id="slide-installation-journey">
-  <div class="slide-eyebrow"><i class="fas fa-calendar-check"></i> Installation Journey</div>
-  <h1 class="slide-h1">What to <span class="accent">Expect</span></h1>
-  <p class="slide-lead">From our first chat to a lifetime of savings. We handle the paperwork, scaffolding, and setup.</p>
-  <img src="timeline.jpg" alt="Installation Timeline" style="width:100%;border-radius:var(--r-md);margin-bottom:1.75rem;box-shadow:var(--shadow-md);" />
-  <div class="journey-grid">${stepsHTML}</div>
-  <div class="journey-note">
-    <i class="fas fa-calendar-alt" style="font-size:1.8rem;opacity:0.65;flex-shrink:0;"></i>
-    <p><strong>Typical timeline: 3–4 weeks from first call to commissioned system.</strong><br/>
-    We handle DNO notification, MCS certification, and all grid export paperwork — so you simply enjoy the savings.</p>
+<div class="slide" id="slide-eco-vs-eco-plus">
+  <div class="slide-eyebrow green"><i class="fas fa-leaf"></i> Glass Performance</div>
+  <h1 class="slide-h1">Eco or <span class="accent">Eco+</span>, the choice is yours</h1>
+  <p class="slide-lead">Both are energy-efficient. One goes further on performance, and unlocks interest-free credit.</p>
+  <div style="background:var(--green-light);border-radius:var(--r-md);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.87rem;color:var(--green);">
+    <i class="fas fa-circle-info"></i> Our low-emissivity glass can cut the energy lost through your windows by <strong>up to 75%</strong>, giving you three times the thermal insulation of standard double glazing.
   </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+    <!-- ECO -->
+    <div style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-lg);padding:1.75rem;box-shadow:var(--shadow-sm);">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-soft);margin-bottom:0.5rem;">Standard</div>
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1rem;">Eco</h2>
+      <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:1.25rem;">${escHtml(eco.body) || 'Our standard soft-coat low-emissivity glass with argon gas. Energy efficient and meets the latest building regulations.'}</p>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> Soft-coat low-emissivity glass</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> Argon gas filled</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> ${escHtml(eco.meta1)}</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> Meets latest building regulations</div>
+      </div>
+      <div style="margin-top:1.25rem;padding:0.85rem;background:#f5f5f5;border-radius:var(--r-sm);font-size:0.8rem;color:var(--text-soft);">
+        <strong>Finance:</strong> Buy Now Pay Later
+      </div>
+    </div>
+    <!-- ECO+ -->
+    <div style="background:var(--green);border:2px solid var(--green);border-radius:var(--r-lg);padding:1.75rem;box-shadow:var(--shadow-md);color:#fff;position:relative;">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:0.7rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;">Recommended</div>
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;opacity:0.8;margin-bottom:0.5rem;">Premium</div>
+      <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:1rem;">Eco+</h2>
+      <p style="font-size:0.85rem;opacity:0.9;margin-bottom:1.25rem;">${escHtml(ecoP.body) || 'A higher specification of soft-coat low-emissivity glass for our best thermal performance.'}</p>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:#fff;"></i> Higher-spec soft-coat low-emissivity</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:#fff;"></i> Argon gas filled</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:#fff;"></i> ${escHtml(ecoP.meta1)}</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:#fff;"></i> The warmest, most efficient choice</div>
+      </div>
+      <div style="margin-top:1.25rem;padding:0.85rem;background:rgba(255,255,255,0.15);border-radius:var(--r-sm);font-size:0.8rem;">
+        <strong>Finance:</strong> Buy Now Pay Later <strong>+ Interest Free Credit</strong> (2–5 years)
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.82rem;color:var(--text-soft);margin-top:1.25rem;text-align:center;">
+    <i class="fas fa-lightbulb" style="color:var(--orange);"></i>
+    Eco+ is the only range with interest-free credit, so the better-performing glass is also the easiest to spread the cost on.
+  </p>
 </div>`;
   },
 
   /* ============================================================
-     TARIFFS
+     GALLERY
      ============================================================ */
-  async renderTariffs() {
-    const tariffs = AppState.getModuleItems('tariffs');
-
-    const rows = tariffs.map(t => {
-      const isFlux = (t.title||'').toLowerCase().includes('flux');
-      return `
-        <tr ${isFlux ? 'class="highlight"' : ''}>
-          <td>
-            <div class="tariff-name">${escHtml(t.title)}</div>
-            <div style="display:flex;gap:0.3rem;margin-top:0.2rem;">
-              <span class="t-tag">${isFlux ? 'Solar + Battery' : 'Solar'}</span>
-              ${isFlux ? '<span class="t-tag">Smart Tariff</span>' : ''}
-            </div>
-          </td>
-          <td>${parseFloat(t.meta1||0).toFixed(1)}p</td>
-          <td class="rate-hi">${parseFloat(t.meta2||0).toFixed(1)}p</td>
-          <td>${parseFloat(t.meta3||0).toFixed(1)}p</td>
-        </tr>`;
-    }).join('');
-
-    return `
-<div class="slide" id="slide-tariffs">
-  <div class="slide-eyebrow"><i class="fas fa-bolt"></i> Tariff Comparison</div>
-  <h1 class="slide-h1">Why <span class="accent">Tariffs</span> Matter</h1>
-  <p class="slide-lead">The right energy tariff can add hundreds of pounds per year on top of your solar savings.</p>
-  <div class="tariff-layout">
-    <div class="tariff-card">
-      <h3><i class="fas fa-chess" style="color:var(--orange);margin-right:0.4rem;"></i> Smart Battery Strategy</h3>
-      <div class="strategy-list">
-        <div class="s-step">
-          <div class="s-icon blue"><i class="fas fa-moon"></i></div>
-          <div class="s-text"><h4>1. Charge overnight cheaply</h4><p>Buy electricity at night rates (e.g. 7p/kWh) to fill your battery.</p></div>
-        </div>
-        <div class="s-step">
-          <div class="s-icon yellow"><i class="fas fa-sun"></i></div>
-          <div class="s-text"><h4>2. Use solar during the day</h4><p>Your panels generate free electricity through daylight hours.</p></div>
-        </div>
-        <div class="s-step">
-          <div class="s-icon green"><i class="fas fa-arrow-up"></i></div>
-          <div class="s-text"><h4>3. Export at peak rates</h4><p>Sell stored energy back to the grid at morning &amp; evening peak prices.</p></div>
-        </div>
-      </div>
-      <div class="tariff-boost">
-        <strong><i class="fas fa-coins" style="color:var(--orange);margin-right:0.35rem;"></i> Boost your savings:</strong>
-        Smart tariffs like Octopus Flux can add an estimated <strong>£200–£400/year</strong> on top of standard solar savings.
-      </div>
-      <div class="tariff-links">
-        <a href="https://octopus.energy/tariffs/" target="_blank" rel="noopener" class="t-link">
-          <i class="fas fa-external-link-alt"></i> Check Live Octopus Tariffs
-        </a>
-        <a href="https://octopus.energy/smart/flux/" target="_blank" rel="noopener" class="t-link outline">
-          <i class="fas fa-bolt"></i> Octopus Flux
-        </a>
-      </div>
-    </div>
-    <div class="tariff-card">
-      <h3><i class="fas fa-table" style="color:var(--green);margin-right:0.4rem;"></i> Example Tariff Comparison</h3>
-      <p style="font-size:0.76rem;color:var(--text-soft);margin-bottom:0.85rem;">
-        <i class="fas fa-circle-info"></i> Indicative rates — check live rates before switching.
-      </p>
-      <table class="tariff-tbl">
-        <thead>
-          <tr><th>Tariff</th><th>Day Rate</th><th>Night Rate</th><th>Export</th></tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-      <div style="margin-top:1rem;background:var(--green-light);border-radius:var(--r-sm);padding:0.8rem;font-size:0.8rem;color:var(--green);">
-        <strong><i class="fas fa-circle-check"></i> SEG (Smart Export Guarantee):</strong>
-        All solar customers are entitled to export payments. We handle the application for you.
-      </div>
-    </div>
-  </div>
-</div>`;
-  },
-
-  /* ============================================================
-     FAQS
-     ============================================================ */
-  async renderFAQs() {
-    const faqs  = AppState.getModuleItems('faqs');
-    const icons = ['fa-house','fa-cloud-sun','fa-house-chimney','fa-wrench','fa-hard-hat','fa-bolt','fa-certificate'];
-
-    const leftCol  = faqs.filter((_, i) => i % 2 === 0);
-    const rightCol = faqs.filter((_, i) => i % 2 !== 0);
-
-    const renderCard = (f, i) => {
-      let bodyContent = escHtml(f.body);
-      if (f.title && f.title.toLowerCase().includes('properly certified')) {
-        bodyContent += `<div style='display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;align-items:center;'>
-          <img src='MCS-LOGO.png' alt='MCS Certified' style='height:40px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
-          <img src='RECC-LOGO.png' alt='RECC Member' style='height:40px;object-fit:contain;background:white;padding:4px;border-radius:6px;'>
-          <img src='TrustMark-Logo.png' alt='TrustMark' style='height:40px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
-        </div>`;
-      }
-      return `
-      <div class="faq-card" data-faq-index="${i}" onclick="faqToggle(this, ${i})">
-        <div class="faq-q">
-          <div class="faq-q-left">
-            <div class="faq-icon-box"><i class="fas ${icons[i % icons.length]}"></i></div>
-            <div class="faq-q-text">${escHtml(f.title)}</div>
-          </div>
-          <i class="fas fa-chevron-down faq-chevron"></i>
-        </div>
-        <div class="faq-answer">${bodyContent}</div>
+  async renderGallery() {
+    const items = AppState.getModuleItems('gallery');
+    const galleryHTML = items.length ? items.map((img, i) => `
+      <div onclick="Modules.openLightbox(${i})" style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--shadow-sm);">
+        <img src="${escHtml(img.meta1 || img.body)}" alt="${escHtml(img.title)}"
+          style="width:100%;height:100%;object-fit:cover;transition:transform 0.2s;"
+          onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
+      </div>`).join('') :
+      `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-soft);">
+        <i class="fas fa-images" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:0.4;"></i>
+        <p>Gallery images will appear here once added in Admin.</p>
       </div>`;
-    };
-
-    const leftHTML  = leftCol.map((f, i) => renderCard(f, i * 2)).join('');
-    const rightHTML = rightCol.map((f, i) => renderCard(f, i * 2 + 1)).join('');
 
     return `
-<div class="slide" id="slide-faqs">
-  <div class="slide-eyebrow green"><i class="fas fa-circle-question"></i> Common Questions</div>
-  <h1 class="slide-h1">Got <span class="accent">Questions?</span></h1>
-  <p class="slide-lead">Here are the things we hear most often. Click any question to reveal the answer.</p>
-  <div class="faqs-grid" id="faqs-grid">
-    <div class="faq-col">${leftHTML}</div>
-    <div class="faq-col">${rightHTML}</div>
+<div class="slide" id="slide-gallery">
+  <div class="slide-eyebrow green"><i class="fas fa-images"></i> Our Work</div>
+  <h1 class="slide-h1">See what's <span class="accent">possible</span></h1>
+  <p class="slide-lead">Real homes, real installs, right across Surrey, Hampshire and Berkshire.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.85rem;">${galleryHTML}</div>
+  <!-- Lightbox -->
+  <div id="gallery-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;align-items:center;justify-content:center;" onclick="Modules.closeLightbox()">
+    <img id="lightbox-img" src="" style="max-width:90vw;max-height:90vh;border-radius:var(--r-md);box-shadow:0 8px 40px rgba(0,0,0,0.5);" />
+    <button onclick="Modules.closeLightbox()" style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;">✕</button>
+  </div>
+</div>`;
+  },
+
+  openLightbox(idx) {
+    const items = AppState.getModuleItems('gallery');
+    if (!items[idx]) return;
+    const lb = document.getElementById('gallery-lightbox');
+    const img = document.getElementById('lightbox-img');
+    if (lb && img) {
+      img.src = items[idx].meta1 || items[idx].body;
+      lb.style.display = 'flex';
+    }
+  },
+
+  closeLightbox() {
+    const lb = document.getElementById('gallery-lightbox');
+    if (lb) lb.style.display = 'none';
+  },
+
+  /* ============================================================
+     EMBEDDED TOOL (Door Builder, Installs Map, Get Quote)
+     ============================================================ */
+  renderEmbeddedTool(toolKey) {
+    const tool = EMBEDDED_TOOLS[toolKey];
+    if (!tool) return `<div class="slide"><h2>Tool not configured: ${toolKey}</h2></div>`;
+
+    const popOut = `<a class="btn-primary" href="${tool.url}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.4rem;">
+      <i class="fas fa-external-link-alt"></i> Open ${tool.label} in full
+    </a>`;
+
+    const isPlaceholder = !tool.url || tool.url.startsWith('CONFIRM');
+
+    if (isPlaceholder) {
+      return `
+<div class="slide" id="slide-${toolKey}">
+  <div class="slide-eyebrow orange"><i class="fas fa-clock"></i> Coming Soon</div>
+  <h1 class="slide-h1">${tool.label}</h1>
+  <p class="slide-lead">${tool.blurb}</p>
+  <div style="background:var(--bg-card);border:2px dashed var(--border);border-radius:var(--r-lg);padding:3rem;text-align:center;">
+    <i class="fas fa-link" style="font-size:2rem;opacity:0.3;margin-bottom:1rem;display:block;"></i>
+    <p style="color:var(--text-soft);font-size:0.87rem;">Tool URL to be confirmed. This will open the ${tool.label} tool.</p>
+  </div>
+</div>`;
+    }
+
+    if (tool.embeddable) {
+      return `
+<div class="slide" id="slide-${toolKey}">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div>
+      <div class="slide-eyebrow green"><i class="fas fa-door-open"></i> Interactive Tool</div>
+      <h1 class="slide-h1" style="margin:0;">${tool.label}</h1>
+    </div>
+    ${popOut}
+  </div>
+  <p class="slide-lead">${tool.blurb}</p>
+  <div style="position:relative;width:100%;height:70vh;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);">
+    <iframe src="${tool.url}" title="${tool.label}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      allow="fullscreen" style="width:100%;height:100%;border:0;"></iframe>
+  </div>
+</div>`;
+    }
+
+    return `
+<div class="slide" id="slide-${toolKey}">
+  <div class="slide-eyebrow green"><i class="fas fa-door-open"></i> Interactive Tool</div>
+  <h1 class="slide-h1">${tool.label}</h1>
+  <p class="slide-lead">${tool.blurb}</p>
+  <div style="background:var(--green-light);border-radius:var(--r-lg);padding:3rem;text-align:center;">
+    <i class="fas fa-door-open" style="font-size:2.5rem;color:var(--green);margin-bottom:1rem;display:block;"></i>
+    <h3 style="margin-bottom:0.75rem;">${tool.label}</h3>
+    <p style="color:var(--text-soft);font-size:0.87rem;margin-bottom:1.5rem;">${tool.blurb}</p>
+    ${popOut}
   </div>
 </div>`;
   },
 
   /* ============================================================
-     WHY CHOOSE US
+     WHY CHOOSE 3C
      ============================================================ */
-  async renderWhyChooseUs() {
-    return `
-<div class="slide" id="slide-why-choose-us">
-  <div class="slide-eyebrow green"><i class="fas fa-shield-halved"></i> Why Choose Us</div>
-  <h1 class="slide-h1">Why <span class="accent">Three Counties Solar?</span></h1>
-  <p class="slide-lead">We've spent years building our reputation as trusted local installers across Surrey, Berkshire, and Hampshire.</p>
-  <div class="why-layout">
-    <div>
-      <img src="solar-house.jpg"
-        alt="Three Counties Solar" style="border-radius:var(--r-md);width:100%;margin-bottom:1.25rem;box-shadow:var(--shadow-md);" />
-      <p style="font-size:0.87rem;color:var(--text-soft);line-height:1.7;margin-bottom:0.85rem;">
-        Here at Three Counties Solar, we've worked for many years to build our reputation across our local area as trusted local installers.
-        We're committed to providing nothing but quality service that our customers can rely on.
-      </p>
-      <p style="font-size:0.87rem;color:var(--text-soft);line-height:1.7;">
-        As solar specialists, we've helped many residential and commercial clients across Surrey, Berkshire, and Hampshire.
-        We'll help you make an informed choice on the right system for your home.
-      </p>
-      <div class="service-strip">
-        <strong><i class="fas fa-map-marker-alt"></i> Service Area:</strong>
-        Based in Camberley — installing solar panels, EV charging, home battery storage, and solar repairs across <strong>Surrey, Berkshire &amp; Hampshire</strong>.
-      </div>
-    </div>
-    <div>
-      <div class="usp-list">
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-certificate"></i></div><div><h4>MCS Certified Installers</h4><p>The industry benchmark for quality solar installation.</p></div></div>
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-user-shield"></i></div><div><h4>RECC Member</h4><p>Independent consumer protection for your peace of mind.</p></div></div>
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-plug"></i></div><div><h4>NIC EIC Approved</h4><p>Giving you added confidence in safe, compliant electrical installation standards.</p></div></div>
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-map-pin"></i></div><div><h4>Genuinely Local</h4><p>Based in Camberley. Quick response times, personal service.</p></div></div>
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-clock-rotate-left"></i></div><div><h4>Years of Experience</h4><p>Many years installing solar, batteries, and EV charge points.</p></div></div>
-        <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-heart"></i></div><div><h4>Lifetime Support</h4><p>We don't disappear after installation. Ongoing aftercare always.</p></div></div>
-      </div>
-      <div class="accred-box">
-        <h4>Accreditations &amp; Memberships</h4>
-        <div class="accred-chips">
-          <img src='MCS-LOGO.png' alt='MCS Certified' style='height:45px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
-          <img src='RECC-LOGO.png' alt='RECC Member' style='height:45px;object-fit:contain;background:white;padding:4px;border-radius:6px;'>
-          <img src='NIC-EIC-.png' alt='NIC EIC Approved' style='height:45px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
+  async renderWhyChoose() {
+    const items = AppState.getModuleItems('why_choose');
+    const icons = ['fa-shield-halved','fa-star','fa-sterling-sign','fa-certificate','fa-check-circle','fa-tag'];
+
+    const cardsHTML = items.length ? items.map((item, i) => `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;display:flex;gap:0.85rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
+        <div class="usp-icon-box"><i class="fas ${icons[i % icons.length]}"></i></div>
+        <div>
+          <h4 style="margin-bottom:0.3rem;">${escHtml(item.title)}</h4>
+          <p style="font-size:0.82rem;color:var(--text-soft);">${escHtml(item.body)}</p>
         </div>
-      </div>
+      </div>`).join('') :
+      `<p style="color:var(--text-soft);">No content yet. Add items in Admin.</p>`;
+
+    return `
+<div class="slide" id="slide-why-choose">
+  <div class="slide-eyebrow green"><i class="fas fa-shield-halved"></i> Why Choose Us</div>
+  <h1 class="slide-h1">Why choose <span class="accent">Three Counties</span></h1>
+  <p class="slide-lead">Helping you make the right decision for your home.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">${cardsHTML}</div>
+  <div style="background:var(--green);border-radius:var(--r-md);padding:1.25rem;color:#fff;text-align:center;">
+    <p style="font-size:0.9rem;opacity:0.95;font-style:italic;">A family-run local business you can trust, here long before the sale and long after.</p>
+    <div style="margin-top:0.75rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-map-marker-alt"></i> Based in Camberley</span>
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01344 777515</span>
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecounties.co.uk</span>
     </div>
   </div>
 </div>`;
@@ -442,314 +252,237 @@ const Modules = {
     const reviews = AppState.getModuleItems('reviews');
     const stars = n => '★'.repeat(parseInt(n)||5) + '☆'.repeat(5-(parseInt(n)||5));
 
-    const html = reviews.map(r => `
+    const platformCards = `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
+          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">9.8/10</div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Checkatrade</div>
+          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,500+ reviews</div>
+          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
+          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">110+</div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Trustpilot</div>
+          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">Verified reviews</div>
+          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
+          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">Google</div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Google Reviews</div>
+          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">Highly rated locally</div>
+          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+        </div>
+      </div>`;
+
+    const reviewCards = reviews.filter(r => r.body && r.body.length > 10).map(r => `
       <div class="rev-card">
         <div class="rev-stars">${stars(r.meta2)}</div>
         <div class="rev-title">${escHtml(r.title)}</div>
         <div class="rev-body">"${escHtml(r.body)}"</div>
         <div class="rev-footer">
-          <div>
-            <div class="rev-name">${escHtml(r.meta1)}</div>
-            <div class="rev-loc">${escHtml(r.meta3||'')}</div>
-          </div>
+          <div class="rev-name">${escHtml(r.meta1 || '')}</div>
+          <div class="rev-loc">${escHtml(r.meta3 || '')}</div>
         </div>
       </div>`).join('');
 
     return `
 <div class="slide" id="slide-reviews">
-  <div class="slide-eyebrow">Customer Reviews <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-  <h1 class="slide-h1">What Our <span class="accent">Customers Say</span></h1>
-  <p class="slide-lead">Real customers, real savings, real experiences.</p>
-  <div class="reviews-grid">${html}</div>
+  <div class="slide-eyebrow"><i class="fas fa-star"></i> Customer Reviews</div>
+  <h1 class="slide-h1">Don't just take <span class="accent">our word for it</span></h1>
+  <p class="slide-lead">Thousands of local homeowners have trusted us with their homes.</p>
+  ${platformCards}
+  ${reviewCards ? `<div class="reviews-grid">${reviewCards}</div>` : ''}
 </div>`;
   },
 
   /* ============================================================
-     VIDEOS
+     INSTALLS NEAR YOU
      ============================================================ */
-  async renderVideos() {
-    const active = AppState.getModuleItems('videos').filter(v => v.is_active && v.meta2);
-
-    if (!active.length) {
-      return `
-<div class="slide" id="slide-videos">
-  <div class="slide-eyebrow green"><i class="fas fa-play-circle"></i> Videos</div>
-  <h1 class="slide-h1">See Solar <span class="accent">In Action</span></h1>
-  <p class="slide-lead">Watch real customer testimonials and installation walkthroughs.</p>
-  <div class="placeholder-center">
-    <div class="ph-icon green"><i class="fas fa-play-circle"></i></div>
-    <h2>Videos Coming Soon</h2>
-    <p>Add YouTube or Vimeo URLs in the Admin panel to display testimonials and explainers here.</p>
-  </div>
+  renderInstallsMap() {
+    const mapUrl = AppState.getSettingStr('installs_map.embed_url', '');
+    return `
+<div class="slide" id="slide-installs-map">
+  <div class="slide-eyebrow green"><i class="fas fa-map-location-dot"></i> Local Work</div>
+  <h1 class="slide-h1">We've been busy <span class="accent">in your area</span></h1>
+  <p class="slide-lead">See where we have recently fitted windows and doors near you.</p>
+  <p style="font-size:0.87rem;color:var(--text-soft);margin-bottom:1.25rem;">We work right across Surrey, Hampshire and Berkshire, so chances are we have already transformed a home not far from yours.</p>
+  ${mapUrl ? `
+  <div style="position:relative;width:100%;height:500px;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);">
+    <iframe src="${mapUrl}" title="Installs Near You" style="width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe>
+  </div>` : `
+  <div style="background:var(--bg-card);border:2px dashed var(--border);border-radius:var(--r-lg);padding:3rem;text-align:center;">
+    <i class="fas fa-map" style="font-size:2.5rem;opacity:0.3;margin-bottom:1rem;display:block;"></i>
+    <p style="color:var(--text-soft);">Map embed URL not yet configured in settings.</p>
+  </div>`}
 </div>`;
-    }
+  },
 
-    const html = active.map(v => {
-      const url = Modules._embedUrl(v.meta2);
-      return `
-        <div style="margin-bottom:1.5rem;">
-          <h3 style="margin-bottom:0.75rem;">${escHtml(v.title)}</h3>
-          <div style="position:relative;padding-bottom:56.25%;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-md);">
-            <iframe src="${url}" frameborder="0" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;"></iframe>
-          </div>
+  /* ============================================================
+     SECURE LIVING WARRANTY
+     ============================================================ */
+  async renderSecureLiving() {
+    const items = AppState.getModuleItems('secure_living');
+    const payouts = items.filter((_, i) => i > 0);
+    const intro = items[0] || { body: 'A free security guarantee that pays you directly if your home is broken into due to a failure of approved window or door hardware. Up to £5,000 of total cover.' };
+
+    const payoutCards = payouts.length ? payouts.map(p => `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--green);margin-bottom:0.35rem;">${escHtml(p.meta1 || '')}</div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">${escHtml(p.title)}</div>
+        <div style="font-size:0.78rem;color:var(--text-soft);">${escHtml(p.body)}</div>
+      </div>`).join('') :
+      ['Emergency Boarding Up — Up to £1,000','Repair or Replace — Up to £1,500','Insurance Excess — Up to £1,500','Goodwill Payment — £1,000'].map(t => {
+        const [label, val] = t.split(' — ');
+        return `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
+          <div style="font-size:1.4rem;font-weight:800;color:var(--green);margin-bottom:0.35rem;">${val}</div>
+          <div style="font-weight:700;font-size:0.85rem;">${label}</div>
         </div>`;
-    }).join('');
+      }).join('');
 
     return `
-<div class="slide" id="slide-videos">
-  <div class="slide-eyebrow green"><i class="fas fa-play-circle"></i> Videos</div>
-  <h1 class="slide-h1">See Solar <span class="accent">In Action</span></h1>
-  <p class="slide-lead">Watch real customer testimonials and installation walkthroughs.</p>
-  <div style="max-width:760px;">${html}</div>
-</div>`;
-  },
-
-  _embedUrl(url) {
-    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/);
-    if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
-    const vm = url.match(/vimeo\.com\/(\d+)/);
-    if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
-    return url;
-  },
-
-  /* ============================================================
-     NEXT STEPS
-     ============================================================ */
-  renderNextSteps(inputs) {
-    const vals    = inputs || Calculator.getDefaultInputs();
-    const results = Calculator.compute(vals);
-    const fmt     = Calculator.format(results);
-
-    return `
-<div class="slide" id="slide-next-steps">
-  <div class="slide-eyebrow"><i class="fas fa-rocket"></i> Closing the Consultation</div>
-  <h1 class="slide-h1">What's <span class="accent">Next</span></h1>
-
-  <div class="next-steps-grid">
-    <!-- Projection -->
+<div class="slide" id="slide-secure-living">
+  <div class="slide-eyebrow green"><i class="fas fa-shield"></i> Security Guarantee</div>
+  <h1 class="slide-h1">Security, <span class="accent">guaranteed</span></h1>
+  <p class="slide-lead">A free warranty that pays you directly, for genuine peace of mind.</p>
+  <div style="background:var(--green);border-radius:var(--r-md);padding:1.25rem 1.5rem;color:#fff;margin-bottom:1.5rem;display:flex;gap:1rem;align-items:flex-start;">
+    <i class="fas fa-shield" style="font-size:2rem;flex-shrink:0;margin-top:0.2rem;"></i>
     <div>
-      <p style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-soft);margin-bottom:0.65rem;">
-        <i class="fas fa-chart-line" style="color:var(--green);"></i> YOUR PROJECTION
-      </p>
-      <div class="ns-projection">
-        <div class="ns-proj-lbl">ESTIMATED 1ST YEAR SAVINGS</div>
-        <div class="ns-proj-val" id="ns-saving">${fmt.totalAnnualSaving}</div>
-        <div class="ns-proj-note">*Based on proposed system &amp; usage</div>
-        <div class="ns-proj-stats">
-          <div><div class="ns-stat-val" id="ns-payback">${results.paybackYears || 'N/A'}</div><div class="ns-stat-lbl">Years Payback</div></div>
-          <div><div class="ns-stat-val" id="ns-25yr">${fmt.savings25yr}</div><div class="ns-stat-lbl">25yr Savings</div></div>
-        </div>
-      </div>
-      <div class="ns-size-bar">
-        <div style="display:flex;align-items:center;gap:0.5rem;">
-          <i class="fas fa-solar-panel" style="color:var(--orange);"></i>
-          <span style="font-size:0.8rem;font-weight:600;color:var(--text-soft);">System Size · Proposed Capacity</span>
-        </div>
-        <span class="ns-size-val" id="ns-size">${vals.arraySize} kWp</span>
-      </div>
+      <div style="font-weight:700;margin-bottom:0.35rem;">Up to £5,000 of total cover — included at no extra cost</div>
+      <p style="font-size:0.85rem;opacity:0.9;">${escHtml(intro.body)}</p>
     </div>
-
-    <!-- Next Steps -->
-    <div>
-      <p style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-soft);margin-bottom:0.65rem;">
-        Next Steps
-      </p>
-      <div class="ns-panel">
-        <div class="now-section">
-          <div class="now-item"><i class="fas fa-check-circle"></i><div><strong>Survey solar panel options</strong></div></div>
-          <div class="now-item"><i class="fas fa-check-circle"></i><div><strong>Build quote</strong></div></div>
-          <div class="now-item"><i class="fas fa-check-circle"></i><div><strong>Provide timelines</strong></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Start Proposal -->
-    <div>
-      <p style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-soft);margin-bottom:0.65rem;">
-        <i class="fas fa-arrow-right" style="color:var(--green);"></i> NEXT STEPS
-      </p>
-      <div class="slot-panel">
-        <div class="slot-icon"><i class="fas fa-file-signature"></i></div>
-        <h3>Ready to build the proposal?</h3>
-        <p>Open OpenSolar to survey options, build the quote and provide timelines.</p>
-        <a href="https://app.opensolar.com/login" target="_blank" rel="noopener" class="btn-book">Start Proposal →</a>
-        <div class="slot-contact">
-          <div style="font-size:0.68rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem;">Have more questions?</div>
-          <a href="tel:01344777515" class="slot-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:0.3rem;"></i> 01344 777515</a>
-          <div class="slot-web">www.threecountiessolar.com</div>
-        </div>
-      </div>
-      <div class="cert-chips" style='display:flex;gap:0.65rem;flex-wrap:wrap;margin-top:0.75rem;justify-content:center;align-items:center;'>
-        <img src='MCS-LOGO.png' alt='MCS Certified' style='height:40px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
-        <img src='RECC-LOGO.png' alt='RECC Member' style='height:40px;object-fit:contain;background:white;padding:4px;border-radius:6px;'>
-        <img src='NIC-EIC-.png' alt='NIC EIC Approved' style='height:40px;object-fit:contain;background:#1a5c38;padding:6px;border-radius:6px;'>
-      </div>
-    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;">${payoutCards}</div>
+  <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.25rem;font-size:0.8rem;color:var(--text-soft);">
+    <strong><i class="fas fa-info-circle"></i> Hardware Partners:</strong> Backed by industry-leading hardware from Avantis, VBH and Yale. Terms and conditions apply.
   </div>
 </div>`;
   },
 
   /* ============================================================
-     EV CHARGING
+     FINANCE OPTIONS
      ============================================================ */
-  renderEvCharging() {
-    const gs = (key, fallback) => {
-      const s = AppState.settings['ev_' + key];
-      return (s && s.setting_value) ? s.setting_value : fallback;
-    };
-
-    const eyebrow  = gs('eyebrow',  'EV Charging');
-    const heading  = gs('heading',  'Future Proof with EV Charging');
-    const intro    = gs('intro',    'Adding an EV charger alongside your solar installation is a smart way to make the most of your home energy setup. Even if you do not need one right away, it can help futureproof your property, improve convenience, and put you in a stronger position for EV-friendly energy tariffs.');
-    const heroImg  = gs('image',    'ev-charging.jpg');
-    const spotlight = gs('spotlight', 'Future-ready homes stand out: adding an EV charger at the same time as solar can be a more cost-effective way to upgrade your property, while also opening up access to more EV-friendly tariff options.');
-
-    const rawBody = gs('body',
-      'If you already own an electric vehicle, or think you may in the future, it often makes sense to plan for EV charging at the same time as your solar installation. Combining the two creates a more joined-up home energy setup — easier to generate, store and use your own electricity.\n\nInstalling a charger alongside solar is also more cost-effective than returning to do it separately. Even if you don\'t have an EV yet, adding a charger now helps futureproof your home, adds practical appeal, and keeps your options open as electric vehicles become more common.\n\nWhen paired with solar, EV charging opens the door to smarter tariffs, better energy control, and a more efficient home setup — rather than just a standalone add-on.'
-    );
-    const bodyHTML = rawBody.split(/\n\n+/).map(p =>
-      `<p style="font-size:0.87rem;color:var(--text-soft);line-height:1.75;margin-bottom:1rem;">${escHtml(p.trim())}</p>`
-    ).join('');
-
-    const storedFaqs = AppState.getModuleItems('ev_charging');
-    const faqs = storedFaqs.length > 0 ? storedFaqs : [
-      { title: 'Can I add an EV charger as part of my solar installation?',  body: 'Yes. If it is done at the same time, it can usually be added as part of the wider project, making the whole installation more efficient and often more cost-effective than coming back to do it later.' },
-      { title: 'Do you install EV chargers yourselves?',                      body: 'Yes, EV chargers are part of the service and can be included alongside your solar installation as a natural extension of the overall home energy setup.' },
-      { title: 'What EV charger brand do you use?',                          body: 'We use Fox ESS chargers as part of our EV charging offering.' },
-      { title: 'I do not have an EV yet. Is it still worth considering?',    body: 'Yes. Even without an immediate need, installing an EV charger can help futureproof your home, add practical value, and prepare the property for changing lifestyles, future vehicle choices, and more flexible energy use.' }
-    ];
-
-    const faqIcons = ['fa-car-battery', 'fa-plug', 'fa-certificate', 'fa-bolt'];
-    const faqHTML = faqs.map((f, i) => `
-      <div class="faq-card${i === 0 ? ' open' : ''}" data-ev-faq-index="${i}" onclick="evFaqToggle(this, ${i})">
-        <div class="faq-q">
-          <div class="faq-q-left">
-            <div class="faq-icon-box"><i class="fas ${faqIcons[i % faqIcons.length]}"></i></div>
-            <div class="faq-q-text">${escHtml(f.title)}</div>
-          </div>
-          <i class="fas fa-chevron-down faq-chevron"></i>
-        </div>
-        <div class="faq-answer">${escHtml(f.body)}</div>
-      </div>`).join('');
-
-    const heroHTML = heroImg ? `
-  <div style="width:100%;margin-bottom:1.75rem;">
-    <img src="${escHtml(heroImg)}" alt="EV charger being plugged into a car"
-      style="width:100%;height:320px;object-fit:cover;display:block;border-radius:var(--r-md);box-shadow:var(--shadow-md);" />
-  </div>` : '';
+  renderFinance() {
+    const disclaimer = AppState.getSettingStr('finance.disclaimer', 'Illustration only. This is not a quote or an offer of credit. Finance subject to status and affordability.');
+    const fcaLine    = AppState.getSettingStr('finance.fca_line',   '3 Counties (Sandhurst) Ltd, FRN 727419, is authorised and regulated by the Financial Conduct Authority. We are a credit broker, not a lender. Credit is provided by Mitsubishi HC Capital UK PLC (Novuna).');
 
     return `
-<div class="slide" id="slide-ev-charging">
-  <div class="slide-eyebrow"><i class="fas fa-car-battery"></i> ${escHtml(eyebrow)}</div>
-  <h1 class="slide-h1"><span class="accent">Future Proof</span> with EV Charging</h1>
-  <p class="slide-lead">${escHtml(intro)}</p>
+<div class="slide" id="slide-finance">
+  <div class="slide-eyebrow green"><i class="fas fa-sterling-sign"></i> Finance Options</div>
+  <h1 class="slide-h1">Spread the cost, <span class="accent">your way</span></h1>
+  <p class="slide-lead">Flexible finance to suit your budget, including interest-free credit.</p>
 
-  ${heroHTML}
-
-  <div class="ev-body-layout">
-    <div class="ev-body-left">
-      ${bodyHTML}
-      <div class="ev-spotlight">
-        <p>${escHtml(spotlight)}</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;">
+    <!-- BNPL -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-soft);margin-bottom:0.5rem;">Available on all products</div>
+      <h3 style="margin-bottom:1rem;">Buy Now Pay Later</h3>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> Buy now, pay within 12 months</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> No interest if paid in full within 12 months</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> A £29 fee applies on settlement</div>
       </div>
     </div>
-    <div class="ev-faq-col" id="ev-faqs-grid">
-      ${faqHTML}
+    <!-- IFC -->
+    <div style="background:var(--green);border:1px solid var(--green);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-md);color:#fff;position:relative;">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:0.7rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;">Eco+ Only</div>
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;opacity:0.8;margin-bottom:0.5rem;">Eco+ window range</div>
+      <h3 style="margin-bottom:1rem;">Interest Free Credit</h3>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> Spread over 2, 3, 4 or 5 years</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> 0% interest</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> Only available on Eco+ range</div>
+      </div>
     </div>
+  </div>
+
+  <!-- Illustrative Calculator -->
+  <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);margin-bottom:1.25rem;">
+    <h3 style="margin-bottom:1rem;"><i class="fas fa-calculator" style="color:var(--orange);margin-right:0.4rem;"></i> Illustrative Monthly Figure</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div class="form-grp">
+        <label class="form-lbl">Project Total (£)</label>
+        <div class="input-wrap">
+          <input type="number" id="fin-total" class="form-inp" value="5000" min="500" max="100000" step="100" oninput="Modules.calcFinance()" />
+          <span class="inp-sfx">£</span>
+        </div>
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl">Finance Term</label>
+        <div class="input-wrap">
+          <select id="fin-term" class="form-inp" onchange="Modules.calcFinance()">
+            <option value="bnpl">Buy Now Pay Later (12 months)</option>
+            <option value="2">Interest Free — 2 years (Eco+ only)</option>
+            <option value="3">Interest Free — 3 years (Eco+ only)</option>
+            <option value="4">Interest Free — 4 years (Eco+ only)</option>
+            <option value="5">Interest Free — 5 years (Eco+ only)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="fin-result" style="background:var(--green-light);border-radius:var(--r-md);padding:1rem;text-align:center;">
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft);margin-bottom:0.35rem;">Illustrative Monthly Payment</div>
+      <div id="fin-monthly" style="font-size:2rem;font-weight:800;color:var(--green);">—</div>
+      <div id="fin-note" style="font-size:0.75rem;color:var(--text-soft);margin-top:0.25rem;"></div>
+    </div>
+  </div>
+
+  <div class="calc-disclaimer">
+    <i class="fas fa-circle-info"></i>
+    <span>${escHtml(disclaimer)} ${escHtml(fcaLine)}</span>
   </div>
 </div>`;
   },
 
+  calcFinance() {
+    const total = parseFloat(document.getElementById('fin-total')?.value) || 0;
+    const term  = document.getElementById('fin-term')?.value;
+    const monthly = document.getElementById('fin-monthly');
+    const note    = document.getElementById('fin-note');
+    if (!monthly || !note) return;
+
+    if (!total) { monthly.textContent = '—'; note.textContent = ''; return; }
+
+    if (term === 'bnpl') {
+      monthly.textContent = `£${(total / 12).toFixed(2)}`;
+      note.textContent = `Pay £${total.toFixed(2)} within 12 months. £29 settlement fee applies.`;
+    } else {
+      const months = parseInt(term) * 12;
+      monthly.textContent = `£${(total / months).toFixed(2)}`;
+      note.textContent = `0% interest over ${term} years (${months} months). Eco+ range only.`;
+    }
+  },
+
   /* ============================================================
-     MOVING HOUSE
+     GET YOUR QUOTE (Close screen)
      ============================================================ */
-  renderMovingHouse() {
-    const gs = (key, fallback) => {
-      const s = AppState.settings['mh_' + key];
-      return (s && s.setting_value) ? s.setting_value : fallback;
-    };
-
-    const eyebrow   = gs('eyebrow',   'Moving House');
-    const heading   = gs('heading',   'Moving House? Solar Still Makes Sense');
-    const intro     = gs('intro',     'Planning to move in the next few years does not automatically make solar a bad investment. In many cases, it can strengthen your home\'s appeal, improve energy performance, and give future buyers one more reason to choose your property. Energy Performance Certificates are a legal part of the sales process in England and Wales, and stronger energy efficiency credentials can help a home stand out. Rightmove\'s research has also found a measurable green premium for homes that improve their EPC rating.');
-    const heroImg   = gs('image',     'moving-house.jpg');
-    const spotlight = gs('spotlight',  'Did you know? A home improving from an EPC rating of D to C could see an average value increase of around 3%, while homes moving from F to C showed a much larger average uplift in Rightmove\'s analysis of 300,000 properties.');
-
-    const rawBody = gs('body',
-      'If moving house is on your mind, solar should be seen as an asset, not a burden. Buyers are increasingly aware of energy bills, running costs, and overall home efficiency, so having solar already installed can become a real selling point rather than an obstacle. Rightmove reports that homes improving from an EPC rating of D to C could see an average value uplift of 3%, with bigger gains possible where the improvement is more significant.\n\nSolar can also help your home feel more future-ready. A better EPC, lower running costs, and visible renewable technology can all add to buyer confidence. Rightmove\'s more recent reporting also shows that energy efficiency has a growing influence on moving decisions, with many home-movers and renters willing to pay more for efficient homes.\n\nFrom a practical point of view, documentation does not usually need to become a sticking point either. EPCs stay with the property for up to 10 years unless replaced, and MCS certification is linked to the installation rather than only the original homeowner, so records can still support the sale process for the next owner.'
-    );
-    const bodyHTML = rawBody.split(/\n\n+/).map((p, idx) => {
-      const paragraph = `<p style="font-size:0.87rem;color:var(--text-soft);line-height:1.75;margin-bottom:1rem;">${escHtml(p.trim())}</p>`;
-      if (idx === 2 && p.includes('MCS certification')) {
-        return paragraph + `<div style='margin:1rem 0;'><img src='MCS-LOGO.png' alt='MCS Certified' style='height:60px;object-fit:contain;background:#1a5c38;padding:8px;border-radius:6px;' /></div>`;
-      }
-      return paragraph;
-    }).join('');
-
-    const storedFaqs = AppState.getModuleItems('moving_house');
-    const faqs = storedFaqs.length > 0 ? storedFaqs : [
-      { title: 'I might move in a few years. Is solar still worth it?',
-        body:  'Yes, it often is. Solar can reduce your energy bills while you are living in the property, and it may also improve buyer appeal when it comes time to sell. Homes with stronger EPC performance and visible energy-saving features are increasingly attractive to buyers.' },
-      { title: 'Does solar add value to a property?',
-        body:  'It can. The amount varies by property, location, and EPC improvement, but Rightmove found that homes improving from a D to C EPC rating could see an average uplift of 3%, with larger gains where efficiency improvements are greater.' },
-      { title: 'Will solar help my home sell faster?',
-        body:  'There is no guaranteed rule for speed of sale, but solar can make a property more appealing because buyers are paying closer attention to energy efficiency, future bills, and green upgrades. That can help your home stand out more clearly against similar properties.' },
-      { title: 'Can the warranties and paperwork transfer to the new owner?',
-        body:  'In most cases, the key documentation can continue to support the new owner, but the exact transfer process depends on the product warranty terms. MCS certification is recorded against the installation, and details can be updated where needed.' },
-      { title: 'Does solar improve my EPC rating?',
-        body:  'It can contribute to a better EPC rating, depending on the property and its overall energy performance. Because EPCs are part of the selling process, an improved rating can become a useful point in your favour when marketing the home.' },
-      { title: 'What is the main message if I am worried solar will tie me to the property?',
-        body:  'The key message is that solar is usually an upgrade to the home, not a reason to delay moving. You benefit from lower running costs while you live there, and the next buyer may see added value in the energy savings, EPC performance, and future-ready setup.' }
-    ];
-
-    const faqIcons = ['fa-house-chimney-crack', 'fa-sterling-sign', 'fa-clock', 'fa-file-contract', 'fa-leaf', 'fa-lightbulb'];
-    const faqHTML = faqs.map((f, i) => `
-      <div class="faq-card${i === 0 ? ' open' : ''}" onclick="mhFaqToggle(this, ${i})">
-        <div class="faq-q">
-          <div class="faq-q-left">
-            <div class="faq-icon-box"><i class="fas ${faqIcons[i % faqIcons.length]}"></i></div>
-            <div class="faq-q-text">${escHtml(f.title)}</div>
-          </div>
-          <i class="fas fa-chevron-down faq-chevron"></i>
-        </div>
-        <div class="faq-answer">${escHtml(f.body)}</div>
-      </div>`).join('');
-
-    const heroHTML = heroImg ? `
-  <div style="width:100%;margin:1.25rem 0 1.75rem;">
-    <img src="${escHtml(heroImg)}" alt="House with solar panels"
-      style="width:100%;height:320px;object-fit:cover;display:block;border-radius:var(--r-md);box-shadow:var(--shadow-md);" />
-  </div>` : '';
+  renderGetQuote() {
+    const quoteUrl = AppState.getSettingStr('tommy_trinder.url', '');
+    const hasUrl   = quoteUrl && !quoteUrl.startsWith('CONFIRM');
 
     return `
-<div class="slide" id="slide-moving-house">
-  <div class="mh-layout">
-
-    <!-- LEFT COLUMN -->
-    <div class="mh-left">
-      <div class="slide-eyebrow"><i class="fas fa-house-chimney-crack"></i> ${escHtml(eyebrow)}</div>
-      <h1 class="slide-h1">Moving House? <span class="accent">Solar Still Makes Sense</span></h1>
-      <p class="slide-lead">${escHtml(intro)}</p>
-      ${heroHTML}
-      ${bodyHTML}
-      <div class="ev-spotlight">
-        <p>${escHtml(spotlight)}</p>
-      </div>
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div class="mh-faq-col">
-      ${faqHTML}
-      <div style="margin-top:1.25rem;">
-        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft);margin-bottom:0.5rem;">Further Reading</div>
-        <div style="display:flex;flex-direction:column;gap:0.4rem;">
-          <a href="https://www.rightmove.co.uk/news/articles/property-news/green-premium-epc-ratings/" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:0.35rem;"><i class="fas fa-external-link-alt"></i> Rightmove — Green Premium &amp; EPC Ratings</a>
-          <a href="https://www.bettermove.co.uk/blog/increase-home-value-with-residential-solar-panels/#going-green-attracts-buyers" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:0.35rem;"><i class="fas fa-external-link-alt"></i> BetterMove — Solar &amp; Home Value</a>
-          <a href="https://www.gov.uk/find-energy-certificate" target="_blank" rel="noopener" style="font-size:0.8rem;color:var(--green);text-decoration:none;display:flex;align-items:center;gap:0.35rem;"><i class="fas fa-external-link-alt"></i> GOV.UK — Find an Energy Certificate</a>
-        </div>
-      </div>
-    </div>
-
+<div class="slide" id="slide-get-quote" style="text-align:center;">
+  <div class="slide-eyebrow"><i class="fas fa-rocket"></i> Next Steps</div>
+  <h1 class="slide-h1">Ready for your free, <span class="accent">no-obligation quote?</span></h1>
+  <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">No pressure, no hard sell. Just an honest price for the right windows.</p>
+  <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">Build your quote now and we will talk you through it. There is no obligation, and the decision is always yours.</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-bottom:2rem;">
+    ${hasUrl ? `
+    <a href="${quoteUrl}" target="_blank" rel="noopener" class="btn-book" style="font-size:1rem;padding:1rem 2.5rem;">
+      Start my quote <i class="fas fa-arrow-right"></i>
+    </a>` : `
+    <button class="btn-book" style="font-size:1rem;padding:1rem 2.5rem;opacity:0.6;cursor:not-allowed;">
+      Start my quote <i class="fas fa-arrow-right"></i>
+    </button>
+    <p style="font-size:0.75rem;color:var(--text-soft);">Quoting tool URL to be confirmed.</p>`}
+    <a href="tel:01344777515" class="btn-secondary" style="font-size:0.9rem;">
+      <i class="fas fa-phone"></i> Or call us: 01344 777515
+    </a>
+  </div>
+  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-lock"></i> Secure Living Warranty</div>
   </div>
 </div>`;
   },
@@ -759,17 +492,17 @@ const Modules = {
      ============================================================ */
   async renderModule(moduleId, inputs, isReadOnly) {
     switch (moduleId) {
-      case 'calculator':           return Modules.renderCalculator(inputs, isReadOnly);
-      case 'how_solar_works':      return await Modules.renderHowSolarWorks();
-      case 'installation_journey': return await Modules.renderInstallationJourney();
-      case 'tariffs':              return await Modules.renderTariffs();
-      case 'faqs':                 return await Modules.renderFAQs();
-      case 'why_choose_us':        return await Modules.renderWhyChooseUs();
-      case 'reviews':              return await Modules.renderReviews();
-      case 'videos':               return await Modules.renderVideos();
-      case 'next_steps':           return Modules.renderNextSteps(inputs);
-      case 'ev_charging':          return Modules.renderEvCharging();
-      case 'moving_house':         return Modules.renderMovingHouse();
+      case 'welcome':        return Modules.renderWelcome();
+      case 'priorities':     return Modules.renderPriorities();
+      case 'eco_vs_eco_plus':return await Modules.renderEcoComparison();
+      case 'gallery':        return await Modules.renderGallery();
+      case 'door_builder':   return Modules.renderEmbeddedTool('door_builder');
+      case 'why_choose':     return await Modules.renderWhyChoose();
+      case 'reviews':        return await Modules.renderReviews();
+      case 'installs_map':   return Modules.renderInstallsMap();
+      case 'secure_living':  return await Modules.renderSecureLiving();
+      case 'finance':        return Modules.renderFinance();
+      case 'get_quote':      return Modules.renderGetQuote();
       default: return `<div class="slide"><h2>Unknown module: ${moduleId}</h2></div>`;
     }
   }

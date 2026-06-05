@@ -312,7 +312,7 @@ const Presentation = {
     inner.innerHTML = `
       <div class="pres-bar" style="position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);">
         <div class="pres-bar-left">
-          <img src="images/logo.png" alt="Three Counties Solar" class="pres-bar-logo" />
+          <img src="logo.png" alt="Three Counties" class="pres-bar-logo" style="mix-blend-mode:multiply;" />
           <span class="pres-bar-name">${escHtml(deckName)}</span>
         </div>
         <div class="pres-bar-center">

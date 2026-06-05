@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Three Counties Solar — Sales Navigator</title>
+  <title>Three Counties — Windows Sales Navigator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=20260325" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <div id="app">
@@ -16,19 +16,19 @@
   <div id="view-home" class="view active">
     <div class="home-wrap">
       <div class="home-topbar">
-        <span class="home-topbar-pill"><i class="fas fa-solar-panel"></i> Solar Panel Specialists</span>
+        <span class="home-topbar-pill"><i class="fas fa-window-maximize"></i> Windows &amp; Doors Specialists</span>
         <span><i class="fas fa-phone"></i> 01344 777515</span>
-        <span>www.threecountiessolar.com</span>
+        <span>www.threecounties.co.uk</span>
       </div>
       <div class="home-hero">
-        <img src="logo.png" alt="Three Counties Solar" class="home-logo" />
-        <h1 class="home-title">Solar Sales <span>Navigator</span></h1>
-        <p class="home-subtitle">The guided consultation tool for Three Counties Solar advisors. Build a personalised presentation deck, run it live, and share with your customer.</p>
+        <img src="logo.png" alt="Three Counties" class="home-logo" />
+        <h1 class="home-title">Windows Sales <span>Navigator</span></h1>
+        <p class="home-subtitle">The guided consultation tool for Three Counties advisors. Build a personalised presentation deck, run it live, and share with your customer.</p>
         <div class="home-grid" id="home-module-grid">
           <div class="home-action-card" onclick="App.startNewDeck()">
             <div class="home-card-icon orange"><i class="fas fa-layer-group"></i></div>
             <div class="home-card-name">Build New Deck</div>
-            <div class="home-card-sub">Choose & order modules</div>
+            <div class="home-card-sub">Choose &amp; order modules</div>
             <i class="fas fa-arrow-right home-card-arrow"></i>
           </div>
           <div class="home-action-card" onclick="App.toggleDecksPanel()">
@@ -40,19 +40,19 @@
           <div class="home-action-card" onclick="App.showView('proof-hub')">
             <div class="home-card-icon green-outline"><i class="fas fa-star"></i></div>
             <div class="home-card-name">Customer Proof Hub</div>
-            <div class="home-card-sub">Reviews & credentials</div>
+            <div class="home-card-sub">Reviews &amp; credentials</div>
             <i class="fas fa-arrow-right home-card-arrow"></i>
           </div>
           <div class="home-action-card" onclick="App.showAdmin()">
             <div class="home-card-icon orange-outline"><i class="fas fa-lock"></i></div>
             <div class="home-card-name">Admin Panel</div>
-            <div class="home-card-sub">Edit content & settings</div>
+            <div class="home-card-sub">Edit content &amp; settings</div>
             <i class="fas fa-arrow-right home-card-arrow"></i>
           </div>
         </div>
       </div>
       <div class="home-footer">
-        <span><i class="fas fa-globe"></i> www.threecountiessolar.com</span>
+        <span><i class="fas fa-globe"></i> www.threecounties.co.uk</span>
         <span><i class="fas fa-phone"></i> 01344 777515</span>
         <span><i class="fas fa-map-marker-alt"></i> Surrey · Berkshire · Hampshire</span>
       </div>
@@ -78,17 +78,17 @@
         <button class="back-nav-btn" onclick="App.goBack('builder')" title="Back to Home">
           <i class="fas fa-arrow-left"></i> Home
         </button>
-        <img src="logo.png" alt="Three Counties Solar" class="builder-logo" />
+        <img src="logo.png" alt="Three Counties" class="builder-logo" />
         <h1 class="builder-title">Build Customer Deck</h1>
         <input type="text" id="deck-name-input" class="deck-name-input"
           placeholder="Customer name / deck title — e.g. Smith Family Quote" />
       </div>
       <div class="presets-bar">
         <span class="presets-label">Quick start:</span>
-        <button class="preset-pill" data-preset="savings">💰 Savings Focus</button>
-        <button class="preset-pill" data-preset="battery">🔋 Battery + Tariff</button>
+        <button class="preset-pill" data-preset="security">🛡️ Security Focus</button>
+        <button class="preset-pill" data-preset="thermal">🌡️ Thermal &amp; Finance</button>
+        <button class="preset-pill" data-preset="aesthetics">✨ Aesthetics Focus</button>
         <button class="preset-pill" data-preset="trust">🤝 Trust Builder</button>
-        <button class="preset-pill" data-preset="ev">⚡ EV Owner</button>
         <button class="preset-pill" data-preset="all">✅ Full Deck</button>
         <button class="preset-pill preset-clear" id="btn-clear-all">✕ Clear</button>
       </div>
@@ -102,7 +102,7 @@
       </div>
       <div class="builder-footer">
         <div class="builder-footer-left">
-          <span class="footer-site">www.threecountiessolar.com</span>
+          <span class="footer-site">www.threecounties.co.uk</span>
           <span class="footer-phone">01344 777515</span>
         </div>
         <div style="display:flex;gap:0.65rem;align-items:center;">
@@ -124,7 +124,7 @@
           <button class="back-nav-btn back-nav-btn--pres" onclick="App.goBack('presentation')" title="Back to Builder">
             <i class="fas fa-arrow-left"></i> Back
           </button>
-          <img src="logo.png" alt="Three Counties Solar" class="pres-bar-logo" />
+          <img src="logo.png" alt="Three Counties" class="pres-bar-logo" />
           <span class="pres-bar-name" id="pres-deck-name"></span>
         </div>
         <div class="pres-bar-center">
@@ -170,18 +170,17 @@
         <button class="back-nav-btn" onclick="App.goBack('proof-hub')" title="Back to Home">
           <i class="fas fa-arrow-left"></i> Home
         </button>
-        <img src="logo.png" alt="Three Counties Solar" style="height:44px;" />
+        <img src="logo.png" alt="Three Counties" style="height:44px;mix-blend-mode:multiply;" />
         <button class="icon-btn" onclick="App.showView('home')"><i class="fas fa-times"></i></button>
       </div>
       <div class="proof-hub-hero">
-        <h1>Explore Three Counties Solar</h1>
+        <h1>Explore Three Counties</h1>
         <p>Whilst your consultant prepares your personalised quote, browse who we are and what our customers say.</p>
       </div>
       <div class="proof-tabs">
         <button class="proof-tab active" data-tab="about">About Us</button>
         <button class="proof-tab" data-tab="reviews">Reviews</button>
         <button class="proof-tab" data-tab="accreditations">Accreditations</button>
-        <button class="proof-tab" data-tab="videos">Videos</button>
       </div>
       <div id="proof-hub-content" class="proof-content"></div>
     </div>
@@ -190,8 +189,8 @@
   <div id="view-admin" class="view">
     <div id="admin-login" class="admin-login-wrap">
       <div class="admin-login-box">
-        <img src="logo.png" alt="Three Counties Solar"
-          style="height:52px;margin-bottom:1.5rem;margin-left:auto;margin-right:auto;" />
+        <img src="logo.png" alt="Three Counties"
+          style="height:52px;margin-bottom:1.5rem;margin-left:auto;margin-right:auto;mix-blend-mode:multiply;" />
         <h2>Admin Access</h2>
         <p>Sign in with your admin account to continue.</p>
         <form onsubmit="event.preventDefault();App.adminLogin();" style="width:100%;">
@@ -200,7 +199,7 @@
               <i class="fas fa-envelope"></i> Email
             </label>
             <input type="email" id="admin-email-input" class="admin-login-input"
-              placeholder="admin@threecountiessolar.com"
+              placeholder="admin@threecounties.co.uk"
               autocomplete="username email" required />
           </div>
           <div class="admin-login-field">
@@ -250,7 +249,7 @@
                   <i class="fas fa-envelope"></i> Email address
                 </label>
                 <input type="email" id="forgot-pw-email" class="admin-login-input"
-                  placeholder="admin@threecountiessolar.com" autocomplete="email" />
+                  placeholder="admin@threecounties.co.uk" autocomplete="email" />
               </div>
               <div id="forgot-pw-error" class="pin-error hidden">
                 <i class="fas fa-exclamation-circle"></i>
@@ -279,37 +278,31 @@
             <i class="fas fa-arrow-left"></i> Back to Home
           </button>
           <div class="admin-sidebar-logo-row">
-            <img src="logo.png" alt="Three Counties Solar" style="height:32px;" />
+            <img src="logo.png" alt="Three Counties" style="height:32px;mix-blend-mode:multiply;" />
             <span class="admin-chip">Admin</span>
           </div>
         </div>
         <nav class="admin-nav">
-          <button class="admin-nav-btn active" data-section="calculator">
-            <i class="fas fa-calculator"></i> Calculator
-          </button>
-          <button class="admin-nav-btn" data-section="faqs">
-            <i class="fas fa-circle-question"></i> FAQs
+          <button class="admin-nav-btn active" data-section="why_choose">
+            <i class="fas fa-shield-halved"></i> Why Choose 3C
           </button>
           <button class="admin-nav-btn" data-section="reviews">
             <i class="fas fa-star"></i> Reviews
           </button>
-          <button class="admin-nav-btn" data-section="tariffs">
-            <i class="fas fa-bolt"></i> Tariffs
+          <button class="admin-nav-btn" data-section="secure_living">
+            <i class="fas fa-shield"></i> Secure Living
           </button>
-          <button class="admin-nav-btn" data-section="journey">
-            <i class="fas fa-road"></i> Journey
+          <button class="admin-nav-btn" data-section="eco_vs_eco_plus">
+            <i class="fas fa-leaf"></i> Eco vs Eco+
           </button>
-          <button class="admin-nav-btn" data-section="videos">
-            <i class="fas fa-play-circle"></i> Videos
+          <button class="admin-nav-btn" data-section="gallery">
+            <i class="fas fa-images"></i> Gallery
           </button>
-          <button class="admin-nav-btn" data-section="customer_hub">
-            <i class="fas fa-users"></i> Customer Hub
+          <button class="admin-nav-btn" data-section="finance">
+            <i class="fas fa-sterling-sign"></i> Finance
           </button>
-          <button class="admin-nav-btn" data-section="ev_charging_admin">
-            <i class="fas fa-car-battery"></i> EV Charging
-          </button>
-          <button class="admin-nav-btn" data-section="moving_house_admin">
-            <i class="fas fa-house-chimney-crack"></i> Moving House
+          <button class="admin-nav-btn" data-section="settings">
+            <i class="fas fa-cog"></i> Settings
           </button>
           <button class="admin-nav-btn" data-section="decks_admin">
             <i class="fas fa-folder"></i> Saved Decks
@@ -326,11 +319,11 @@
   <div id="view-customer" class="view">
     <div class="cust-banner">
       <div style="display:flex;align-items:center;gap:0.75rem;">
-        <i class="fas fa-solar-panel"></i>
-        <span id="customer-banner-text">Your personalised solar estimate</span>
+        <i class="fas fa-window-maximize"></i>
+        <span id="customer-banner-text">Your personalised windows quote</span>
       </div>
       <span class="cust-banner-contact" style="display:flex;align-items:center;gap:1rem;">
-        <i class="fas fa-phone"></i> 01344 777515 &nbsp;|&nbsp; www.threecountiessolar.com
+        <i class="fas fa-phone"></i> 01344 777515 &nbsp;|&nbsp; www.threecounties.co.uk
       </span>
     </div>
     <div id="view-customer-inner"></div>
@@ -349,12 +342,12 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="data.js?v=20260325"></script>
-<script src="calculator.js?v=20260325"></script>
-<script src="modules.js?v=20260325"></script>
-<script src="builder.js?v=20260325"></script>
-<script src="presentation.js?v=20260325"></script>
-<script src="admin.js?v=20260325"></script>
-<script src="app.js?v=20260325"></script>
+<script src="data.js"></script>
+<script src="calculator.js"></script>
+<script src="modules.js"></script>
+<script src="builder.js"></script>
+<script src="presentation.js"></script>
+<script src="admin.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

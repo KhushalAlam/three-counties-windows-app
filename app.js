@@ -654,7 +654,7 @@ const App = {
         document.body.innerHTML = `
           <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;
             flex-direction:column;gap:1rem;font-family:Inter,sans-serif;background:#F5F5F0;padding:2rem;text-align:center;">
-            <img src="logo.png" alt="Three Counties Solar" style="height:50px;" />
+            <img src="logo.png" alt="Three Counties" style="height:50px;mix-blend-mode:multiply;" />
             <h2 style="color:#E87722;font-size:1.3rem;">Deck Not Found</h2>
             <p style="color:#666;font-size:0.9rem;">This link may have expired or been removed.</p>
             <p style="color:#2D6A2F;font-weight:700;font-size:1rem;">📞 01344 777515</p>
