@@ -128,30 +128,13 @@ const Modules = {
   /* ============================================================
      GALLERY
      ============================================================ */
-  async renderGallery() {
-    const items = AppState.getModuleItems('gallery');
-    const galleryHTML = items.length ? items.map((img, i) => `
-      <div onclick="Modules.openLightbox(${i})" style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--shadow-sm);">
-        <img src="${escHtml(img.meta1 || img.body)}" alt="${escHtml(img.title)}"
-          style="width:100%;height:100%;object-fit:cover;transition:transform 0.2s;"
-          onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
-      </div>`).join('') :
-      `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-soft);">
-        <i class="fas fa-images" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:0.4;"></i>
-        <p>Gallery images will appear here once added in Admin.</p>
-      </div>`;
-
+  renderGallery() {
     return `
 <div class="slide" id="slide-gallery">
   <div class="slide-eyebrow green"><i class="fas fa-images"></i> Our Work</div>
   <h1 class="slide-h1">See what's <span class="accent">possible</span></h1>
   <p class="slide-lead">Real homes, real installs, right across Surrey, Hampshire and Berkshire.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.85rem;">${galleryHTML}</div>
-  <!-- Lightbox -->
-  <div id="gallery-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;align-items:center;justify-content:center;" onclick="Modules.closeLightbox()">
-    <img id="lightbox-img" src="" style="max-width:90vw;max-height:90vh;border-radius:var(--r-md);box-shadow:0 8px 40px rgba(0,0,0,0.5);" />
-    <button onclick="Modules.closeLightbox()" style="position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;">✕</button>
-  </div>
+  <img src="gallery.png" alt="Three Counties recent installations" style="width:100%;max-width:1100px;height:auto;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;margin:0 auto;">
 </div>`;
   },
 
