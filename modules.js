@@ -41,19 +41,31 @@ const Modules = {
     ];
     return `
 <div class="slide" id="slide-priorities">
-  <div class="slide-eyebrow green"><i class="fas fa-list-check"></i> Personalise Your Journey</div>
-  <h1 class="slide-h1">What <span class="accent">matters most</span> to you?</h1>
-  <p class="slide-lead">Tap the things that are important, and we will focus on those first.</p>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:640px;margin:0 auto;">
-    ${opts.map(o => `
-      <button class="priority-chip" data-priority="${o.key}" onclick="togglePriority('${o.key}')"
-        style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-md);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;">
-        <i class="fas ${o.icon}" style="font-size:1.8rem;color:var(--green);margin-bottom:0.65rem;display:block;"></i>
-        <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">${o.label}</div>
-        <div style="font-size:0.75rem;color:var(--text-soft);">${o.desc}</div>
-      </button>`).join('')}
+  <style>
+    .priority-chip.selected{border-color:var(--green)!important;background:var(--green-light)!important;}
+    @media(max-width:760px){#priorities-grid{grid-template-columns:1fr!important;}#priorities-img{order:1;min-height:220px!important;}}
+  </style>
+  <div id="priorities-grid" style="display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:stretch;max-width:1040px;margin:0 auto;">
+    <!-- LEFT -->
+    <div>
+      <div class="slide-eyebrow green"><i class="fas fa-list-check"></i> Personalise Your Journey</div>
+      <h1 class="slide-h1">What <span class="accent">matters most</span> to you?</h1>
+      <p class="slide-lead">Tap the things that are important, and we will focus on those first.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem;">
+        ${opts.map(o => `
+          <button class="priority-chip" data-priority="${o.key}" onclick="togglePriority('${o.key}')"
+            style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-md);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;">
+            <i class="fas ${o.icon}" style="font-size:1.8rem;color:var(--green);margin-bottom:0.65rem;display:block;"></i>
+            <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">${o.label}</div>
+            <div style="font-size:0.75rem;color:var(--text-soft);">${o.desc}</div>
+          </button>`).join('')}
+      </div>
+    </div>
+    <!-- RIGHT -->
+    <div id="priorities-img" style="border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);min-height:440px;">
+      <img src="priorities.png" alt="Three Counties home" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
   </div>
-  <style>.priority-chip.selected{border-color:var(--green)!important;background:var(--green-light)!important;}</style>
 </div>`;
   },
 
