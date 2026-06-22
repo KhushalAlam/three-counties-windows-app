@@ -42,6 +42,12 @@ const Presentation = {
 
     Presentation.currentIndex = index;
     container.innerHTML = Presentation.slides[index].html;
+    container.querySelectorAll('script').forEach(old => {
+      const s = document.createElement('script');
+      [...old.attributes].forEach(a => s.setAttribute(a.name, a.value));
+      s.text = old.text;
+      old.parentNode.replaceChild(s, old);
+    });
 
     // Reinitialise calculator events after DOM is ready
     if (Presentation.slides[index].id === 'calculator') {
@@ -385,6 +391,12 @@ const CustomerPresentation = {
     if (!container || !CustomerPresentation.slides[index]) return;
     CustomerPresentation.currentIndex = index;
     container.innerHTML = CustomerPresentation.slides[index].html;
+    container.querySelectorAll('script').forEach(old => {
+      const s = document.createElement('script');
+      [...old.attributes].forEach(a => s.setAttribute(a.name, a.value));
+      s.text = old.text;
+      old.parentNode.replaceChild(s, old);
+    });
 
     const pt = document.getElementById('cust-progress-text');
     if (pt) pt.textContent = `${index + 1} / ${CustomerPresentation.slides.length}`;
