@@ -163,8 +163,10 @@ const Modules = {
   <h1 class="slide-h1">Design your perfect <span class="accent">door</span></h1>
   <p class="slide-lead">Choose your style, colour and glass, then see it on your own home.</p>
   <p style="font-size:0.87rem;color:var(--text-soft);max-width:640px;margin:0 auto 1.25rem;line-height:1.7;">Use our door designer to build the exact look you want. When you've got it right, the <strong>Home Visualizer</strong> lets you upload a photo of your house and preview your new door in place — before you commit to anything.</p>
-  <div class="glazing-vault-wrap" style="min-height:70vh;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);background:var(--bg-card);">
-    <script type="text/javascript" id="salesManager2" src="//theglazingvault.com/sm2/cdn/dsi-5054-73a0e24341861f07fcfcb93d9af92a06.js"><\/script>
+  <div class="glazing-vault-wrap" style="width:100%;min-height:726px;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);background:var(--bg-card);">
+    <iframe src="https://www.theglazingvault.com/sm2/designer/create/5054/73a0e24341861f07fcfcb93d9af92a06"
+            title="Door Designer" loading="lazy" allow="fullscreen"
+            style="width:100%;height:726px;min-height:726px;border:0;display:block;"></iframe>
   </div>
 </div>`;
   },
