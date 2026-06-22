@@ -22,9 +22,9 @@ const Modules = {
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;width:100%;max-width:840px;margin:2rem auto 0;">
     <img src="welcome-1.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-2.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-3.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-4.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-2.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-3.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-4.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
   </div>
 </div>`;
   },
