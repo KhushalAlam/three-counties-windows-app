@@ -20,6 +20,12 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;width:100%;max-width:840px;margin:2rem auto 0;">
+    <img src="welcome-1.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-2.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-3.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    <img src="welcome-4.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+  </div>
 </div>`;
   },
 
