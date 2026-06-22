@@ -386,7 +386,8 @@ const Modules = {
       <p style="font-size:0.85rem;opacity:0.9;">${escHtml(intro.body)}</p>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem;">${payoutCards}</div>
+  <style>@media(max-width:720px){#secure-payouts{grid-template-columns:repeat(2,1fr)!important;}}</style>
+  <div id="secure-payouts" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-bottom:1.5rem;">${payoutCards}</div>
   <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.25rem;font-size:0.8rem;color:var(--text-soft);">
     <strong><i class="fas fa-info-circle"></i> Hardware Partners:</strong> Backed by industry-leading hardware from Avantis, VBH and Yale. Terms and conditions apply.
   </div>
