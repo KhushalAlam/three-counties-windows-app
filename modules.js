@@ -273,10 +273,10 @@ const Modules = {
     const platformCards = `
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
-          <a href="https://www.checkatrade.com/ThreeCountiesConservatoriesWindowsDoors/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+          <a href="https://www.checkatrade.com/trades/threecountiesconservatorieswindowsdoors1075774" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
             <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">9.8/10</div>
             <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Checkatrade</div>
-            <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,200+ reviews</div>
+            <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,500+ reviews</div>
             <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
           </a>
         </div>
@@ -322,7 +322,7 @@ const Modules = {
   </div>
   <div id="rev-track" style="display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:0.5rem;">${carouselCards}</div>` : ''}
   <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1.25rem;">
-    <a href="https://www.checkatrade.com/ThreeCountiesConservatoriesWindowsDoors/" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Checkatrade Reviews</a>
+    <a href="https://www.checkatrade.com/trades/threecountiesconservatorieswindowsdoors1075774" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Checkatrade Reviews</a>
     <a href="https://www.trustpilot.com/review/threecountiesltd.co.uk" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Trustpilot Reviews</a>
     <a href="https://www.google.com/search?q=Three+Counties+Conservatories+Windows+Doors+Camberley+reviews" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Google Reviews</a>
   </div>
