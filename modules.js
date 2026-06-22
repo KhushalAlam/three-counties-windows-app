@@ -298,15 +298,13 @@ const Modules = {
         </div>
       </div>`;
 
-    const reviewCards = reviews.filter(r => r.body && r.body.length > 10).map(r => `
-      <div class="rev-card">
-        <div class="rev-stars">${stars(r.meta2)}</div>
-        <div class="rev-title">${escHtml(r.title)}</div>
-        <div class="rev-body">"${escHtml(r.body)}"</div>
-        <div class="rev-footer">
-          <div class="rev-name">${escHtml(r.meta1 || '')}</div>
-          <div class="rev-loc">${escHtml(r.meta3 || '')}</div>
-        </div>
+    const carouselCards = reviews.filter(r => r.body && r.body.length > 10).map(r => `
+      <div class="rev-card" style="flex:0 0 300px;scroll-snap-align:start;">
+        <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--green);margin-bottom:0.4rem;">${escHtml(r.meta1 || '')}</div>
+        <div style="color:#f59e0b;font-size:0.9rem;margin-bottom:0.6rem;">${stars(r.meta2)}</div>
+        <div style="font-size:0.85rem;color:var(--text);font-style:italic;margin-bottom:0.75rem;line-height:1.6;">"${escHtml(r.body)}"</div>
+        <div style="font-weight:700;font-size:0.82rem;">${escHtml(r.title)}</div>
+        <div style="font-size:0.75rem;color:var(--text-soft);margin-top:0.15rem;">${escHtml(r.meta3 || '')}</div>
       </div>`).join('');
 
     return `
@@ -315,7 +313,19 @@ const Modules = {
   <h1 class="slide-h1">Don't just take <span class="accent">our word for it</span></h1>
   <p class="slide-lead">Thousands of local homeowners have trusted us with their homes.</p>
   ${platformCards}
-  ${reviewCards ? `<div class="reviews-grid">${reviewCards}</div>` : ''}
+  ${carouselCards ? `
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.5rem;margin-bottom:0.6rem;">
+    <button onclick="document.getElementById('rev-track').scrollBy({left:-330,behavior:'smooth'})"
+      style="width:36px;height:36px;border-radius:50%;border:2px solid var(--green);background:var(--green-light);color:var(--green);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8592;</button>
+    <button onclick="document.getElementById('rev-track').scrollBy({left:330,behavior:'smooth'})"
+      style="width:36px;height:36px;border-radius:50%;border:2px solid var(--green);background:var(--green-light);color:var(--green);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#8594;</button>
+  </div>
+  <div id="rev-track" style="display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:0.5rem;">${carouselCards}</div>` : ''}
+  <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1.25rem;">
+    <a href="https://www.checkatrade.com/ThreeCountiesConservatoriesWindowsDoors/" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Checkatrade Reviews</a>
+    <a href="https://www.trustpilot.com/review/threecountiesltd.co.uk" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Trustpilot Reviews</a>
+    <a href="https://www.google.com/search?q=Three+Counties+Conservatories+Windows+Doors+Camberley+reviews" target="_blank" rel="noopener" class="btn-secondary" style="font-size:0.82rem;"><i class="fas fa-star"></i> View All Google Reviews</a>
+  </div>
 </div>`;
   },
 
