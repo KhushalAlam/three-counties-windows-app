@@ -42,7 +42,16 @@ const Presentation = {
 
     Presentation.currentIndex = index;
     container.innerHTML = Presentation.slides[index].html;
+    window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
+      const key = old.id || old.src;
+      if (key) {
+        if (window.__injectedScripts.has(key)) {
+          old.parentNode.removeChild(old);
+          return;
+        }
+        window.__injectedScripts.add(key);
+      }
       const s = document.createElement('script');
       [...old.attributes].forEach(a => s.setAttribute(a.name, a.value));
       s.text = old.text;
@@ -391,7 +400,16 @@ const CustomerPresentation = {
     if (!container || !CustomerPresentation.slides[index]) return;
     CustomerPresentation.currentIndex = index;
     container.innerHTML = CustomerPresentation.slides[index].html;
+    window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
+      const key = old.id || old.src;
+      if (key) {
+        if (window.__injectedScripts.has(key)) {
+          old.parentNode.removeChild(old);
+          return;
+        }
+        window.__injectedScripts.add(key);
+      }
       const s = document.createElement('script');
       [...old.attributes].forEach(a => s.setAttribute(a.name, a.value));
       s.text = old.text;
