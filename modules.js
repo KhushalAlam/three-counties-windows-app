@@ -273,22 +273,28 @@ const Modules = {
     const platformCards = `
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
-          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">9.8/10</div>
-          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Checkatrade</div>
-          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,500+ reviews</div>
-          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          <a href="https://www.checkatrade.com/ThreeCountiesConservatoriesWindowsDoors/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+            <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">9.8/10</div>
+            <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Checkatrade</div>
+            <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,200+ reviews</div>
+            <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          </a>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
-          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">110+</div>
-          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Trustpilot</div>
-          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">Verified reviews</div>
-          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          <a href="https://www.trustpilot.com/review/threecountiesltd.co.uk" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+            <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">5/5</div>
+            <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Trustpilot</div>
+            <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">116 reviews</div>
+            <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          </a>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
-          <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">Google</div>
-          <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Google Reviews</div>
-          <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">Highly rated locally</div>
-          <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          <a href="https://www.google.com/search?q=Three+Counties+Conservatories+Windows+Doors+Camberley+reviews" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+            <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">4.6/5</div>
+            <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Google</div>
+            <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">220 reviews</div>
+            <div style="color:#f59e0b;font-size:0.9rem;margin-top:0.35rem;">★★★★★</div>
+          </a>
         </div>
       </div>`;
 
