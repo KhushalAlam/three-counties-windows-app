@@ -53,7 +53,7 @@ const Modules = {
       <p class="slide-lead">Tap the things that are important, and we will focus on those first.</p>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem;">
         ${opts.map(o => `
-          <button class="priority-chip" data-priority="${o.key}" onclick="togglePriority('${o.key}')"
+          <button class="priority-chip${AppState.priorities?.has(o.key) ? ' selected' : ''}" data-priority="${o.key}" onclick="togglePriority('${o.key}')"
             style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-md);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;">
             <i class="fas ${o.icon}" style="font-size:1.8rem;color:var(--green);margin-bottom:0.65rem;display:block;"></i>
             <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">${o.label}</div>

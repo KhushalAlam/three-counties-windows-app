@@ -113,6 +113,7 @@ const App = {
   /* ---- Home Actions ---- */
   startNewDeck() {
     AppState.currentDeck = null;
+    AppState.priorities = new Set();
     Builder.selectedModules = [];
     Builder.render();
     App.showView('builder');
@@ -194,6 +195,9 @@ const App = {
       if (!deck) { showToast('Deck not found.', 'error'); return; }
       let customerInputs = null;
       try { customerInputs = deck.customer_inputs ? JSON.parse(deck.customer_inputs) : null; } catch (e) {}
+      if (customerInputs && Array.isArray(customerInputs.priorities)) {
+        AppState.priorities = new Set(customerInputs.priorities);
+      }
       AppState.currentDeck = {
         ...deck,
         modules_selected: Array.isArray(deck.modules_selected) ? deck.modules_selected : []
@@ -219,7 +223,13 @@ const App = {
     if (!calcInputs) {
       calcInputs = Calculator.getDefaultInputs();
       if (AppState.currentDeck?.customer_inputs) {
-        try { calcInputs = JSON.parse(AppState.currentDeck.customer_inputs); } catch (e) {}
+        try {
+          const parsed = JSON.parse(AppState.currentDeck.customer_inputs);
+          calcInputs = parsed;
+          if (Array.isArray(parsed.priorities)) {
+            AppState.priorities = new Set(parsed.priorities);
+          }
+        } catch (e) {}
       }
     }
     App.showView('presentation');
