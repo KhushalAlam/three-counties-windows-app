@@ -471,6 +471,38 @@ input, textarea, select { font-family: var(--font); }
 .preset-pill.preset-clear { border-color: #ffcdd2; color: #c62828; }
 .preset-pill.preset-clear:hover { background: #ffebee; }
 
+/* Product bar (above quick-start presets) */
+.product-bar {
+  padding: 0.7rem 2rem;
+  background: var(--green-light);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.product-pill {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.product-pill:hover { border-color: var(--green); color: var(--green); background: #fff; }
+.product-pill.active {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+.product-pill.active:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
 /* Module grid */
 .module-grid {
   display: grid;

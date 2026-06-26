@@ -198,7 +198,12 @@ const Builder = {
   },
 
   clearAll() {
-    Builder.selectedModules = [];
+    AppState.products = new Set();
+    AppState.priorities = new Set();
+    if (typeof syncProductBarUI === 'function') syncProductBarUI();
+    document.querySelectorAll('.product-chip').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.priority-chip').forEach(c => c.classList.remove('selected'));
+    Builder.selectedModules = [...DEFAULT_DECK];
     Builder.renderGrid();
     Builder.renderSortable();
     Builder.updateCount();

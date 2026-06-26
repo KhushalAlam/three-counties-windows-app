@@ -32,6 +32,10 @@ const App = {
 
   /* ---- Bind all top-level UI events ---- */
   bindGlobalEvents() {
+    document.querySelectorAll('.product-pill[data-product]').forEach(btn => {
+      btn.addEventListener('click', () => App.selectBuilderProduct(btn.dataset.product));
+    });
+
     document.querySelectorAll('.preset-pill[data-preset]').forEach(btn => {
       btn.addEventListener('click', () => Builder.applyPreset(btn.dataset.preset));
     });
@@ -117,7 +121,31 @@ const App = {
     AppState.products = new Set();
     Builder.selectedModules = [...assembleDeckFromProducts()];
     Builder.render();
+    syncProductBarUI();
     App.showView('builder');
+  },
+
+  /* Select a product from the builder product-bar (single-select toggle) */
+  selectBuilderProduct(key) {
+    if (!AppState.products) AppState.products = new Set();
+    // Toggle: clicking the already-active product deselects it
+    if (AppState.products.has(key)) {
+      AppState.products.delete(key);
+    } else {
+      AppState.products.clear();   // only one active at a time in the product-bar
+      AppState.products.add(key);
+    }
+    syncProductBarUI();
+    // Keep presentation-slide chips in sync (if priorities slide is rendered)
+    document.querySelectorAll('.product-chip').forEach(chip => {
+      chip.classList.toggle('selected', AppState.products.has(chip.dataset.product));
+    });
+    // Rebuild the deck
+    Builder.selectedModules = [...assembleDeckFromProducts()];
+    Builder.renderGrid();
+    Builder.renderSortable();
+    Builder.updateCount();
+    Builder.updateNextBtn();
   },
 
   async toggleDecksPanel() {
@@ -181,8 +209,14 @@ const App = {
         ...deck,
         modules_selected: Array.isArray(deck.modules_selected) ? deck.modules_selected : []
       };
+      AppState.products = new Set();
+      try {
+        const ci = deck.customer_inputs ? JSON.parse(deck.customer_inputs) : null;
+        if (ci && Array.isArray(ci.products)) AppState.products = new Set(ci.products);
+      } catch (_) {}
       Builder.selectedModules = [...AppState.currentDeck.modules_selected];
       Builder.render();
+      syncProductBarUI();
       App.closeDecksPanel();
       App.showView('builder');
     } catch (e) {
@@ -663,6 +697,13 @@ function toggleProduct(key) {
     Builder.updateCount();
     Builder.updateNextBtn();
   }
+}
+
+/* Sync the product-bar active state to AppState.products */
+function syncProductBarUI() {
+  document.querySelectorAll('.product-pill[data-product]').forEach(btn => {
+    btn.classList.toggle('active', !!(AppState.products && AppState.products.has(btn.dataset.product)));
+  });
 }
 
 function assembleDeckFromProducts() {
