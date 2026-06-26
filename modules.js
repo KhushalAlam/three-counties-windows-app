@@ -38,6 +38,7 @@ const Modules = {
       { key: 'thermal',     label: 'Thermal Efficiency', icon: 'fa-temperature-half', desc: 'A warmer home and lower energy bills' },
       { key: 'aesthetics',  label: 'Aesthetics',         icon: 'fa-eye',           desc: 'Windows that transform how your home looks' },
       { key: 'maintenance', label: 'Easy Maintenance',   icon: 'fa-screwdriver-wrench', desc: 'Quality that lasts with very little upkeep' },
+      { key: 'resell',      label: 'Resell Value',       icon: 'fa-arrow-trend-up',     desc: 'Windows that add value when you sell' },
     ];
     return `
 <div class="slide" id="slide-priorities">
