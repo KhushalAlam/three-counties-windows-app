@@ -83,6 +83,86 @@ const Modules = {
   },
 
   /* ============================================================
+     HOW WE HELP — content map + renderer
+     ============================================================ */
+  howWeHelpContent: {
+    security:    {
+      headline: 'Windows built to keep your home <span class="accent">safe</span>',
+      intro:    'Security starts with the hardware, and ours is built to resist.',
+      points:   [
+        'Security-approved locking and hardware from Avantis, VBH and Yale',
+        'Our Secure Living Warranty pays you up to £5,000 directly if your home is broken into through a failure of approved hardware',
+        'Fully FENSA registered and fitted to standard, every time'
+      ]
+    },
+    thermal:     {
+      headline: 'A warmer home, and <span class="accent">lower bills</span>',
+      intro:    'The right glass makes a measurable difference to what you pay.',
+      points:   [
+        'Our soft-coat low-emissivity glass can cut the energy lost through your windows by up to 75 per cent',
+        'That is up to three times the thermal insulation of standard double glazing',
+        'Choose Eco+ for our warmest, most efficient specification, with a centre pane U-value of 1.0'
+      ]
+    },
+    aesthetics:  {
+      headline: 'Windows that <span class="accent">transform</span> how your home looks',
+      intro:    'The right windows lift the whole property, inside and out.',
+      points:   [
+        'A wide range of styles, colours and finishes to suit your home',
+        'Real installs across Surrey, Hampshire and Berkshire, see them in our gallery',
+        'Finished to a standard you will be proud to show off'
+      ]
+    },
+    maintenance: {
+      headline: 'Quality that lasts, with <span class="accent">very little upkeep</span>',
+      intro:    'Fit once, enjoy for years, with barely any work.',
+      points:   [
+        'Built from durable materials that stay looking good with minimal effort',
+        'Backed by a long guarantee for real peace of mind',
+        'No constant upkeep, just windows that keep performing'
+      ]
+    },
+    resell:      {
+      headline: 'Windows that <span class="accent">add value</span> when you sell',
+      intro:    'Quality glazing is an asset buyers notice and surveyors record.',
+      points:   [
+        'Kerb appeal and a modern, well-kept look that helps a home stand out',
+        'Energy efficiency that supports a better EPC rating, increasingly a buyer priority',
+        'FENSA registration gives buyers documented reassurance during conveyancing'
+      ]
+    },
+    default:     {
+      headline: 'The right windows, <span class="accent">done properly</span>',
+      intro:    'Warmth, security, looks and longevity, all in one.',
+      points:   [
+        'Energy-efficient glass that helps lower your bills',
+        'Security-approved hardware and our Secure Living Warranty',
+        'Quality that lasts, from a family-run local team'
+      ]
+    }
+  },
+
+  renderHowWeHelp() {
+    const order = ['security', 'thermal', 'aesthetics', 'maintenance', 'resell'];
+    const key   = order.find(k => AppState.priorities && AppState.priorities.has(k)) || 'default';
+    const c     = Modules.howWeHelpContent[key];
+    const pointsHTML = c.points.map(p => `
+      <div style="display:flex;align-items:flex-start;gap:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
+        <i class="fas fa-circle-check" style="color:var(--green);font-size:1.15rem;flex-shrink:0;margin-top:0.1rem;"></i>
+        <span style="font-size:0.9rem;line-height:1.6;color:var(--text);">${escHtml(p)}</span>
+      </div>`).join('');
+    return `
+<div class="slide" id="slide-how-we-help" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="slide-eyebrow green"><i class="fas fa-hands-helping"></i> How We Help</div>
+  <h1 class="slide-h1" style="max-width:760px;">${c.headline}</h1>
+  <p class="slide-lead" style="max-width:620px;margin:0 auto 2rem;">${escHtml(c.intro)}</p>
+  <div style="display:flex;flex-direction:column;gap:0.85rem;width:100%;max-width:760px;text-align:left;">
+    ${pointsHTML}
+  </div>
+</div>`;
+  },
+
+  /* ============================================================
      ECO VS ECO+
      ============================================================ */
   async renderEcoComparison() {
@@ -543,6 +623,7 @@ const Modules = {
     switch (moduleId) {
       case 'welcome':        return Modules.renderWelcome();
       case 'priorities':     return Modules.renderPriorities();
+      case 'how_we_help':     return Modules.renderHowWeHelp();
       case 'eco_vs_eco_plus':return await Modules.renderEcoComparison();
       case 'gallery':        return await Modules.renderGallery();
       case 'door_builder':   return Modules.renderDoorBuilder();

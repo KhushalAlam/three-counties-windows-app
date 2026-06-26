@@ -327,6 +327,15 @@ const MODULE_REGISTRY = [
     placeholder: false
   },
   {
+    id: 'how_we_help',
+    name: 'How We Help',
+    subtitle: 'Tailored to what matters',
+    icon: 'fa-hands-helping',
+    iconStyle: 'green',
+    essential: false,
+    placeholder: false
+  },
+  {
     id: 'eco_vs_eco_plus',
     name: 'Eco vs Eco+',
     subtitle: 'Glass performance comparison',
