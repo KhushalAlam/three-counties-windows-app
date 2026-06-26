@@ -228,7 +228,7 @@ const Builder = {
     const payload = {
       deck_name: name,
       modules_selected: Builder.selectedModules,
-      customer_inputs: JSON.stringify({ ...(calcInputs || {}), priorities: Array.from(AppState.priorities || []) }),
+      customer_inputs: JSON.stringify({ ...(calcInputs || {}), priorities: Array.from(AppState.priorities || []), products: Array.from(AppState.products || []) }),
     };
     if (AppState.currentDeck?.id) payload.id = AppState.currentDeck.id;
 

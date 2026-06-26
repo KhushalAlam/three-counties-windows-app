@@ -114,6 +114,7 @@ const App = {
   startNewDeck() {
     AppState.currentDeck = null;
     AppState.priorities = new Set();
+    AppState.products = new Set();
     Builder.selectedModules = [];
     Builder.render();
     App.showView('builder');
@@ -198,6 +199,9 @@ const App = {
       if (customerInputs && Array.isArray(customerInputs.priorities)) {
         AppState.priorities = new Set(customerInputs.priorities);
       }
+      if (customerInputs && Array.isArray(customerInputs.products)) {
+        AppState.products = new Set(customerInputs.products);
+      }
       AppState.currentDeck = {
         ...deck,
         modules_selected: Array.isArray(deck.modules_selected) ? deck.modules_selected : []
@@ -228,6 +232,9 @@ const App = {
           calcInputs = parsed;
           if (Array.isArray(parsed.priorities)) {
             AppState.priorities = new Set(parsed.priorities);
+          }
+          if (Array.isArray(parsed.products)) {
+            AppState.products = new Set(parsed.products);
           }
         } catch (e) {}
       }
@@ -639,6 +646,14 @@ function togglePriority(key) {
   AppState.priorities.has(key) ? AppState.priorities.delete(key) : AppState.priorities.add(key);
   document.querySelectorAll('.priority-chip').forEach(chip => {
     chip.classList.toggle('selected', AppState.priorities.has(chip.dataset.priority));
+  });
+}
+
+function toggleProduct(key) {
+  if (!AppState.products) AppState.products = new Set();
+  AppState.products.has(key) ? AppState.products.delete(key) : AppState.products.add(key);
+  document.querySelectorAll('.product-chip').forEach(chip => {
+    chip.classList.toggle('selected', AppState.products.has(chip.dataset.product));
   });
 }
 

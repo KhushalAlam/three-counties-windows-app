@@ -44,11 +44,22 @@ const Modules = {
 <div class="slide" id="slide-priorities">
   <style>
     .priority-chip.selected{border-color:var(--green)!important;background:var(--green-light)!important;}
+    .product-chip.selected{border-color:var(--green)!important;background:var(--green-light)!important;}
     @media(max-width:760px){#priorities-grid{grid-template-columns:1fr!important;}#priorities-img{order:1;min-height:220px!important;}}
   </style>
   <div id="priorities-grid" style="display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:stretch;max-width:1040px;margin:0 auto;">
     <!-- LEFT -->
     <div>
+      <div class="slide-eyebrow green"><i class="fas fa-layer-group"></i> What are you looking for?</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:0.75rem;">
+        ${[{key:'windows',label:'Windows',icon:'fa-border-all'},{key:'doors',label:'Doors',icon:'fa-door-open'},{key:'conservatories',label:'Conservatories',icon:'fa-house-chimney-window'}].map(p => `
+          <button class="product-chip${AppState.products?.has(p.key) ? ' selected' : ''}" data-product="${p.key}" onclick="toggleProduct('${p.key}')"
+            style="background:var(--bg-card);border:2px solid var(--border);border-radius:var(--r-md);padding:1rem 0.5rem;text-align:center;cursor:pointer;transition:all 0.2s;">
+            <i class="fas ${p.icon}" style="font-size:1.4rem;color:var(--green);margin-bottom:0.45rem;display:block;"></i>
+            <div style="font-weight:700;font-size:0.85rem;">${p.label}</div>
+          </button>`).join('')}
+      </div>
+      <div style="margin-top:1.75rem;">
       <div class="slide-eyebrow green"><i class="fas fa-list-check"></i> Personalise Your Journey</div>
       <h1 class="slide-h1">What <span class="accent">matters most</span> to you?</h1>
       <p class="slide-lead">Tap the things that are important, and we will focus on those first.</p>
@@ -60,6 +71,7 @@ const Modules = {
             <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">${o.label}</div>
             <div style="font-size:0.75rem;color:var(--text-soft);">${o.desc}</div>
           </button>`).join('')}
+      </div>
       </div>
     </div>
     <!-- RIGHT -->

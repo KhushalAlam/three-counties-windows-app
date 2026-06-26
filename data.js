@@ -261,6 +261,7 @@ const AppState = {
   presentationIndex: 0,
   isCustomerView:    false,
   priorities:        null,
+  products:          null,
 
   getModuleItems(moduleId) {
     return Object.values(this.contentItems)
