@@ -115,7 +115,7 @@ const App = {
     AppState.currentDeck = null;
     AppState.priorities = new Set();
     AppState.products = new Set();
-    Builder.selectedModules = [];
+    Builder.selectedModules = [...assembleDeckFromProducts()];
     Builder.render();
     App.showView('builder');
   },
@@ -655,6 +655,30 @@ function toggleProduct(key) {
   document.querySelectorAll('.product-chip').forEach(chip => {
     chip.classList.toggle('selected', AppState.products.has(chip.dataset.product));
   });
+  // Recompute builder deck only when the builder view is active
+  if (AppState.currentView === 'builder' && document.getElementById('module-grid')) {
+    Builder.selectedModules = [...assembleDeckFromProducts()];
+    Builder.renderGrid();
+    Builder.renderSortable();
+    Builder.updateCount();
+    Builder.updateNextBtn();
+  }
+}
+
+function assembleDeckFromProducts() {
+  const selected = AppState.products ? [...AppState.products] : [];
+  if (selected.length === 0) return [...DEFAULT_DECK];
+  // Collect all slides from each selected product's list
+  const merged = new Set();
+  selected.forEach(p => {
+    const list = PRODUCT_DECKS[p];
+    if (list) list.forEach(id => merged.add(id));
+  });
+  // Re-order by the position each slide appears in DEFAULT_DECK,
+  // then append any extras (unknown products) at the end
+  const ordered = DEFAULT_DECK.filter(id => merged.has(id));
+  merged.forEach(id => { if (!ordered.includes(id)) ordered.push(id); });
+  return ordered.length ? ordered : [...DEFAULT_DECK];
 }
 
 /* ============================================================

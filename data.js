@@ -444,4 +444,14 @@ const PRESETS = {
   }
 };
 
+/* ============================================================
+   PRODUCT-BASED DECK MATRIX
+   ============================================================ */
+const PRODUCT_DECKS = {
+  windows:        ['welcome','priorities','how_we_help','eco_vs_eco_plus','gallery','why_choose','reviews','installs_map','secure_living','finance','get_quote'],
+  doors:          ['welcome','priorities','how_we_help','gallery','door_builder','why_choose','reviews','installs_map','secure_living','finance','get_quote'],
+  conservatories: ['welcome','priorities','how_we_help','gallery','why_choose','reviews','installs_map','secure_living','finance','get_quote']
+};
+const DEFAULT_DECK = ['welcome','priorities','how_we_help','eco_vs_eco_plus','gallery','why_choose','reviews','installs_map','secure_living','finance','get_quote'];
+
 const ADMIN_PIN = '';
