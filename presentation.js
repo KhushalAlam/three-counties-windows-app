@@ -42,9 +42,10 @@ const Presentation = {
 
     Presentation.currentIndex = index;
     const slide = Presentation.slides[index];
-    container.innerHTML = (slide.id === 'how_we_help')
-      ? Modules.renderHowWeHelp()
-      : slide.html;
+    container.innerHTML =
+      slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
+      slide.id === 'gallery'     ? Modules.renderGallery()   :
+      slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
       const key = old.id || old.src;
@@ -403,9 +404,10 @@ const CustomerPresentation = {
     if (!container || !CustomerPresentation.slides[index]) return;
     CustomerPresentation.currentIndex = index;
     const slide = CustomerPresentation.slides[index];
-    container.innerHTML = (slide.id === 'how_we_help')
-      ? Modules.renderHowWeHelp()
-      : slide.html;
+    container.innerHTML =
+      slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
+      slide.id === 'gallery'     ? Modules.renderGallery()   :
+      slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
       const key = old.id || old.src;

@@ -250,19 +250,48 @@ const Modules = {
   /* ============================================================
      GALLERY
      ============================================================ */
-  galleryImages: [
-    'ourwork-1.png','ourwork-2.png','ourwork-3.png','ourwork-4.png',
-    'ourwork-5.jpg','ourwork-6.png','ourwork-7.png','ourwork-8.png',
-    'ourwork-9.png','ourwork-10.png','ourwork-11.png','ourwork-12.jpg'
+  gallery: [
+    {src:'ourwork-1.png',  product:'windows',        priority:null},
+    {src:'ourwork-2.png',  product:'doors',          priority:null},
+    {src:'ourwork-3.png',  product:'conservatories', priority:null},
+    {src:'ourwork-4.png',  product:'conservatories', priority:null},
+    {src:'ourwork-5.jpg',  product:'windows',        priority:null},
+    {src:'ourwork-6.png',  product:'doors',          priority:null},
+    {src:'ourwork-7.png',  product:'doors',          priority:null},
+    {src:'ourwork-8.png',  product:'windows',        priority:null},
+    {src:'ourwork-9.png',  product:'doors',          priority:null},
+    {src:'ourwork-10.png', product:'conservatories', priority:null},
+    {src:'ourwork-11.png', product:'windows',        priority:null},
+    {src:'ourwork-12.jpg', product:'windows',        priority:null}
   ],
+  _galleryVisible: [],
 
   renderGallery() {
-    const tilesHTML = Modules.galleryImages.map((filename, i) => `
+    // Hard-filter by product
+    const hasProducts = AppState.products && AppState.products.size > 0;
+    let visible = hasProducts
+      ? Modules.gallery.filter(item => AppState.products.has(item.product))
+      : Modules.gallery.slice();
+    if (visible.length === 0) visible = Modules.gallery.slice();
+
+    // Soft-order by priority (items with a matching priority float to front)
+    const hasPriorities = AppState.priorities && AppState.priorities.size > 0;
+    if (hasPriorities) {
+      const pri = [], rest = [];
+      visible.forEach(item => {
+        (item.priority && AppState.priorities.has(item.priority) ? pri : rest).push(item);
+      });
+      visible = [...pri, ...rest];
+    }
+
+    Modules._galleryVisible = visible;
+
+    const tilesHTML = visible.map((item, i) => `
       <div onclick="Modules.openLightbox(${i})"
         style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);
                aspect-ratio:4/3;transition:transform 0.18s;background:var(--bg-card);"
         onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
-        <img src="${filename}" alt="Three Counties installation ${i + 1}"
+        <img src="${item.src}" alt="Three Counties installation ${i + 1}"
           style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>`).join('');
     return `
@@ -284,8 +313,9 @@ const Modules = {
   },
 
   openLightbox(idx) {
-    const src = Modules.galleryImages[idx];
-    if (!src) return;
+    const item = Modules._galleryVisible[idx];
+    if (!item) return;
+    const src = item.src;
     const lb = document.getElementById('gallery-lightbox');
     const img = document.getElementById('lightbox-img');
     if (lb && img) {
