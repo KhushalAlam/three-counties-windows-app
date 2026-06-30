@@ -296,7 +296,7 @@ const App = {
         content.innerHTML = `
           <div class="why-layout">
             <div>
-              <img src="windows-hero.jpg"
+              <img src="ourwork-1.png"
                 alt="Three Counties Windows"
                 style="border-radius:var(--r-lg);width:100%;box-shadow:var(--shadow-md);margin-bottom:1.25rem;" />
               <div style="font-size:0.87rem;color:var(--text-soft);line-height:1.7;margin-bottom:0.85rem;">
