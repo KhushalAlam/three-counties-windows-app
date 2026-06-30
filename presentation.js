@@ -45,6 +45,7 @@ const Presentation = {
     container.innerHTML =
       slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
       slide.id === 'gallery'     ? Modules.renderGallery()   :
+      slide.id === 'welcome'     ? Modules.renderWelcome()   :
       slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
@@ -407,6 +408,7 @@ const CustomerPresentation = {
     container.innerHTML =
       slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
       slide.id === 'gallery'     ? Modules.renderGallery()   :
+      slide.id === 'welcome'     ? Modules.renderWelcome()   :
       slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
