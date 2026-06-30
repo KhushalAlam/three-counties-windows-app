@@ -221,23 +221,46 @@ const Modules = {
   /* ============================================================
      GALLERY
      ============================================================ */
+  galleryImages: [
+    'ourwork-1.png','ourwork-2.png','ourwork-3.png','ourwork-4.png',
+    'ourwork-5.jpg','ourwork-6.png','ourwork-7.png','ourwork-8.png',
+    'ourwork-9.png','ourwork-10.png','ourwork-11.png','ourwork-12.jpg'
+  ],
+
   renderGallery() {
+    const tilesHTML = Modules.galleryImages.map((filename, i) => `
+      <div onclick="Modules.openLightbox(${i})"
+        style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);
+               aspect-ratio:4/3;transition:transform 0.18s;background:var(--bg-card);"
+        onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
+        <img src="${filename}" alt="Three Counties installation ${i + 1}"
+          style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>`).join('');
     return `
 <div class="slide" id="slide-gallery">
   <div class="slide-eyebrow green"><i class="fas fa-images"></i> Our Work</div>
   <h1 class="slide-h1">See what's <span class="accent">possible</span></h1>
   <p class="slide-lead">Real homes, real installs, right across Surrey, Hampshire and Berkshire.</p>
-  <img src="gallery.png" alt="Three Counties recent installations" style="width:100%;max-width:1100px;height:auto;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;margin:0 auto;">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;">
+    ${tilesHTML}
+  </div>
+  <div id="gallery-lightbox"
+    style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;
+           align-items:center;justify-content:center;"
+    onclick="Modules.closeLightbox()">
+    <img id="lightbox-img" src="" alt="Gallery image"
+      style="max-width:92vw;max-height:90vh;border-radius:var(--r-md);box-shadow:var(--shadow-md);display:block;">
+  </div>
 </div>`;
   },
 
   openLightbox(idx) {
-    const items = AppState.getModuleItems('gallery');
-    if (!items[idx]) return;
+    const src = Modules.galleryImages[idx];
+    if (!src) return;
     const lb = document.getElementById('gallery-lightbox');
     const img = document.getElementById('lightbox-img');
     if (lb && img) {
-      img.src = items[idx].meta1 || items[idx].body;
+      img.src = src;
       lb.style.display = 'flex';
     }
   },
