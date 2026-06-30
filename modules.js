@@ -83,79 +83,108 @@ const Modules = {
   },
 
   /* ============================================================
-     HOW WE HELP — content map + renderer
+     HOW WE HELP — tagged sentences + renderer
      ============================================================ */
-  howWeHelpContent: {
-    security:    {
-      headline: 'Windows built to keep your home <span class="accent">safe</span>',
-      intro:    'Security starts with the hardware, and ours is built to resist.',
-      points:   [
-        'Security-approved locking and hardware from Avantis, VBH and Yale',
-        'Our Secure Living Warranty pays you up to £5,000 directly if your home is broken into through a failure of approved hardware',
-        'Fully FENSA registered and fitted to standard, every time'
-      ]
-    },
-    thermal:     {
-      headline: 'A warmer home, and <span class="accent">lower bills</span>',
-      intro:    'The right glass makes a measurable difference to what you pay.',
-      points:   [
-        'Our soft-coat low-emissivity glass can cut the energy lost through your windows by up to 75 per cent',
-        'That is up to three times the thermal insulation of standard double glazing',
-        'Choose Eco+ for our warmest, most efficient specification, with a centre pane U-value of 1.0'
-      ]
-    },
-    aesthetics:  {
-      headline: 'Windows that <span class="accent">transform</span> how your home looks',
-      intro:    'The right windows lift the whole property, inside and out.',
-      points:   [
-        'A wide range of styles, colours and finishes to suit your home',
-        'Real installs across Surrey, Hampshire and Berkshire, see them in our gallery',
-        'Finished to a standard you will be proud to show off'
-      ]
-    },
-    maintenance: {
-      headline: 'Quality that lasts, with <span class="accent">very little upkeep</span>',
-      intro:    'Fit once, enjoy for years, with barely any work.',
-      points:   [
-        'Built from durable materials that stay looking good with minimal effort',
-        'Backed by a long guarantee for real peace of mind',
-        'No constant upkeep, just windows that keep performing'
-      ]
-    },
-    resell:      {
-      headline: 'Windows that <span class="accent">add value</span> when you sell',
-      intro:    'Quality glazing is an asset buyers notice and surveyors record.',
-      points:   [
-        'Kerb appeal and a modern, well-kept look that helps a home stand out',
-        'Energy efficiency that supports a better EPC rating, increasingly a buyer priority',
-        'FENSA registration gives buyers documented reassurance during conveyancing'
-      ]
-    },
-    default:     {
-      headline: 'The right windows, <span class="accent">done properly</span>',
-      intro:    'Warmth, security, looks and longevity, all in one.',
-      points:   [
-        'Energy-efficient glass that helps lower your bills',
-        'Security-approved hardware and our Secure Living Warranty',
-        'Quality that lasts, from a family-run local team'
-      ]
-    }
-  },
+  howWeHelpSentences: [
+    {product:'windows',        priority:'security',    text:'Security-approved locking and hardware from Avantis, VBH and Yale'},
+    {product:'windows',        priority:'security',    text:'Our Secure Living Warranty pays you up to \u00a35,000 if approved hardware fails in a break-in'},
+    {product:'windows',        priority:'security',    text:'Fully FENSA registered and fitted to standard'},
+    {product:'windows',        priority:'thermal',     text:'Low-emissivity glass that cuts heat loss by up to 75 per cent'},
+    {product:'windows',        priority:'thermal',     text:'Up to three times the insulation of standard double glazing'},
+    {product:'windows',        priority:'thermal',     text:'Eco+ for our warmest, most efficient specification'},
+    {product:'windows',        priority:'aesthetics',  text:'A wide range of styles, colours and finishes to suit your home'},
+    {product:'windows',        priority:'aesthetics',  text:'Slim, modern frames that let in more light'},
+    {product:'windows',        priority:'aesthetics',  text:'Finished to a standard you will be proud to show off'},
+    {product:'windows',        priority:'maintenance', text:'Durable frames that stay looking good with a simple wipe down'},
+    {product:'windows',        priority:'maintenance', text:'No repainting, no warping, no constant upkeep'},
+    {product:'windows',        priority:'maintenance', text:'Quality that lasts, from a family-run local team'},
+    {product:'windows',        priority:'resell',      text:'Modern windows that lift kerb appeal and first impressions'},
+    {product:'windows',        priority:'resell',      text:'Better efficiency supports a stronger EPC rating'},
+    {product:'windows',        priority:'resell',      text:'FENSA registration gives buyers reassurance at sale'},
+    {product:'doors',          priority:'security',    text:'High-security multipoint locking and approved hardware from Avantis, VBH and Yale'},
+    {product:'doors',          priority:'security',    text:'Our Secure Living Warranty pays you up to \u00a35,000 if approved hardware fails in a break-in'},
+    {product:'doors',          priority:'security',    text:'Solid, reinforced construction that stands up to force'},
+    {product:'doors',          priority:'thermal',     text:'Insulated, solid-core construction that holds warmth in'},
+    {product:'doors',          priority:'thermal',     text:'Weather-tight seals that cut out draughts and cold spots'},
+    {product:'doors',          priority:'thermal',     text:'Energy-efficient glazing for light without the heat loss'},
+    {product:'doors',          priority:'aesthetics',  text:'A wide choice of styles, from classic to contemporary'},
+    {product:'doors',          priority:'aesthetics',  text:'Glazing, hardware and furniture options to match your taste'},
+    {product:'doors',          priority:'aesthetics',  text:'Preview your new door on your own home before you commit'},
+    {product:'doors',          priority:'maintenance', text:'Hard-wearing finishes that resist fading, warping and weather'},
+    {product:'doors',          priority:'maintenance', text:'No repainting or sanding, just an occasional wipe down'},
+    {product:'doors',          priority:'maintenance', text:'Quality that lasts, from a family-run local team'},
+    {product:'doors',          priority:'resell',      text:'A striking entrance is one of the first things buyers notice'},
+    {product:'doors',          priority:'resell',      text:'Better insulation and security are genuine selling points'},
+    {product:'doors',          priority:'resell',      text:'FENSA registration gives buyers reassurance at sale'},
+    {product:'conservatories', priority:'security',    text:'Security-approved locking and hardware from Avantis, VBH and Yale throughout'},
+    {product:'conservatories', priority:'security',    text:'Our Secure Living Warranty pays you up to \u00a35,000 if approved hardware fails in a break-in'},
+    {product:'conservatories', priority:'security',    text:'Toughened glass and solid construction for genuine peace of mind'},
+    {product:'conservatories', priority:'thermal',     text:'Low-emissivity glass that keeps heat in during winter and out in summer'},
+    {product:'conservatories', priority:'thermal',     text:'Insulated roof options that make the space usable all year'},
+    {product:'conservatories', priority:'thermal',     text:'Lower running costs than you would expect from a glazed room'},
+    {product:'conservatories', priority:'aesthetics',  text:"Designed to complement your home's character, not fight it"},
+    {product:'conservatories', priority:'aesthetics',  text:'Floods your living space with natural light'},
+    {product:'conservatories', priority:'aesthetics',  text:'A wide choice of styles, frames and finishes to suit the property'},
+    {product:'conservatories', priority:'maintenance', text:'Durable, weather-resistant frames that need only a simple clean'},
+    {product:'conservatories', priority:'maintenance', text:'Modern glazing that resists grime and stays clear'},
+    {product:'conservatories', priority:'maintenance', text:'Quality that lasts, from a family-run local team'},
+    {product:'conservatories', priority:'resell',      text:'Adds a genuine, year-round room that buyers value'},
+    {product:'conservatories', priority:'resell',      text:'Quality construction and efficient glazing strengthen the appeal'},
+    {product:'conservatories', priority:'resell',      text:'A professionally installed, compliant build buyers can trust'}
+  ],
+  howWeHelpDefault: [
+    'Energy-efficient glass that helps lower your bills',
+    'Security-approved hardware and our Secure Living Warranty',
+    'Quality that lasts, from a family-run local team'
+  ],
 
   renderHowWeHelp() {
-    const order = ['security', 'thermal', 'aesthetics', 'maintenance', 'resell'];
-    const key   = order.find(k => AppState.priorities && AppState.priorities.has(k)) || 'default';
-    const c     = Modules.howWeHelpContent[key];
-    const pointsHTML = c.points.map(p => `
+    // --- Headline: derive product name(s) ---
+    const productOrder = ['windows', 'doors', 'conservatories'];
+    const selProducts  = AppState.products
+      ? productOrder.filter(p => AppState.products.has(p))
+      : [];
+    const productLabel = selProducts.length === 0 ? 'windows'
+      : selProducts.length === 1 ? selProducts[0]
+      : selProducts.length === 2 ? selProducts.join(' & ')
+      : `${selProducts[0]}, ${selProducts[1]} & ${selProducts[2]}`;
+    const headline = `The right ${productLabel}, <span class="accent">done properly</span>`;
+
+    // --- Sentence selection & ordering ---
+    const priorityWeight = ['security', 'thermal', 'resell', 'aesthetics', 'maintenance'];
+    const hasProducts    = selProducts.length > 0;
+    const hasPriorities  = AppState.priorities && AppState.priorities.size > 0;
+
+    let sentences;
+    if (!hasProducts || !hasPriorities) {
+      sentences = Modules.howWeHelpDefault;
+    } else {
+      const matched = Modules.howWeHelpSentences.filter(
+        s => AppState.products.has(s.product) && AppState.priorities.has(s.priority)
+      );
+      if (matched.length === 0) {
+        sentences = Modules.howWeHelpDefault;
+      } else {
+        matched.sort((a, b) => {
+          const pw = priorityWeight.indexOf(a.priority) - priorityWeight.indexOf(b.priority);
+          if (pw !== 0) return pw;
+          return productOrder.indexOf(a.product) - productOrder.indexOf(b.product);
+        });
+        sentences = matched.map(s => s.text);
+      }
+    }
+
+    const pointsHTML = sentences.map(p => `
       <div style="display:flex;align-items:flex-start;gap:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
         <i class="fas fa-circle-check" style="color:var(--green);font-size:1.15rem;flex-shrink:0;margin-top:0.1rem;"></i>
         <span style="font-size:0.9rem;line-height:1.6;color:var(--text);">${escHtml(p)}</span>
       </div>`).join('');
+
     return `
 <div class="slide" id="slide-how-we-help" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
   <div class="slide-eyebrow green"><i class="fas fa-hands-helping"></i> How We Help</div>
-  <h1 class="slide-h1" style="max-width:760px;">${c.headline}</h1>
-  <p class="slide-lead" style="max-width:620px;margin:0 auto 2rem;">${escHtml(c.intro)}</p>
+  <h1 class="slide-h1" style="max-width:760px;">${headline}</h1>
+  <p class="slide-lead" style="max-width:620px;margin:0 auto 2rem;">Warmth, security, looks and longevity, all in one.</p>
   <div style="display:flex;flex-direction:column;gap:0.85rem;width:100%;max-width:760px;text-align:left;">
     ${pointsHTML}
   </div>
