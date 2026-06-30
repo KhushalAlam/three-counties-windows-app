@@ -14,6 +14,14 @@ const Modules = {
       : sel.length === 1 ? sel[0]
       : sel.length === 2 ? sel.join(' & ')
       : `${sel[0]}, ${sel[1]} & ${sel[2]}`;
+    const defaultHeroes = ['welcome-1.jpg','welcome-2.png','welcome-3.png','welcome-4.png'];
+    let heroes;
+    if (sel.length > 0) {
+      heroes = Modules.gallery.filter(g => AppState.products.has(g.product)).map(g => g.src).slice(0, 4);
+      if (heroes.length === 0) heroes = defaultHeroes;
+    } else {
+      heroes = defaultHeroes;
+    }
     return `
 <div class="slide" id="slide-welcome" style="position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;">
   <div class="slide-eyebrow green"><i class="fas fa-house"></i> Three Counties</div>
@@ -27,10 +35,7 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;width:100%;max-width:840px;margin:2rem auto 0;">
-    <img src="welcome-1.jpg" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-2.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-3.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
-    <img src="welcome-4.png" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">
+    ${heroes.map(src => `<img src="${src}" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">`).join('')}
   </div>
 </div>`;
   },
