@@ -181,7 +181,21 @@ const Modules = {
           if (pw !== 0) return pw;
           return productOrder.indexOf(a.product) - productOrder.indexOf(b.product);
         });
-        sentences = matched.map(s => s.text);
+        if (!hasPriorities) {
+          // No priorities chosen: show one sentence per priority-group per product
+          // (first sentence encountered after sort, so ordering stays canonical)
+          const seen = new Set();
+          sentences = matched
+            .filter(s => {
+              const key = s.product + '|' + s.priority;
+              if (seen.has(key)) return false;
+              seen.add(key);
+              return true;
+            })
+            .map(s => s.text);
+        } else {
+          sentences = matched.map(s => s.text);
+        }
       }
     }
 
