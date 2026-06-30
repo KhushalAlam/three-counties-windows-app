@@ -167,11 +167,11 @@ const Modules = {
     const hasPriorities  = AppState.priorities && AppState.priorities.size > 0;
 
     let sentences;
-    if (!hasProducts || !hasPriorities) {
+    if (!hasProducts) {
       sentences = Modules.howWeHelpDefault;
     } else {
       const matched = Modules.howWeHelpSentences.filter(
-        s => AppState.products.has(s.product) && AppState.priorities.has(s.priority)
+        s => AppState.products.has(s.product) && (!hasPriorities || AppState.priorities.has(s.priority))
       );
       if (matched.length === 0) {
         sentences = Modules.howWeHelpDefault;
