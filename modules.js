@@ -612,93 +612,118 @@ const Modules = {
   renderFinance() {
     const disclaimer = AppState.getSettingStr('finance.disclaimer', 'Illustration only. This is not a quote or an offer of credit. Finance subject to status and affordability.');
     const fcaLine    = AppState.getSettingStr('finance.fca_line',   '3 Counties (Sandhurst) Ltd, FRN 727419, is authorised and regulated by the Financial Conduct Authority. We are a credit broker, not a lender. Credit is provided by Mitsubishi HC Capital UK PLC (Novuna).');
-
     return `
 <div class="slide" id="slide-finance">
   <div class="slide-eyebrow green"><i class="fas fa-sterling-sign"></i> Finance Options</div>
   <h1 class="slide-h1">Spread the cost, <span class="accent">your way</span></h1>
   <p class="slide-lead">Flexible finance to suit your budget, including interest-free credit.</p>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;">
-    <!-- BNPL -->
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-soft);margin-bottom:0.5rem;">Available on all products</div>
-      <h3 style="margin-bottom:1rem;">Buy Now Pay Later</h3>
-      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;">
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> Buy now, pay within 12 months</div>
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> No interest if paid in full within 12 months</div>
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle" style="color:var(--green);"></i> A £29 fee applies on settlement</div>
-      </div>
-    </div>
-    <!-- IFC -->
-    <div style="background:var(--green);border:1px solid var(--green);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-md);color:#fff;position:relative;">
-      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:0.7rem;font-weight:700;padding:0.3rem 0.85rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;">Eco+ Only</div>
-      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;opacity:0.8;margin-bottom:0.5rem;">Eco+ window range</div>
-      <h3 style="margin-bottom:1rem;">Interest Free Credit</h3>
-      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;">
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> Spread over 2, 3, 4 or 5 years</div>
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> 0% interest</div>
-        <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;"><i class="fas fa-check-circle"></i> Only available on Eco+ range</div>
-      </div>
-    </div>
+  <style>
+  .fin-modes{display:inline-flex;background:#e7e7dd;border-radius:999px;padding:5px;margin-bottom:1.5rem}
+  .fin-modes button{border:0;background:transparent;font:inherit;font-weight:700;font-size:0.9rem;padding:0.65rem 1.5rem;border-radius:999px;cursor:pointer;color:#6b7268;transition:all .18s}
+  .fin-modes button.on{background:#2f6b2f;color:#fff;box-shadow:0 2px 8px rgba(47,107,47,.35)}
+  .fin-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:1.5rem;align-items:start}
+  @media(max-width:900px){.fin-grid{grid-template-columns:1fr}}
+  .fin-panel{background:#fff;border-radius:16px;box-shadow:0 6px 18px rgba(40,60,35,.08);padding:1.75rem}
+  .fin-fldrow{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem}
+  @media(max-width:560px){.fin-fldrow{grid-template-columns:1fr}}
+  .fin-lbl{display:block;font-weight:700;font-size:0.9rem;margin:0 0 0.5rem}
+  .fin-iw{position:relative}
+  .fin-iw .sym{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#6b7268;font-size:0.85rem}
+  .fin-in{width:100%;font:inherit;font-size:1.05rem;font-weight:600;padding:0.85rem 2rem 0.85rem 1rem;border:1.5px solid #e3e3da;border-radius:12px;background:#fbfbf7;outline:none;transition:border .15s}
+  .fin-in:focus{border-color:#2f6b2f}
+  .fin-sect{font-weight:700;font-size:0.9rem;margin:0.25rem 0 0.75rem}
+  .fin-prods{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.5rem}
+  @media(max-width:680px){.fin-prods{grid-template-columns:1fr}}
+  .fin-prod{position:relative;text-align:left;border:2px solid #e3e3da;border-radius:14px;background:#fff;padding:1rem 1rem 0.85rem;cursor:pointer;font:inherit;transition:border .15s,background .15s}
+  .fin-prod:hover{border-color:#bccdb2}
+  .fin-prod.on{border-color:#2f6b2f;background:#e9f0e2}
+  .fin-nm{font-weight:800;font-size:1rem;display:flex;align-items:center;gap:0.5rem}
+  .fin-dot{width:16px;height:16px;border-radius:50%;border:2px solid #b9b9ac;flex:0 0 16px;position:relative}
+  .fin-prod.on .fin-dot,.fin-opt.on .fin-dot{border-color:#2f6b2f}
+  .fin-prod.on .fin-dot::after,.fin-opt.on .fin-dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#2f6b2f}
+  .fin-ds{color:#6b7268;font-size:0.85rem;margin:0.4rem 0 0.15rem}
+  .fin-apr{font-size:0.82rem;font-weight:700;color:#2f6b2f}
+  .fin-badge{position:absolute;top:-11px;right:12px;background:#7cab54;color:#fff;font-size:0.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:0.25rem 0.6rem;border-radius:999px}
+  .fin-opts{display:flex;flex-direction:column;gap:0.75rem}
+  .fin-opt{text-align:left;border:2px solid #e3e3da;border-radius:14px;background:#fff;padding:1rem 1.1rem;cursor:pointer;font:inherit;display:flex;gap:0.9rem;align-items:flex-start;transition:border .15s,background .15s}
+  .fin-opt:hover{border-color:#bccdb2}
+  .fin-opt.on{border-color:#2f6b2f;background:#e9f0e2}
+  .fin-opt .fin-dot{margin-top:3px}
+  .fin-amt{font-weight:800;font-size:1.1rem;color:#2c4a28}
+  .fin-tm{font-size:0.9rem;color:#1e2420;margin-top:2px}
+  .fin-sub{font-size:0.82rem;color:#6b7268;margin-top:2px}
+  .fin-note{background:#eaf2e3;border-radius:12px;padding:0.9rem 1rem;font-size:0.88rem;color:#2c4a28;margin-bottom:0.9rem;line-height:1.5}
+  .fin-note b{font-weight:800}
+  .fin-summary{background:#3a5f34;color:#fff;border-radius:16px;box-shadow:0 6px 18px rgba(40,60,35,.08);padding:1.75rem}
+  .fin-summary h3{font-size:0.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#cfe0c4;margin-bottom:1.1rem}
+  .fin-srow{display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:0.9rem}
+  .fin-srow .k{color:#d9e6d0}.fin-srow .v{font-weight:700}
+  .fin-srow.big{border-bottom:0;padding-top:1rem}.fin-srow.big .v{font-size:1.8rem;font-weight:800}
+  .fin-ph{color:#c4d6b8;font-size:0.9rem;line-height:1.6}
+  .fin-aff-wrap{display:flex;flex-direction:column;gap:0.75rem;margin-top:0.4rem}
+  .fin-aff{border:2px solid #e3e3da;border-radius:14px;padding:1rem 1.1rem;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap}
+  .fin-aff .l .p{font-weight:800;font-size:1rem}.fin-aff .l .t{font-size:0.85rem;color:#6b7268;margin-top:2px}
+  .fin-aff .r{text-align:right}.fin-aff .r .v{font-weight:800;font-size:1.35rem;color:#2f6b2f}.fin-aff .r .lb{font-size:0.72rem;color:#6b7268}
+  .fin-aff.best{border-color:#2f6b2f;background:#e9f0e2}
+  .fin-hide{display:none}
+  </style>
+  <div class="fin-modes">
+    <button id="fin-mode-fwd" class="on" onclick="Modules.finSetMode('fwd')">Monthly figure</button>
+    <button id="fin-mode-rev" onclick="Modules.finSetMode('rev')">What can I afford?</button>
   </div>
-
-  <!-- Illustrative Calculator -->
-  <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm);margin-bottom:1.25rem;">
-    <h3 style="margin-bottom:1rem;"><i class="fas fa-calculator" style="color:var(--orange);margin-right:0.4rem;"></i> Illustrative Monthly Figure</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
-      <div class="form-grp">
-        <label class="form-lbl">Project Total (£)</label>
-        <div class="input-wrap">
-          <input type="number" id="fin-total" class="form-inp" value="5000" min="500" max="100000" step="100" oninput="Modules.calcFinance()" />
-          <span class="inp-sfx">£</span>
+  <div id="fin-view-fwd">
+    <div class="fin-grid">
+      <div class="fin-panel">
+        <div class="fin-fldrow">
+          <div><label class="fin-lbl" for="fin-total">Project Total (£)</label><div class="fin-iw"><input type="number" id="fin-total" class="fin-in" value="5000" min="500" max="100000" step="100" oninput="Modules.finRecalc()"><span class="sym">£</span></div></div>
+          <div><label class="fin-lbl" for="fin-deposit">Deposit (£)</label><div class="fin-iw"><input type="number" id="fin-deposit" class="fin-in" value="0" min="0" step="100" oninput="Modules.finRecalc()"><span class="sym">£</span></div></div>
         </div>
+        <div class="fin-sect">Finance product</div>
+        <div class="fin-prods" id="fin-prods">${Modules._finProductsHTML()}</div>
+        <div id="fin-bnpl-note" class="fin-note${Modules._fin.product==='bnpl'?'':' fin-hide'}"><b>How Buy Now Pay Later works:</b> nothing to pay for 12 months. Settle in full within the deferral period and you pay only the cash price plus a ${Modules._finGbp0(Modules._finFee())} fee, with no interest. If you let it run, it converts to monthly repayments at 19.9% APR.</div>
+        <div class="fin-sect">Repayment options</div>
+        <div class="fin-opts" id="fin-opts">${Modules._finOptsHTML()}</div>
       </div>
-      <div class="form-grp">
-        <label class="form-lbl">Finance Term</label>
-        <div class="input-wrap">
-          <select id="fin-term" class="form-inp" onchange="Modules.calcFinance()">
-            <option value="bnpl">Buy Now Pay Later (12 months)</option>
-            <option value="2">Interest Free — 2 years (Eco+ only)</option>
-            <option value="3">Interest Free — 3 years (Eco+ only)</option>
-            <option value="4">Interest Free — 4 years (Eco+ only)</option>
-            <option value="5">Interest Free — 5 years (Eco+ only)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div id="fin-result" style="background:var(--green-light);border-radius:var(--r-md);padding:1rem;text-align:center;">
-      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-soft);margin-bottom:0.35rem;">Illustrative Monthly Payment</div>
-      <div id="fin-monthly" style="font-size:2rem;font-weight:800;color:var(--green);">—</div>
-      <div id="fin-note" style="font-size:0.75rem;color:var(--text-soft);margin-top:0.25rem;"></div>
+      <div class="fin-summary"><h3>Loan illustration</h3><div id="fin-sbody">${Modules._finSummaryHTML()}</div></div>
     </div>
   </div>
-
-  <div class="calc-disclaimer">
-    <i class="fas fa-circle-info"></i>
-    <span>${escHtml(disclaimer)} ${escHtml(fcaLine)}</span>
+  <div id="fin-view-rev" class="fin-hide">
+    <div class="fin-grid">
+      <div class="fin-panel">
+        <label class="fin-lbl" for="fin-budget">What monthly payment feels comfortable? (£)</label>
+        <div class="fin-iw" style="max-width:320px"><input type="number" id="fin-budget" class="fin-in" value="150" min="20" max="5000" step="10" oninput="Modules.finRecalcRev()"><span class="sym">£/mo</span></div>
+        <p style="color:#6b7268;font-size:0.88rem;margin:0.6rem 0 1.4rem">We will show you the size of project that budget could support on each finance option.</p>
+        <div class="fin-sect">Your budget could fund…</div>
+        <div class="fin-aff-wrap" id="fin-affres">${Modules._finAffHTML()}</div>
+      </div>
+      <div class="fin-summary"><h3>Why this way round?</h3><p class="fin-ph" style="color:#e2eeda">Most people think in monthly budgets, not project totals. Start from what feels comfortable each month, and we will show what is possible — often more than you would expect, especially on interest-free credit with the Eco+ range.</p></div>
+    </div>
   </div>
+  <div class="calc-disclaimer"><i class="fas fa-circle-info"></i><span>${escHtml(disclaimer)} ${escHtml(fcaLine)}</span></div>
 </div>`;
   },
 
-  calcFinance() {
-    const total = parseFloat(document.getElementById('fin-total')?.value) || 0;
-    const term  = document.getElementById('fin-term')?.value;
-    const monthly = document.getElementById('fin-monthly');
-    const note    = document.getElementById('fin-note');
-    if (!monthly || !note) return;
-
-    if (!total) { monthly.textContent = '—'; note.textContent = ''; return; }
-
-    if (term === 'bnpl') {
-      monthly.textContent = `£${(total / 12).toFixed(2)}`;
-      note.textContent = `Pay £${total.toFixed(2)} within 12 months. £29 settlement fee applies.`;
-    } else {
-      const months = parseInt(term) * 12;
-      monthly.textContent = `£${(total / months).toFixed(2)}`;
-      note.textContent = `0% interest over ${term} years (${months} months). Eco+ range only.`;
-    }
-  },
+  _fin:{product:'bnpl',term:null,mode:'fwd'},
+  _finProducts(){const g=(k,d)=>AppState.getSettingStr(k,d);return[{id:'bnpl',nm:'BNPL',ds:'Buy now pay later',apr:parseFloat(g('finance.bnpl_apr','0.199')),aprLb:g('finance.bnpl_apr_label','19.9% APR'),badge:null},{id:'ifc',nm:'IFC',ds:'Interest free credit',apr:parseFloat(g('finance.ifc_apr','0')),aprLb:g('finance.ifc_apr_label','0% APR'),badge:'Eco+ only'},{id:'ibc',nm:'IBC',ds:'Interest bearing credit',apr:parseFloat(g('finance.ibc_apr','0.129')),aprLb:g('finance.ibc_apr_label','12.9% APR'),badge:null}];},
+  _finTerms(){const g=(k,d)=>AppState.getSettingStr(k,d);const parse=s=>String(s).split(',').map(x=>parseInt(x.trim(),10)).filter(Boolean);return{ifc:parse(g('finance.ifc_terms','24,36,48,60')),ibc:parse(g('finance.ibc_terms','36,48,60,120')),bnpl:[60]};},
+  _finFee(){return parseFloat(AppState.getSettingStr('finance.bnpl_fee','29'))||29;},
+  _finEffR(apr){return Math.pow(1+apr,1/12)-1;},
+  _finPay(P,n,apr){return apr===0?P/n:P*Modules._finEffR(apr)/(1-Math.pow(1+Modules._finEffR(apr),-n));},
+  _finRev(M,n,apr){return apr===0?M*n:M*(1-Math.pow(1+Modules._finEffR(apr),-n))/Modules._finEffR(apr);},
+  _finGbp(v){return '£'+Number(v).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});},
+  _finGbp0(v){return '£'+Math.round(v).toLocaleString('en-GB');},
+  _finBorrowed(){const te=document.getElementById('fin-total'),de=document.getElementById('fin-deposit');const t=te?Math.max(0,parseFloat(te.value)||0):(parseFloat(AppState.getSettingStr('finance.default_total','5000'))||5000);const d=Math.min(t,Math.max(0,parseFloat(de?de.value:'0')||0));return{t,d,P:t-d};},
+  _finBudget(){const e=document.getElementById('fin-budget');return e?Math.max(0,parseFloat(e.value)||0):(parseFloat(AppState.getSettingStr('finance.default_budget','150'))||150);},
+  _finOptionData(){const {P}=Modules._finBorrowed();const prod=Modules._finProducts().find(p=>p.id===Modules._fin.product);const fee=Modules._finFee();if(Modules._fin.product==='bnpl'){const settle=P+fee,P2=P*(1+prod.apr),m=Modules._finPay(P2,60,prod.apr);return[{key:'settle',amt:Modules._finGbp(settle)+' total',tm:'Settle within 12 months',sub:`No interest. Cash price plus ${Modules._finGbp0(fee)} settlement fee.`,n:12,monthly:null,total:settle,interest:fee,defer:true},{key:'run',amt:Modules._finGbp(m)+'/month',tm:'60 months after deferral',sub:`Repay ${Modules._finGbp(m*60)} inc. ${Modules._finGbp(m*60-P)} interest (illustrative)`,n:60,monthly:m,total:m*60,interest:m*60-P,defer:true}];}return Modules._finTerms()[Modules._fin.product].map(n=>{const m=Modules._finPay(P,n,prod.apr),tot=m*n,int=tot-P;return{key:String(n),amt:Modules._finGbp(m)+'/month',tm:n+' months',sub:prod.apr===0?`Repay ${Modules._finGbp(tot)} interest free`:`Repay ${Modules._finGbp(tot)} inc. ${Modules._finGbp(int)} interest`,n,monthly:m,total:tot,interest:int,defer:false};});},
+  _finProductsHTML(){return Modules._finProducts().map(p=>`<button class="fin-prod ${Modules._fin.product===p.id?'on':''}" onclick="Modules.finPick('${p.id}')">${p.badge?`<span class="fin-badge">${p.badge}</span>`:''}<span class="fin-nm"><span class="fin-dot"></span>${p.nm}</span><div class="fin-ds">${p.ds}</div><div class="fin-apr">${p.aprLb}</div></button>`).join('');},
+  _finOptsHTML(){const data=Modules._finOptionData();if(!data.find(o=>o.key===Modules._fin.term))Modules._fin.term=null;return data.map(o=>`<button class="fin-opt ${Modules._fin.term===o.key?'on':''}" onclick="Modules.finPickTerm('${o.key}')"><span class="fin-dot"></span><span><div class="fin-amt">${o.amt}</div><div class="fin-tm">${o.tm}</div><div class="fin-sub">${o.sub}</div></span></button>`).join('');},
+  _finSummaryHTML(){const data=Modules._finOptionData();const o=data.find(x=>x.key===Modules._fin.term);const {t,d,P}=Modules._finBorrowed();const prod=Modules._finProducts().find(p=>p.id===Modules._fin.product);if(!o)return '<p class="fin-ph">Choose a repayment option to see your illustration.</p>';return `<div class="fin-srow"><span class="k">Total cost</span><span class="v">${Modules._finGbp(t)}</span></div><div class="fin-srow"><span class="k">Deposit</span><span class="v">${Modules._finGbp(d)}</span></div><div class="fin-srow"><span class="k">Amount borrowed</span><span class="v">${Modules._finGbp(P)}</span></div>${o.defer?'<div class="fin-srow"><span class="k">Deferred for</span><span class="v">12 months</span></div>':''}<div class="fin-srow"><span class="k">Repaid over</span><span class="v">${o.monthly?o.n+' months':'within 12 months'}</span></div><div class="fin-srow"><span class="k">Representative APR</span><span class="v">${prod.aprLb}${o.key==='settle'?' (0% if settled)':''}</span></div><div class="fin-srow"><span class="k">Interest / fees</span><span class="v">${Modules._finGbp(o.interest)}</span></div><div class="fin-srow"><span class="k">Total payable</span><span class="v">${Modules._finGbp(o.total)}</span></div><div class="fin-srow big"><span class="k">${o.monthly?'Monthly repayment':'One-off settlement'}</span><span class="v">${o.monthly?Modules._finGbp(o.monthly):Modules._finGbp(o.total)}</span></div>`;},
+  _finAffHTML(){const M=Modules._finBudget();const T=Modules._finTerms();const prods=Modules._finProducts();const ifc=prods.find(p=>p.id==='ifc'),ibc=prods.find(p=>p.id==='ibc');const rows=[];T.ifc.forEach(n=>rows.push({p:'Interest Free Credit',badge:'Eco+ only · '+ifc.aprLb,t:n,v:Modules._finRev(M,n,ifc.apr),best:n===60}));T.ibc.forEach(n=>rows.push({p:'Interest Bearing Credit',badge:ibc.aprLb,t:n,v:Modules._finRev(M,n,ibc.apr),best:false}));return rows.map(r=>`<div class="fin-aff ${r.best?'best':''}"><div class="l"><div class="p">${r.p} · ${r.t} months</div><div class="t">${r.badge}</div></div><div class="r"><div class="v">${Modules._finGbp0(r.v)}</div><div class="lb">project total</div></div></div>`).join('');},
+  finPick(id){Modules._fin.product=id;Modules._fin.term=null;const p=document.getElementById('fin-prods');if(p)p.innerHTML=Modules._finProductsHTML();const note=document.getElementById('fin-bnpl-note');if(note)note.classList.toggle('fin-hide',id!=='bnpl');Modules.finRecalc();},
+  finPickTerm(k){Modules._fin.term=k;Modules.finRecalc();},
+  finRecalc(){const o=document.getElementById('fin-opts');if(o)o.innerHTML=Modules._finOptsHTML();const s=document.getElementById('fin-sbody');if(s)s.innerHTML=Modules._finSummaryHTML();},
+  finRecalcRev(){const a=document.getElementById('fin-affres');if(a)a.innerHTML=Modules._finAffHTML();},
+  finSetMode(m){Modules._fin.mode=m;const f=document.getElementById('fin-mode-fwd'),r=document.getElementById('fin-mode-rev'),vf=document.getElementById('fin-view-fwd'),vr=document.getElementById('fin-view-rev');if(f)f.classList.toggle('on',m==='fwd');if(r)r.classList.toggle('on',m==='rev');if(vf)vf.classList.toggle('fin-hide',m!=='fwd');if(vr)vr.classList.toggle('fin-hide',m!=='rev');},
 
   /* ============================================================
      GET YOUR QUOTE (Close screen)

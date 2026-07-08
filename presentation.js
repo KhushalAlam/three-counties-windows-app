@@ -46,6 +46,7 @@ const Presentation = {
       slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
       slide.id === 'gallery'     ? Modules.renderGallery()   :
       slide.id === 'welcome'     ? Modules.renderWelcome()   :
+      slide.id === 'finance'     ? Modules.renderFinance()   :
       slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
@@ -409,6 +410,7 @@ const CustomerPresentation = {
       slide.id === 'how_we_help' ? Modules.renderHowWeHelp() :
       slide.id === 'gallery'     ? Modules.renderGallery()   :
       slide.id === 'welcome'     ? Modules.renderWelcome()   :
+      slide.id === 'finance'     ? Modules.renderFinance()   :
       slide.html;
     window.__injectedScripts = window.__injectedScripts || new Set();
     container.querySelectorAll('script').forEach(old => {
