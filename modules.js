@@ -20,7 +20,7 @@ const Modules = {
       : selD.length === 1 ? selD[0]
       : selD.length === 2 ? selD.join(' & ')
       : `${selD[0]}, ${selD[1]} & ${selD[2]}`;
-    const defaultHeroes = ['welcome-1.jpg','welcome-2.png','welcome-3.png','welcome-4.png'];
+    const defaultHeroes = ['welcome-1.jpg','welcome-2.jpg','welcome-3.jpg','welcome-4.jpg'];
     let heroes;
     if (sel.length > 0) {
       heroes = Modules.gallery.filter(g => AppState.products.has(g.product)).map(g => g.src).slice(0, 4);
