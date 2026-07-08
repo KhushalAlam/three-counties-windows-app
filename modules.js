@@ -14,6 +14,12 @@ const Modules = {
       : sel.length === 1 ? sel[0]
       : sel.length === 2 ? sel.join(' & ')
       : `${sel[0]}, ${sel[1]} & ${sel[2]}`;
+    const displayMap = { windows: 'windows', doors: 'doors', conservatories: 'conservatory' };
+    const selD = sel.map(p => displayMap[p]);
+    const headlineLabel = selD.length === 0 ? 'windows'
+      : selD.length === 1 ? selD[0]
+      : selD.length === 2 ? selD.join(' & ')
+      : `${selD[0]}, ${selD[1]} & ${selD[2]}`;
     const defaultHeroes = ['welcome-1.jpg','welcome-2.png','welcome-3.png','welcome-4.png'];
     let heroes;
     if (sel.length > 0) {
@@ -25,7 +31,7 @@ const Modules = {
     return `
 <div class="slide" id="slide-welcome" style="position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;">
   <div class="slide-eyebrow green"><i class="fas fa-house"></i> Three Counties</div>
-  <h1 class="slide-h1" style="font-size:2rem;max-width:600px;">Let's find the <span class="accent">right ${productLabel}</span> for your home</h1>
+  <h1 class="slide-h1" style="font-size:2rem;max-width:600px;">Let's find the <span class="accent">right ${headlineLabel}</span> for your home</h1>
   <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">No hassle, no pressure. Just clear, honest advice from a local team that has been doing this for over 20 years.</p>
   <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">We will walk through everything that matters to you, from how the ${productLabel} perform to what they cost and how to spread it. Take your time, ask anything, and we will only ever recommend what is right for your home.</p>
   <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
@@ -159,7 +165,13 @@ const Modules = {
       : selProducts.length === 1 ? selProducts[0]
       : selProducts.length === 2 ? selProducts.join(' & ')
       : `${selProducts[0]}, ${selProducts[1]} & ${selProducts[2]}`;
-    const headline = `The right ${productLabel}, <span class="accent">done properly</span>`;
+    const displayMap = { windows: 'windows', doors: 'doors', conservatories: 'conservatory' };
+    const selD = selProducts.map(p => displayMap[p]);
+    const headlineLabel = selD.length === 0 ? 'windows'
+      : selD.length === 1 ? selD[0]
+      : selD.length === 2 ? selD.join(' & ')
+      : `${selD[0]}, ${selD[1]} & ${selD[2]}`;
+    const headline = `The right ${headlineLabel}, <span class="accent">done properly</span>`;
 
     // --- Sentence selection & ordering ---
     const priorityWeight = ['security', 'thermal', 'resell', 'aesthetics', 'maintenance'];
