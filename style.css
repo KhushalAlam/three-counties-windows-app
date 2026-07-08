@@ -174,7 +174,7 @@ input, textarea, select { font-family: var(--font); }
   justify-content: flex-start;
   padding: 2rem 2rem 2rem;
   text-align: center;
-  background: linear-gradient(rgba(245,245,240,0.88), rgba(245,245,240,0.93)), url('main-display.png') center/cover no-repeat;
+  background: linear-gradient(rgba(245,245,240,0.88), rgba(245,245,240,0.93)), url('main-display.jpg') center/cover no-repeat;
 }
 
 .home-logo {

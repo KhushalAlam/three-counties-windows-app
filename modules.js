@@ -276,17 +276,17 @@ const Modules = {
      GALLERY
      ============================================================ */
   gallery: [
-    {src:'ourwork-1.png',  product:'windows',        priority:null},
-    {src:'ourwork-2.png',  product:'doors',          priority:null},
-    {src:'ourwork-3.png',  product:'conservatories', priority:null},
-    {src:'ourwork-4.png',  product:'conservatories', priority:null},
+    {src:'ourwork-1.jpg',  product:'windows',        priority:null},
+    {src:'ourwork-2.jpg',  product:'doors',          priority:null},
+    {src:'ourwork-3.jpg',  product:'conservatories', priority:null},
+    {src:'ourwork-4.jpg',  product:'conservatories', priority:null},
     {src:'ourwork-5.jpg',  product:'windows',        priority:null},
-    {src:'ourwork-6.png',  product:'doors',          priority:null},
-    {src:'ourwork-7.png',  product:'doors',          priority:null},
-    {src:'ourwork-8.png',  product:'windows',        priority:null},
-    {src:'ourwork-9.png',  product:'doors',          priority:null},
-    {src:'ourwork-10.png', product:'conservatories', priority:null},
-    {src:'ourwork-11.png', product:'windows',        priority:null},
+    {src:'ourwork-6.jpg',  product:'doors',          priority:null},
+    {src:'ourwork-7.jpg',  product:'doors',          priority:null},
+    {src:'ourwork-8.jpg',  product:'windows',        priority:null},
+    {src:'ourwork-9.jpg',  product:'doors',          priority:null},
+    {src:'ourwork-10.jpg', product:'conservatories', priority:null},
+    {src:'ourwork-11.jpg', product:'windows',        priority:null},
     {src:'ourwork-12.jpg', product:'windows',        priority:null}
   ],
   _galleryVisible: [],
