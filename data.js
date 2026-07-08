@@ -424,15 +424,15 @@ const MODULE_REGISTRY = [
 const PRESETS = {
   security: {
     name: 'Security Focus',
-    modules: ['welcome', 'priorities', 'secure_living', 'why_choose', 'reviews', 'get_quote']
+    modules: ['welcome', 'priorities', 'how_we_help', 'secure_living', 'why_choose', 'reviews', 'get_quote']
   },
   thermal: {
     name: 'Thermal & Finance',
-    modules: ['welcome', 'priorities', 'eco_vs_eco_plus', 'finance', 'why_choose', 'get_quote']
+    modules: ['welcome', 'priorities', 'how_we_help', 'eco_vs_eco_plus', 'finance', 'why_choose', 'get_quote']
   },
   aesthetics: {
     name: 'Aesthetics Focus',
-    modules: ['welcome', 'priorities', 'gallery', 'door_builder', 'reviews', 'get_quote']
+    modules: ['welcome', 'priorities', 'how_we_help', 'gallery', 'door_builder', 'reviews', 'get_quote']
   },
   trust: {
     name: 'Trust Builder',
@@ -440,7 +440,7 @@ const PRESETS = {
   },
   all: {
     name: 'Full Deck',
-    modules: ['welcome', 'priorities', 'eco_vs_eco_plus', 'gallery', 'door_builder', 'why_choose', 'reviews', 'installs_map', 'secure_living', 'finance', 'get_quote']
+    modules: ['welcome', 'priorities', 'how_we_help', 'eco_vs_eco_plus', 'gallery', 'door_builder', 'why_choose', 'reviews', 'installs_map', 'secure_living', 'finance', 'get_quote']
   }
 };
 
