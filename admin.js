@@ -72,6 +72,10 @@ const Admin = {
         content.innerHTML = await Admin.renderWhyChooseEditor();
         Admin.bindContentListEvents('why_choose', 'hub_item');
         break;
+      case 'how_we_help':
+        content.innerHTML = await Admin.renderHowWeHelpEditor();
+        Admin.bindContentListEvents('how_we_help', 'how_we_help');
+        break;
       default:
         content.innerHTML = '<div class="empty-state"><p>Section not found.</p></div>';
     }
@@ -536,12 +540,14 @@ const Admin = {
       journey_step: { fields: [{ key: 'title', label: 'Step Title', type: 'text' }, { key: 'meta1', label: 'Timing (e.g. Day 1)', type: 'text' }, { key: 'body', label: 'Description', type: 'textarea' }] },
       video: { fields: [{ key: 'title', label: 'Video Title', type: 'text' }, { key: 'meta2', label: 'Video URL (YouTube or Vimeo)', type: 'text' }, { key: 'meta1', label: 'Caption / Description', type: 'text' }] },
       hub_item: { fields: [{ key: 'title', label: 'USP Title (e.g. MCS Certified)', type: 'text' }, { key: 'body', label: 'USP Description', type: 'text' }, { key: 'meta1', label: 'Icon (e.g. fa-certificate)', type: 'text' }] },
-      secure_living: { fields: [{ key: 'meta1', label: 'Figure (e.g. £1,000) — leave blank for the intro banner', type: 'text' }, { key: 'title', label: 'Card Label (e.g. Emergency Boarding Up)', type: 'text' }, { key: 'body', label: 'Description / Intro banner text', type: 'textarea' }] }
+      secure_living: { fields: [{ key: 'meta1', label: 'Figure (e.g. £1,000) — leave blank for the intro banner', type: 'text' }, { key: 'title', label: 'Card Label (e.g. Emergency Boarding Up)', type: 'text' }, { key: 'body', label: 'Description / Intro banner text', type: 'textarea' }] },
+      how_we_help: { fields: [{ key: 'title', label: 'Sentence text', type: 'textarea' }, { key: 'meta1', label: 'Product', type: 'select', options: ['windows','doors','conservatories'] }, { key: 'meta2', label: 'Priority', type: 'select', options: ['security','thermal','aesthetics','maintenance','resell'] }] }
     };
     const config = typeConfig[type] || { fields: [] };
     const isActive = item.is_active !== false;
     const fieldsHTML = config.fields.map(f => {
       const val = escHtml(item[f.key] || '');
+      if (f.type === 'select') return `<div class="admin-field"><label>${f.label}</label><select class="admin-input" data-field="${f.key}">${f.options.map(o => `<option value="${o}" ${ (item[f.key]||'') === o ? 'selected' : ''}>${o}</option>`).join('')}</select></div>`;
       if (f.type === 'textarea') return `<div class="admin-field"><label>${f.label}</label><textarea class="admin-textarea" data-field="${f.key}">${val}</textarea></div>`;
       return `<div class="admin-field"><label>${f.label}</label><input type="${f.type}" class="admin-input" data-field="${f.key}" value="${val}" ${f.min !== undefined ? 'min="' + f.min + '"' : ''} ${f.max !== undefined ? 'max="' + f.max + '"' : ''} /></div>`;
     }).join('');
@@ -626,10 +632,10 @@ const Admin = {
     const existingItems = Object.values(AppState.contentItems).filter(i => i.module_id === moduleId);
     const newItem = {
       module_id: moduleId, content_type: type,
-      title: type === 'faq' ? 'New Question' : type === 'review' ? 'New Review' : type === 'video' ? 'New Video' : type === 'hub_item' ? 'New USP' : 'New Step',
+      title: type === 'faq' ? 'New Question' : type === 'review' ? 'New Review' : type === 'video' ? 'New Video' : type === 'hub_item' ? 'New USP' : type === 'how_we_help' ? 'New sentence' : 'New Step',
       body: '',
-      meta1: type === 'review' ? 'Customer Name' : type === 'journey_step' ? 'Week 1' : type === 'hub_item' ? 'fa-star' : '',
-      meta2: type === 'review' ? '5' : '', meta3: '',
+      meta1: type === 'review' ? 'Customer Name' : type === 'journey_step' ? 'Week 1' : type === 'hub_item' ? 'fa-star' : type === 'how_we_help' ? 'windows' : '',
+      meta2: type === 'review' ? '5' : type === 'how_we_help' ? 'security' : '', meta3: '',
       sort_order: existingItems.length + 1,
       is_active: type !== 'video', _isNew: true
     };
@@ -1108,6 +1114,21 @@ const Admin = {
       </div>
       <button class="admin-add-btn mt-2" onclick="Admin.addNewItem('why_choose', 'hub_item')">
         <i class="fas fa-plus"></i> Add New Card
+      </button>`;
+  },
+
+  async renderHowWeHelpEditor() {
+    const items = AppState.getModuleItems('how_we_help');
+    return `
+      <div class="admin-section-header">
+        <h2><i class="fas fa-hands-helping" style="color:var(--orange);margin-right:0.5rem;"></i> How We Help</h2>
+        <p>Edit the tagged sentences on the "How We Help" slide. Each sentence has a Product and a Priority tag; the slide shows sentences matching the customer's selection. Reorder via Sort Order.</p>
+      </div>
+      <div class="admin-list" id="admin-how_we_help-list">
+        ${Admin.renderContentItemsList(items, 'how_we_help')}
+      </div>
+      <button class="admin-add-btn mt-2" onclick="Admin.addNewItem('how_we_help', 'how_we_help')">
+        <i class="fas fa-plus"></i> Add New Sentence
       </button>`;
   },
 };
