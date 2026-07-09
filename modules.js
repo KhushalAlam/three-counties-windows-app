@@ -184,7 +184,11 @@ const Modules = {
     if (!hasProducts) {
       sentences = Modules.howWeHelpDefault;
     } else {
-      const matched = Modules.howWeHelpSentences.filter(
+      const dbRows = AppState.getModuleItems('how_we_help');
+      const sourceSentences = (dbRows && dbRows.length)
+        ? dbRows.map(r => ({ product: r.meta1, priority: r.meta2, text: r.title }))
+        : Modules.howWeHelpSentences;
+      const matched = sourceSentences.filter(
         s => AppState.products.has(s.product) && (!hasPriorities || AppState.priorities.has(s.priority))
       );
       if (matched.length === 0) {
