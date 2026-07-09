@@ -681,7 +681,7 @@ const Modules = {
     <div class="fin-grid">
       <div class="fin-panel">
         <div class="fin-fldrow">
-          <div><label class="fin-lbl" for="fin-total">Project Total (£)</label><div class="fin-iw"><input type="number" id="fin-total" class="fin-in" value="5000" min="${Modules._finMinTotal()}" max="${Modules._finMaxTotal()}" step="100" oninput="Modules.finRecalc()"><span class="sym">£</span></div></div>
+          <div><label class="fin-lbl" for="fin-total">Project Total (£)</label><div class="fin-iw"><input type="number" id="fin-total" class="fin-in" value="${parseFloat(AppState.getSettingStr('finance.default_total','5000'))||5000}" min="${Modules._finMinTotal()}" max="${Modules._finMaxTotal()}" step="100" oninput="Modules.finRecalc()"><span class="sym">£</span></div></div>
           <div><label class="fin-lbl" for="fin-deposit">Deposit (£)</label><div class="fin-iw"><input type="number" id="fin-deposit" class="fin-in" value="0" min="0" step="100" oninput="Modules.finRecalc()"><span class="sym">£</span></div></div>
         </div>
         <div class="fin-sect">Finance product</div>
