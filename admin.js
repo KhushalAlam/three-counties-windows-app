@@ -16,6 +16,7 @@ const Admin = {
     if (!content) return;
     content.innerHTML = '<div class="loading"><i class="fas fa-circle-notch fa-spin"></i> Loading...</div>';
     switch (section) {
+      case 'settings':
       case 'calculator':
         content.innerHTML = await Admin.renderCalculatorSettings();
         Admin.bindCalculatorSettingsSave();
