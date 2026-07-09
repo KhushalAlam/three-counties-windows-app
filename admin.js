@@ -64,6 +64,10 @@ const Admin = {
         content.innerHTML = await Admin.renderSecureLivingEditor();
         Admin.bindContentListEvents('secure_living', 'secure_living');
         break;
+      case 'finance':
+        content.innerHTML = await Admin.renderFinanceEditor();
+        Admin.bindFinanceEditorSave();
+        break;
       default:
         content.innerHTML = '<div class="empty-state"><p>Section not found.</p></div>';
     }
@@ -1040,6 +1044,51 @@ const Admin = {
         else ok = false;
       }
       showToast(ok ? 'Welcome text saved!' : 'Some text failed to save.', ok ? 'success' : 'error');
+    });
+  },
+
+  async renderFinanceEditor() {
+    const s = AppState.settings;
+    const f = (key, attrs='') => { const r = s[key]; if (!r) return ''; const isTA = (r.setting_value||'').length > 60; const inp = isTA
+      ? `<textarea class="admin-input fin-set-input" data-record-id="${r.id}" data-key="${key}" rows="3">${escHtml(r.setting_value)}</textarea>`
+      : `<input class="admin-input fin-set-input" data-record-id="${r.id}" data-key="${key}" value="${escHtml(r.setting_value)}" ${attrs} />`;
+      return `<div class="admin-field"><label>${escHtml(r.label)}</label><div class="field-desc">${escHtml(r.description)}</div>${inp}</div>`; };
+    return `
+      <div class="admin-section-header"><h2><i class="fas fa-pound-sign" style="color:var(--orange);margin-right:0.5rem;"></i> Finance Calculator</h2><p>These values feed the live calculator. APRs are decimals (0.199 = 19.9%). The payment formulas and the IFC 0% rate are fixed in code and not editable.</p></div>
+      <div class="admin-card"><div class="admin-card-header"><h3>Rates & fees</h3></div>
+        ${f('finance.bnpl_apr')}${f('finance.ibc_apr')}${f('finance.bnpl_fee')}${f('finance.bnpl_deferral')}
+      </div>
+      <div class="admin-card"><div class="admin-card-header"><h3>Term options</h3></div>
+        ${f('finance.ifc_terms')}${f('finance.ibc_terms')}
+      </div>
+      <div class="admin-card"><div class="admin-card-header"><h3>Input boundaries</h3></div>
+        ${f('finance.min_total')}${f('finance.max_total')}${f('finance.default_total')}${f('finance.default_budget')}
+      </div>
+      <div class="admin-card"><div class="admin-card-header"><h3>Compliance text</h3></div>
+        ${f('finance.disclaimer')}${f('finance.fca_line')}
+      </div>
+      <div class="admin-save-btn-row"><button class="btn-primary" id="btn-save-finance"><i class="fas fa-floppy-disk"></i> Save Finance Settings</button></div>`;
+  },
+
+  bindFinanceEditorSave() {
+    const btn = document.getElementById('btn-save-finance');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const val = k => { const el = document.querySelector('.fin-set-input[data-key="'+k+'"]'); return el ? el.value.trim() : null; };
+      const errs = [];
+      const apr = k => parseFloat(val(k));
+      ['finance.bnpl_apr','finance.ibc_apr'].forEach(k => { const v = apr(k); if (isNaN(v) || v < 0 || v > 0.5) errs.push(k+' must be a decimal between 0 and 0.50 (0.199 = 19.9%).'); });
+      const fee = parseFloat(val('finance.bnpl_fee')); if (isNaN(fee) || fee < 0) errs.push('BNPL fee must be 0 or more.');
+      const defer = parseInt(val('finance.bnpl_deferral'),10); if (isNaN(defer) || defer < 1 || !Number.isInteger(defer)) errs.push('Deferral must be a whole number of months.');
+      const termsOk = k => { const parts = (val(k)||'').split(',').map(x=>x.trim()); return parts.length>0 && parts.every(x=>/^\d+$/.test(x)); };
+      ['finance.ifc_terms','finance.ibc_terms'].forEach(k => { if (!termsOk(k)) errs.push(k+' must be whole months separated by commas, e.g. 24,36,48,60.'); });
+      const mn = parseFloat(val('finance.min_total')), mx = parseFloat(val('finance.max_total'));
+      if (isNaN(mn) || isNaN(mx) || mn >= mx) errs.push('Minimum project total must be below the maximum.');
+      if (errs.length) { showToast(errs[0], 'error'); return; }
+      const inputs = document.querySelectorAll('.fin-set-input');
+      let ok = true;
+      for (const input of inputs) { const v = input.value.trim(); if (!input.dataset.recordId || v === '') continue; const res = await API.saveSetting(input.dataset.recordId, v); if (res) { if (AppState.settings[input.dataset.key]) AppState.settings[input.dataset.key].setting_value = v; } else ok = false; }
+      showToast(ok ? 'Finance settings saved!' : 'Some settings failed to save.', ok ? 'success' : 'error');
     });
   },
 };
