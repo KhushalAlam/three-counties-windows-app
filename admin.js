@@ -68,6 +68,10 @@ const Admin = {
         content.innerHTML = await Admin.renderFinanceEditor();
         Admin.bindFinanceEditorSave();
         break;
+      case 'why_choose':
+        content.innerHTML = await Admin.renderWhyChooseEditor();
+        Admin.bindContentListEvents('why_choose', 'hub_item');
+        break;
       default:
         content.innerHTML = '<div class="empty-state"><p>Section not found.</p></div>';
     }
@@ -1090,5 +1094,20 @@ const Admin = {
       for (const input of inputs) { const v = input.value.trim(); if (!input.dataset.recordId || v === '') continue; const res = await API.saveSetting(input.dataset.recordId, v); if (res) { if (AppState.settings[input.dataset.key]) AppState.settings[input.dataset.key].setting_value = v; } else ok = false; }
       showToast(ok ? 'Finance settings saved!' : 'Some settings failed to save.', ok ? 'success' : 'error');
     });
+  },
+
+  async renderWhyChooseEditor() {
+    const items = AppState.getModuleItems('why_choose');
+    return `
+      <div class="admin-section-header">
+        <h2><i class="fas fa-shield-halved" style="color:var(--orange);margin-right:0.5rem;"></i> Why Choose 3C</h2>
+        <p>Edit the USP cards on the "Why choose Three Counties" slide. Each card has a title, a short description, and an icon. Reorder via Sort Order.</p>
+      </div>
+      <div class="admin-list" id="admin-why_choose-list">
+        ${Admin.renderContentItemsList(items, 'hub_item')}
+      </div>
+      <button class="admin-add-btn mt-2" onclick="Admin.addNewItem('why_choose', 'hub_item')">
+        <i class="fas fa-plus"></i> Add New Card
+      </button>`;
   },
 };
