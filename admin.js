@@ -56,6 +56,10 @@ const Admin = {
       case 'decks_admin':
         content.innerHTML = await Admin.renderDecksAdmin();
         break;
+      case 'welcome':
+        content.innerHTML = await Admin.renderWelcomeEditor();
+        Admin.bindWelcomeEditorSave();
+        break;
       default:
         content.innerHTML = '<div class="empty-state"><p>Section not found.</p></div>';
     }
@@ -985,5 +989,37 @@ const Admin = {
     if (!confirm('Permanently delete this deck? This cannot be undone.')) return;
     const result = await API.hardDeleteDeck(deckId);
     if (result) { btn.closest('.admin-list-item').remove(); showToast('Deck deleted.', ''); }
-  }
+  },
+
+  async renderWelcomeEditor() {
+    const s = AppState.settings;
+    const field = (key) => {
+      const r = s[key]; if (!r) return '';
+      return `<div class="admin-field"><label>${escHtml(r.label)}</label><div class="field-desc">${escHtml(r.description)}</div><textarea class="admin-input welcome-setting-input" data-record-id="${r.id}" data-key="${key}" rows="4">${escHtml(r.setting_value)}</textarea></div>`;
+    };
+    return `
+      <div class="admin-section-header"><h2><i class="fas fa-house" style="color:var(--orange);margin-right:0.5rem;"></i> Welcome Page</h2><p>Edit the intro text on the opening slide. In the body, {product} is replaced with the customer's selected product.</p></div>
+      <div class="admin-card">
+        <div class="admin-card-header"><h3>Welcome text</h3></div>
+        ${field('welcome.lead')}
+        ${field('welcome.body')}
+        <div class="admin-save-btn-row"><button class="btn-primary" id="btn-save-welcome"><i class="fas fa-floppy-disk"></i> Save Welcome Text</button></div>
+      </div>`;
+  },
+  bindWelcomeEditorSave() {
+    const btn = document.getElementById('btn-save-welcome');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const inputs = document.querySelectorAll('.welcome-setting-input');
+      let ok = true;
+      for (const input of inputs) {
+        const val = input.value.trim();
+        if (!input.dataset.recordId || val === '') continue;
+        const res = await API.saveSetting(input.dataset.recordId, val);
+        if (res) { if (AppState.settings[input.dataset.key]) AppState.settings[input.dataset.key].setting_value = val; }
+        else ok = false;
+      }
+      showToast(ok ? 'Welcome text saved!' : 'Some text failed to save.', ok ? 'success' : 'error');
+    });
+  },
 };

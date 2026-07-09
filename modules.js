@@ -28,12 +28,14 @@ const Modules = {
     } else {
       heroes = defaultHeroes;
     }
+    const wLead = AppState.getSettingStr('welcome.lead', 'No hassle, no pressure. Just clear, honest advice from a local team that has been doing this for over 20 years.');
+    const wBody = (AppState.getSettingStr('welcome.body', 'We will walk through everything that matters to you, from how the {product} perform to what they cost and how to spread it. Take your time, ask anything, and we will only ever recommend what is right for your home.')).split('{product}').join(productLabel);
     return `
 <div class="slide" id="slide-welcome" style="position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 1.5rem;">
   <div class="slide-eyebrow green"><i class="fas fa-house"></i> Three Counties</div>
   <h1 class="slide-h1" style="font-size:2rem;max-width:600px;">Let's find the <span class="accent">right ${headlineLabel}</span> for your home</h1>
-  <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">No hassle, no pressure. Just clear, honest advice from a local team that has been doing this for over 20 years.</p>
-  <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">We will walk through everything that matters to you, from how the ${productLabel} perform to what they cost and how to spread it. Take your time, ask anything, and we will only ever recommend what is right for your home.</p>
+  <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">${escHtml(wLead)}</p>
+  <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">${wBody}</p>
   <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
