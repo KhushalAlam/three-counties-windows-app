@@ -60,6 +60,10 @@ const Admin = {
         content.innerHTML = await Admin.renderWelcomeEditor();
         Admin.bindWelcomeEditorSave();
         break;
+      case 'secure_living':
+        content.innerHTML = await Admin.renderSecureLivingEditor();
+        Admin.bindContentListEvents('secure_living', 'secure_living');
+        break;
       default:
         content.innerHTML = '<div class="empty-state"><p>Section not found.</p></div>';
     }
@@ -199,6 +203,21 @@ const Admin = {
       </div>
       <button class="admin-add-btn mt-2" onclick="Admin.addNewItem('reviews', 'review')">
         <i class="fas fa-plus"></i> Add New Review
+      </button>`;
+  },
+
+  async renderSecureLivingEditor() {
+    const items = AppState.getModuleItems('secure_living');
+    return `
+      <div class="admin-section-header">
+        <h2><i class="fas fa-shield" style="color:var(--orange);margin-right:0.5rem;"></i> Security Guaranteed</h2>
+        <p>Edit the Secure Living page. The first item is the intro banner text; the rest are the payout cards (figure, label, description). Drag order via Sort Order.</p>
+      </div>
+      <div class="admin-list" id="admin-secure_living-list">
+        ${Admin.renderContentItemsList(items, 'secure_living')}
+      </div>
+      <button class="admin-add-btn mt-2" onclick="Admin.addNewItem('secure_living', 'secure_living')">
+        <i class="fas fa-plus"></i> Add New Payout Card
       </button>`;
   },
 
@@ -508,7 +527,8 @@ const Admin = {
       review: { fields: [{ key: 'title', label: 'Review Headline', type: 'text' }, { key: 'body', label: 'Review Text', type: 'textarea' }, { key: 'meta1', label: 'Reviewer Name', type: 'text' }, { key: 'meta2', label: 'Star Rating (1-5)', type: 'number', min: 1, max: 5 }, { key: 'meta3', label: 'Location', type: 'text' }] },
       journey_step: { fields: [{ key: 'title', label: 'Step Title', type: 'text' }, { key: 'meta1', label: 'Timing (e.g. Day 1)', type: 'text' }, { key: 'body', label: 'Description', type: 'textarea' }] },
       video: { fields: [{ key: 'title', label: 'Video Title', type: 'text' }, { key: 'meta2', label: 'Video URL (YouTube or Vimeo)', type: 'text' }, { key: 'meta1', label: 'Caption / Description', type: 'text' }] },
-      hub_item: { fields: [{ key: 'title', label: 'USP Title (e.g. MCS Certified)', type: 'text' }, { key: 'body', label: 'USP Description', type: 'text' }, { key: 'meta1', label: 'Icon (e.g. fa-certificate)', type: 'text' }] }
+      hub_item: { fields: [{ key: 'title', label: 'USP Title (e.g. MCS Certified)', type: 'text' }, { key: 'body', label: 'USP Description', type: 'text' }, { key: 'meta1', label: 'Icon (e.g. fa-certificate)', type: 'text' }] },
+      secure_living: { fields: [{ key: 'meta1', label: 'Figure (e.g. £1,000) — leave blank for the intro banner', type: 'text' }, { key: 'title', label: 'Card Label (e.g. Emergency Boarding Up)', type: 'text' }, { key: 'body', label: 'Description / Intro banner text', type: 'textarea' }] }
     };
     const config = typeConfig[type] || { fields: [] };
     const isActive = item.is_active !== false;
