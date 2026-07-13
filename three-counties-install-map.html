@@ -18,7 +18,7 @@
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     background:var(--tc-bg);color:var(--tc-ink);
-    padding:18px clamp(16px,4vw,32px);
+    padding:0;
   }
   .eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
     letter-spacing:.12em;text-transform:uppercase;color:var(--tc-ink);margin-bottom:14px}
@@ -27,9 +27,8 @@
   h1 span{color:var(--tc-green)}
   .sub{font-size:17px;color:var(--tc-body);margin-bottom:6px}
   .note{font-size:14px;color:var(--tc-body);margin-bottom:26px}
-  .map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(30,60,40,.14);
-    background:#fff;position:relative}
-  #map{height:min(78vh,640px);width:100%;background:#e8efe9}
+  .map-wrap{overflow:hidden;background:#fff;position:relative}
+  #map{height:calc(100vh - 120px);min-height:420px;width:100%;background:#e8efe9}
   .map-footer{display:flex;justify-content:space-between;align-items:center;
     padding:12px 18px;background:#fff;border-top:1px solid #eceae2}
   .stat{font-size:14px;color:var(--tc-body)}
@@ -56,14 +55,14 @@
   .pop-count{font-weight:800;color:var(--tc-green-dark);font-size:15px}
   .pop-pc{font-size:12px;color:var(--tc-body);letter-spacing:.04em}
 
-  .pc-search{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+  .pc-search{display:flex;gap:8px;padding:14px 18px;background:#fff;border-bottom:1px solid #eceae2;flex-wrap:wrap;align-items:center}
   .pc-search input{flex:1;min-width:200px;max-width:340px;padding:11px 14px;border:1px solid #d8d5ca;
     border-radius:9px;font-size:15px;font-family:inherit;color:var(--tc-ink);background:#fff}
   .pc-search input:focus{outline:none;border-color:var(--tc-green);box-shadow:0 0 0 3px rgba(61,155,53,.15)}
   .pc-search button{padding:11px 20px;border:none;border-radius:9px;background:var(--tc-green-dark);
     color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
   .pc-search button:hover{background:var(--tc-green)}
-  .pc-msg{font-size:13px;color:var(--tc-body);min-height:18px}
+  .pc-msg{font-size:13px;color:var(--tc-body);min-height:0;padding:0 18px}
   .pc-msg.err{color:#b23b3b}
   .you-pin{background:var(--tc-green-dark);width:20px;height:20px;border-radius:50% 50% 50% 0;
     transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
