@@ -203,7 +203,7 @@ const Builder = {
     if (typeof syncProductBarUI === 'function') syncProductBarUI();
     document.querySelectorAll('.product-chip').forEach(c => c.classList.remove('selected'));
     document.querySelectorAll('.priority-chip').forEach(c => c.classList.remove('selected'));
-    Builder.selectedModules = [...DEFAULT_DECK];
+    Builder.selectedModules = [];
     Builder.renderGrid();
     Builder.renderSortable();
     Builder.updateCount();
