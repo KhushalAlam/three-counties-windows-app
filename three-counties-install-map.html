@@ -132,6 +132,13 @@ DATA.forEach(([lat,lng,count,pc])=>{
   clusters.addLayer(m);
 });
 map.addLayer(clusters);
+// Ensure correct sizing + centering inside the iframe (fixes off-centre render on first load)
+function fixMapView(){ map.invalidateSize(); map.setView(HOME.center, HOME.zoom); }
+setTimeout(fixMapView, 200);
+setTimeout(fixMapView, 800);
+window.addEventListener('load', fixMapView);
+window.addEventListener('resize', function(){ map.invalidateSize(); });
+
 
 document.getElementById('statInstalls').textContent = totalInstalls.toLocaleString('en-GB');
 document.getElementById('statAreas').textContent = DATA.length.toLocaleString('en-GB');
