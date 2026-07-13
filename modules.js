@@ -560,7 +560,7 @@ const Modules = {
   <p class="slide-lead">See where we have recently fitted windows and doors near you.</p>
   <p style="font-size:0.87rem;color:var(--text-soft);margin-bottom:1.25rem;">We work right across Surrey, Hampshire and Berkshire, so chances are we have already transformed a home not far from yours.</p>
   ${mapUrl ? `
-  <div style="position:relative;width:100%;height:78vh;min-height:560px;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);">
+  <div style="position:relative;width:100%;height:520px;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-md);">
     <iframe src="${mapUrl}" title="Installs Near You" style="width:100%;height:100%;border:0;display:block;" allowfullscreen></iframe>
   </div>` : `
   <div style="background:var(--bg-card);border:2px dashed var(--border);border-radius:var(--r-lg);padding:3rem;text-align:center;">
