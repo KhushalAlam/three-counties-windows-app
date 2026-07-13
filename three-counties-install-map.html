@@ -15,10 +15,11 @@
     --tc-bg:#f6f5f0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     background:var(--tc-bg);color:var(--tc-ink);
-    padding:0;
+    padding:0;margin:0;
   }
   .eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
     letter-spacing:.12em;text-transform:uppercase;color:var(--tc-ink);margin-bottom:14px}
@@ -27,8 +28,8 @@
   h1 span{color:var(--tc-green)}
   .sub{font-size:17px;color:var(--tc-body);margin-bottom:6px}
   .note{font-size:14px;color:var(--tc-body);margin-bottom:26px}
-  .map-wrap{overflow:hidden;background:#fff;position:relative}
-  #map{height:calc(100vh - 120px);min-height:420px;width:100%;background:#e8efe9}
+  .map-wrap{overflow:hidden;background:#fff;position:relative;height:100%}
+  #map{height:calc(100% - 64px);min-height:380px;width:100%;background:#e8efe9}
   .map-footer{display:flex;justify-content:space-between;align-items:center;
     padding:12px 18px;background:#fff;border-top:1px solid #eceae2}
   .stat{font-size:14px;color:var(--tc-body)}
