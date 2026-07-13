@@ -18,7 +18,7 @@
   body{
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     background:var(--tc-bg);color:var(--tc-ink);
-    padding:56px clamp(20px,6vw,90px);
+    padding:18px clamp(16px,4vw,32px);
   }
   .eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
     letter-spacing:.12em;text-transform:uppercase;color:var(--tc-ink);margin-bottom:14px}
@@ -29,7 +29,7 @@
   .note{font-size:14px;color:var(--tc-body);margin-bottom:26px}
   .map-wrap{border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(30,60,40,.14);
     background:#fff;position:relative}
-  #map{height:min(62vh,560px);width:100%;background:#e8efe9}
+  #map{height:min(78vh,640px);width:100%;background:#e8efe9}
   .map-footer{display:flex;justify-content:space-between;align-items:center;
     padding:12px 18px;background:#fff;border-top:1px solid #eceae2}
   .stat{font-size:14px;color:var(--tc-body)}
@@ -71,13 +71,6 @@
 </style>
 </head>
 <body>
-  <div class="eyebrow">
-    <svg viewBox="0 0 24 24"><path d="M12 3 4 9v12h5v-7h6v7h5V9z"/></svg>
-    LOCAL WORK
-  </div>
-  <h1>We've been busy <span>in your area</span></h1>
-  <p class="sub">See where we have recently fitted windows and doors near you.</p>
-  <p class="note">We work right across Surrey, Hampshire and Berkshire, so chances are we have already transformed a home not far from yours.</p>
 
   <div class="pc-search">
     <input id="pcInput" type="text" placeholder="Enter your postcode, e.g. GU15 3DF" autocomplete="postal-code" />
