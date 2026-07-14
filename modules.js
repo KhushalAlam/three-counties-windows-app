@@ -45,9 +45,9 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
-  <div style="margin-top:1.75rem;display:flex;gap:1rem;justify-content:center;align-items:center;flex-wrap:wrap;">
-    <span style="background:#fff;border-radius:10px;padding:8px 16px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:56px;width:auto;"></span>
-    <span style="background:#fff;border-radius:10px;padding:8px 16px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="ggf-logo.jpg" alt="GGF Member" style="height:56px;width:auto;"></span>
+  <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
   </div>
 </div>`;
   },
@@ -482,9 +482,9 @@ const Modules = {
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01344 777515</span>
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecounties.co.uk</span>
     </div>
-    <div style="margin-top:1.25rem;display:flex;gap:1rem;justify-content:center;align-items:center;flex-wrap:wrap;">
-      <span style="background:#fff;border-radius:10px;padding:8px 14px;display:inline-flex;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:48px;width:auto;"></span>
-      <span style="background:#fff;border-radius:10px;padding:8px 14px;display:inline-flex;"><img src="ggf-logo.jpg" alt="GGF Member" style="height:48px;width:auto;"></span>
+    <div style="margin-top:1.25rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
+      <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
+      <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
     </div>
   </div>
 </div>`;
@@ -777,9 +777,9 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-lock"></i> Secure Living Warranty</div>
   </div>
-  <div style="margin-top:1.75rem;display:flex;gap:1rem;justify-content:center;align-items:center;flex-wrap:wrap;">
-    <span style="background:#fff;border-radius:10px;padding:8px 16px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:56px;width:auto;"></span>
-    <span style="background:#fff;border-radius:10px;padding:8px 16px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="ggf-logo.jpg" alt="GGF Member" style="height:56px;width:auto;"></span>
+  <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
   </div>
 </div>`;
   },
