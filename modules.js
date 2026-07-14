@@ -495,7 +495,7 @@ const Modules = {
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
           <a href="https://www.checkatrade.com/trades/threecountiesconservatorieswindowsdoors1075774" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-            <img src="check-a-trade.png" alt="Checkatrade" style="height:26px;width:auto;margin:0 auto 0.5rem;display:block;">
+            <div style="height:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.6rem;"><img src="check-a-trade.png" alt="Checkatrade" style="max-height:30px;max-width:130px;width:auto;object-fit:contain;"></div>
             <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">9.8/10</div>
             <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Checkatrade</div>
             <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">1,500+ reviews</div>
@@ -504,7 +504,7 @@ const Modules = {
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
           <a href="https://www.trustpilot.com/review/threecountiesltd.co.uk" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-            <img src="trustpilot-logo.png" alt="Trustpilot" style="height:26px;width:auto;margin:0 auto 0.5rem;display:block;">
+            <div style="height:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.6rem;"><img src="trustpilot-logo.png" alt="Trustpilot" style="max-height:30px;max-width:130px;width:auto;object-fit:contain;"></div>
             <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">5/5</div>
             <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Trustpilot</div>
             <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">116 reviews</div>
@@ -513,7 +513,7 @@ const Modules = {
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem;text-align:center;box-shadow:var(--shadow-sm);">
           <a href="https://www.google.com/search?q=Three+Counties+Conservatories+Windows+Doors+Camberley+reviews" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
-            <img src="Google-review-logo.png" alt="Google Reviews" style="height:26px;width:auto;margin:0 auto 0.5rem;display:block;">
+            <div style="height:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.6rem;"><img src="Google-review-logo.png" alt="Google Reviews" style="max-height:30px;max-width:130px;width:auto;object-fit:contain;"></div>
             <div style="font-weight:800;font-size:1.5rem;color:var(--green);margin-bottom:0.25rem;">4.6/5</div>
             <div style="font-size:0.72rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.4px;">Google</div>
             <div style="font-size:0.78rem;color:var(--text-soft);margin-top:0.25rem;">220 reviews</div>
