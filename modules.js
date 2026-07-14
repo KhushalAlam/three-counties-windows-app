@@ -48,6 +48,7 @@ const Modules = {
   <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="uktsa-surrey.webp" alt="Surrey Trading Standards Approved" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
   </div>
 </div>`;
   },
@@ -485,6 +486,7 @@ const Modules = {
     <div style="margin-top:1.25rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
       <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
       <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
+      <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="uktsa-surrey.webp" alt="Surrey Trading Standards Approved" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
     </div>
   </div>
 </div>`;
@@ -780,6 +782,7 @@ const Modules = {
   <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
+    <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="uktsa-surrey.webp" alt="Surrey Trading Standards Approved" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
   </div>
 </div>`;
   },
