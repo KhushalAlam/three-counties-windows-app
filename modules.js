@@ -45,7 +45,10 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
-  <div style="margin-top:1.5rem;display:flex;justify-content:center;"><img src="fensa-logo.png" alt="FENSA Registered" style="height:44px;width:auto;opacity:0.95;"></div>
+  <div style="margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:center;align-items:center;">
+    <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:40px;width:auto;"></span>
+    <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="ggf-logo.jpg" alt="GGF Member" style="height:40px;width:auto;"></span>
+  </div>
 </div>`;
   },
 
@@ -479,7 +482,10 @@ const Modules = {
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01344 777515</span>
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecounties.co.uk</span>
     </div>
-    <div style="margin-top:1rem;display:flex;justify-content:center;"><span style="background:#fff;border-radius:8px;padding:8px 14px;display:inline-flex;"><img src="fensa-logo.png" alt="FENSA Registered" style="height:36px;width:auto;"></span></div>
+    <div style="margin-top:1rem;display:flex;gap:0.75rem;justify-content:center;align-items:center;">
+      <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:34px;width:auto;"></span>
+      <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;"><img src="ggf-logo.jpg" alt="GGF Member" style="height:34px;width:auto;"></span>
+    </div>
   </div>
 </div>`;
   },
@@ -771,7 +777,10 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-lock"></i> Secure Living Warranty</div>
   </div>
-  <div style="margin-top:1.5rem;display:flex;justify-content:center;"><img src="fensa-logo.png" alt="FENSA Registered" style="height:44px;width:auto;opacity:0.95;"></div>
+  <div style="margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:center;align-items:center;">
+    <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="fensa-logo.jpg" alt="FENSA Registered" style="height:40px;width:auto;"></span>
+    <span style="background:#fff;border-radius:8px;padding:6px 12px;display:inline-flex;box-shadow:var(--shadow-sm);"><img src="ggf-logo.jpg" alt="GGF Member" style="height:40px;width:auto;"></span>
+  </div>
 </div>`;
   },
 
