@@ -373,7 +373,7 @@ const App = {
             </p>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem;">
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-certificate"></i></div>
+                <div style="width:72px;height:56px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:6px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-width:100%;max-height:100%;object-fit:contain;"></div>
                 <div>
                   <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">FENSA Registered</div>
                   <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Fenestration Self-Assessment Scheme</div>
@@ -381,7 +381,7 @@ const App = {
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-shield-halved"></i></div>
+                <div style="width:72px;height:56px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:6px;"><img src="ggf-logo.jpg" alt="GGF Member" style="max-width:100%;max-height:100%;object-fit:contain;"></div>
                 <div>
                   <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">GGF Member</div>
                   <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Glass &amp; Glazing Federation</div>
@@ -389,7 +389,7 @@ const App = {
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
-                <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-star"></i></div>
+                <div style="width:72px;height:56px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:6px;"><img src="check-a-trade.png" alt="Checkatrade Approved" style="max-width:100%;max-height:100%;object-fit:contain;"></div>
                 <div>
                   <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Checkatrade Approved</div>
                   <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">9.8/10 from 1,500+ reviews</div>
