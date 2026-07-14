@@ -36,6 +36,9 @@ const Modules = {
   <h1 class="slide-h1" style="font-size:2rem;max-width:600px;">Let's find the <span class="accent">right ${headlineLabel}</span> for your home</h1>
   <p class="slide-lead" style="max-width:520px;margin:0 auto 2rem;">${escHtml(wLead)}</p>
   <p style="font-size:0.87rem;color:var(--text-soft);max-width:480px;margin:0 auto 2rem;line-height:1.7;">${wBody}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;width:100%;max-width:840px;margin:0 auto 2rem;">
+    ${heroes.map(src => `<img src="${src}" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">`).join('')}
+  </div>
   <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
@@ -43,9 +46,6 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
   </div>
   <div style="margin-top:1.5rem;display:flex;justify-content:center;"><img src="fensa-logo.png" alt="FENSA Registered" style="height:44px;width:auto;opacity:0.95;"></div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;width:100%;max-width:840px;margin:2rem auto 0;">
-    ${heroes.map(src => `<img src="${src}" alt="Three Counties installation" style="width:100%;height:150px;object-fit:cover;border-radius:var(--r-md);box-shadow:var(--shadow-sm);display:block;">`).join('')}
-  </div>
 </div>`;
   },
 
