@@ -397,6 +397,14 @@ const App = {
                 </div>
               </div>
               <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
+                <div style="width:72px;height:56px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:6px;"><img src="uktsa-surrey.webp" alt="Surrey Trading Standards Approved" style="max-width:100%;max-height:100%;object-fit:contain;"></div>
+                <div>
+                  <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Trading Standards Approved</div>
+                  <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:0.5rem;">Surrey County Council Trading Standards</div>
+                  <p style="font-size:0.8rem;color:var(--text-soft);line-height:1.55;">Vetted and monitored under a Trading Standards approved trader scheme — your assurance of fair, honest and legitimate trading.</p>
+                </div>
+              </div>
+              <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--shadow-sm);">
                 <div style="width:48px;height:48px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="fas fa-lock"></i></div>
                 <div>
                   <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Secure Living Warranty</div>
