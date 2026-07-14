@@ -410,11 +410,6 @@ const App = {
               <span>Specific membership numbers and registration details are available on request.
               Please call <strong>01344 777515</strong> or visit <strong>threecounties.co.uk</strong>.</span>
             </div>
-            <div style="margin-top:1.5rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
-              <span style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;height:64px;width:150px;box-shadow:var(--shadow-sm);"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-width:100%;max-height:100%;object-fit:contain;"></span>
-              <span style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;height:64px;width:150px;box-shadow:var(--shadow-sm);"><img src="ggf-logo.jpg" alt="GGF Member" style="max-width:100%;max-height:100%;object-fit:contain;"></span>
-              <span style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;height:64px;width:150px;box-shadow:var(--shadow-sm);"><img src="check-a-trade.png" alt="Checkatrade Approved" style="max-width:100%;max-height:100%;object-fit:contain;"></span>
-            </div>
           </div>`;
         break;
     }
