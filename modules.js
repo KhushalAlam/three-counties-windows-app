@@ -23,7 +23,11 @@ const Modules = {
     const defaultHeroes = ['welcome-1.jpg','welcome-2.jpg','welcome-3.jpg','welcome-4.jpg'];
     let heroes;
     if (sel.length > 0) {
+      const heroPicks = {
+        windows: ['Windows-6.jpg','Windows-38.jpg','Windows-24.jpg','Windows-10.jpg']
+      };
       const byProduct = sel.map(p => {
+        if (heroPicks[p]) return heroPicks[p].slice();
         const all = Modules.gallery.filter(g => g.product === p).map(g => g.src);
         const want = Math.max(1, Math.ceil(4 / sel.length));
         const step = Math.max(1, Math.floor(all.length / want));
