@@ -132,7 +132,6 @@ const App = {
     if (AppState.products.has(key)) {
       AppState.products.delete(key);
     } else {
-      AppState.products.clear();   // only one active at a time in the product-bar
       AppState.products.add(key);
     }
     syncProductBarUI();
