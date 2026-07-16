@@ -23,7 +23,16 @@ const Modules = {
     const defaultHeroes = ['welcome-1.jpg','welcome-2.jpg','welcome-3.jpg','welcome-4.jpg'];
     let heroes;
     if (sel.length > 0) {
-      heroes = Modules.gallery.filter(g => AppState.products.has(g.product)).map(g => g.src).slice(0, 4);
+      const byProduct = sel.map(p => Modules.gallery.filter(g => g.product === p).map(g => g.src));
+      heroes = [];
+      for (let round = 0; heroes.length < 4; round++) {
+        let added = false;
+        for (const list of byProduct) {
+          if (list[round]) { heroes.push(list[round]); added = true; }
+          if (heroes.length === 4) break;
+        }
+        if (!added) break;
+      }
       if (heroes.length === 0) heroes = defaultHeroes;
     } else {
       heroes = defaultHeroes;
