@@ -23,7 +23,14 @@ const Modules = {
     const defaultHeroes = ['welcome-1.jpg','welcome-2.jpg','welcome-3.jpg','welcome-4.jpg'];
     let heroes;
     if (sel.length > 0) {
-      const byProduct = sel.map(p => Modules.gallery.filter(g => g.product === p).map(g => g.src));
+      const byProduct = sel.map(p => {
+        const all = Modules.gallery.filter(g => g.product === p).map(g => g.src);
+        const want = Math.max(1, Math.ceil(4 / sel.length));
+        const step = Math.max(1, Math.floor(all.length / want));
+        const picks = [];
+        for (let i = 0; i < all.length && picks.length < want; i += step) picks.push(all[i]);
+        return picks;
+      });
       heroes = [];
       for (let round = 0; heroes.length < 4; round++) {
         let added = false;
