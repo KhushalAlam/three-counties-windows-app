@@ -9,6 +9,8 @@ const TABLES = {
   content:  'windows_content_items',
   settings: 'windows_settings',
   decks:    'windows_decks',
+  galleryFolders: 'windows_gallery_folders',
+  galleryImages:  'windows_gallery_images',
 };
 
 /* ---------- Supabase connection config ---------- */
@@ -74,6 +76,28 @@ const API = {
       (rows || []).forEach(s => { map[s.key] = s; });
       return map;
     } catch (e) { console.error('getSettings error', e); return {}; }
+  },
+
+  async getGalleryFolders() {
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/${TABLES.galleryFolders}?select=*&is_active=eq.true&order=product.asc,sort_order.asc&limit=200`,
+        { headers: sbHeaders() }
+      );
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (e) { console.error('getGalleryFolders', e); return []; }
+  },
+
+  async getGalleryImages() {
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/${TABLES.galleryImages}?select=*&is_active=eq.true&order=sort_order.asc&limit=1000`,
+        { headers: sbHeaders() }
+      );
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (e) { console.error('getGalleryImages', e); return []; }
   },
 
   async saveSetting(recordId, value) {

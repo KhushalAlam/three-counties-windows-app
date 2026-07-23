@@ -429,44 +429,54 @@ const Modules = {
     {src:'Conservatory-24.jpg', product:'conservatories', priority:null},
     {src:'Conservatory-25.jpg', product:'conservatories', priority:null}
   ],
-  _galleryVisible: [],
+  _galleryData: null,
+  _galleryLoading: false,
+  _galleryProduct: null,
+  _galleryFolder: null,
+
+  _loadGalleryData() {
+    if (Modules._galleryLoading) return;
+    Modules._galleryLoading = true;
+    Promise.all([API.getGalleryFolders(), API.getGalleryImages()])
+      .then(([folders, images]) => {
+        Modules._galleryData = { folders: folders || [], images: images || [] };
+      })
+      .catch(() => { Modules._galleryData = { folders: [], images: [] }; })
+      .then(() => {
+        Modules._galleryLoading = false;
+        Modules._galleryRefresh();
+      });
+  },
+
+  _galleryRefresh() {
+    const el = document.getElementById('slide-gallery');
+    if (el) el.outerHTML = Modules.renderGallery();
+  },
+
+  gallerySetProduct(p) {
+    Modules._galleryProduct = p;
+    Modules._galleryFolder = null;
+    Modules._galleryRefresh();
+  },
+
+  galleryOpenFolder(id) {
+    Modules._galleryFolder = id;
+    Modules._galleryRefresh();
+  },
+
+  galleryBack() {
+    Modules._galleryFolder = null;
+    Modules._galleryRefresh();
+  },
 
   renderGallery() {
-    // Hard-filter by product
-    const hasProducts = AppState.products && AppState.products.size > 0;
-    let visible = hasProducts
-      ? Modules.gallery.filter(item => AppState.products.has(item.product))
-      : Modules.gallery.slice();
-    if (visible.length === 0) visible = Modules.gallery.slice();
-
-    // Soft-order by priority (items with a matching priority float to front)
-    const hasPriorities = AppState.priorities && AppState.priorities.size > 0;
-    if (hasPriorities) {
-      const pri = [], rest = [];
-      visible.forEach(item => {
-        (item.priority && AppState.priorities.has(item.priority) ? pri : rest).push(item);
-      });
-      visible = [...pri, ...rest];
-    }
-
-    Modules._galleryVisible = visible;
-
-    const tilesHTML = visible.map((item, i) => `
-      <div onclick="Modules.openLightbox(${i})"
-        style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);
-               aspect-ratio:4/3;transition:transform 0.18s;background:var(--bg-card);"
-        onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
-        <img src="${item.src}" alt="Three Counties installation ${i + 1}" loading="lazy" decoding="async"
-          style="width:100%;height:100%;object-fit:cover;display:block;">
-      </div>`).join('');
-    return `
+    const LABELS = { windows:'Windows', doors:'Doors', conservatories:'Conservatories' };
+    const shell = (inner) => `
 <div class="slide" id="slide-gallery">
   <div class="slide-eyebrow green"><i class="fas fa-images"></i> Our Work</div>
   <h1 class="slide-h1">See what's <span class="accent">possible</span></h1>
   <p class="slide-lead">Real homes, real installs, right across Surrey, Hampshire and Berkshire.</p>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;">
-    ${tilesHTML}
-  </div>
+  ${inner}
   <div id="gallery-lightbox"
     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;
            align-items:center;justify-content:center;"
@@ -475,6 +485,97 @@ const Modules = {
       style="max-width:92vw;max-height:90vh;border-radius:var(--r-md);box-shadow:var(--shadow-md);display:block;">
   </div>
 </div>`;
+
+    if (!Modules._galleryData) {
+      Modules._loadGalleryData();
+      Modules._galleryVisible = [];
+      return shell(`<div style="padding:3rem;text-align:center;color:var(--text-soft);">
+        <i class="fas fa-circle-notch fa-spin"></i> Loading gallery…</div>`);
+    }
+
+    const folders = Modules._galleryData.folders;
+    const images  = Modules._galleryData.images;
+    const all = ['windows','doors','conservatories'];
+    const sel = (AppState.products && AppState.products.size > 0) ? [...AppState.products] : all;
+    let products = all.filter(p => sel.indexOf(p) !== -1);
+    if (products.length === 0) products = all.slice();
+
+    if (!Modules._galleryProduct || products.indexOf(Modules._galleryProduct) === -1) {
+      Modules._galleryProduct = products[0];
+      Modules._galleryFolder = null;
+    }
+    const product = Modules._galleryProduct;
+
+    const tabs = products.length > 1 ? `
+    <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1.25rem;flex-wrap:wrap;">
+      ${products.map(p => `
+        <button onclick="Modules.gallerySetProduct('${p}')"
+          style="border:1px solid var(--border);border-radius:999px;padding:0.5rem 1.1rem;cursor:pointer;
+                 font-weight:600;font-size:0.85rem;
+                 background:${p===product?'var(--green)':'var(--bg-card)'};
+                 color:${p===product?'#fff':'inherit'};">${LABELS[p]}</button>`).join('')}
+    </div>` : '';
+
+    const prodFolders = folders.filter(f => f.product === product);
+    const imgsIn = (fid) => images.filter(im => im.folder_id === fid);
+
+    if (Modules._galleryFolder) {
+      const folder = prodFolders.filter(f => f.id === Modules._galleryFolder)[0];
+      const list = folder ? imgsIn(folder.id) : [];
+      Modules._galleryVisible = list;
+      const tiles = list.map((item, i) => `
+      <div onclick="Modules.openLightbox(${i})"
+        style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);
+               aspect-ratio:4/3;transition:transform 0.18s;background:var(--bg-card);"
+        onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
+        <img src="${item.src}" alt="Three Counties installation ${i+1}" loading="lazy" decoding="async"
+          style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>`).join('');
+      return shell(`
+      ${tabs}
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+        <button onclick="Modules.galleryBack()"
+          style="border:1px solid var(--border);background:var(--bg-card);border-radius:999px;
+                 padding:0.45rem 1rem;cursor:pointer;font-weight:600;font-size:0.85rem;">
+          <i class="fas fa-chevron-left"></i> All ${LABELS[product]}</button>
+        <div style="font-weight:700;">${folder ? folder.name : ''}</div>
+      </div>
+      ${list.length
+        ? `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;">${tiles}</div>`
+        : `<div style="padding:3rem;text-align:center;color:var(--text-soft);
+                 border:1px dashed var(--border);border-radius:var(--r-md);">
+             <i class="fas fa-image"></i><div style="margin-top:0.5rem;">Images coming soon</div></div>`}`);
+    }
+
+    Modules._galleryVisible = [];
+    const cards = prodFolders.map(f => {
+      const list = imgsIn(f.id);
+      const cover = list[0];
+      return `
+      <div onclick="Modules.galleryOpenFolder('${f.id}')"
+        style="cursor:pointer;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm);
+               background:var(--bg-card);border:1px solid var(--border);transition:transform 0.18s;"
+        onmouseenter="this.style.transform='scale(1.02)'" onmouseleave="this.style.transform='scale(1)'">
+        <div style="aspect-ratio:4/3;background:#f4f5f1;display:flex;align-items:center;justify-content:center;">
+          ${cover
+            ? `<img src="${cover.src}" alt="${f.name}" loading="lazy" decoding="async"
+                 style="width:100%;height:100%;object-fit:cover;display:block;">`
+            : `<div style="color:var(--text-soft);text-align:center;font-size:0.8rem;">
+                 <i class="fas fa-image"></i><div style="margin-top:0.35rem;">Coming soon</div></div>`}
+        </div>
+        <div style="padding:0.7rem 0.85rem;">
+          <div style="font-weight:700;font-size:0.9rem;">${f.name}</div>
+          <div style="font-size:0.75rem;color:var(--text-soft);margin-top:0.15rem;">
+            ${list.length ? list.length + (list.length === 1 ? ' photo' : ' photos') : 'No images yet'}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return shell(`
+    ${tabs}
+    ${prodFolders.length
+      ? `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">${cards}</div>`
+      : `<div style="padding:3rem;text-align:center;color:var(--text-soft);">No folders set up yet.</div>`}`);
   },
 
   openLightbox(idx) {
