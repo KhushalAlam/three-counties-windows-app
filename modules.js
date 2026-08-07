@@ -516,8 +516,8 @@ const Modules = {
                  color:${p===product?'#fff':'inherit'};">${LABELS[p]}</button>`).join('')}
     </div>` : '';
 
-    const prodFolders = folders.filter(f => f.product === product);
     const imgsIn = (fid) => images.filter(im => im.folder_id === fid);
+    const prodFolders = folders.filter(f => f.product === product && imgsIn(f.id).length > 0);
 
     if (Modules._galleryFolder) {
       const folder = prodFolders.filter(f => f.id === Modules._galleryFolder)[0];
