@@ -63,7 +63,7 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
-    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01344 777515</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01252 414800</div>
   </div>
   <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
@@ -698,8 +698,8 @@ const Modules = {
     <p style="font-size:0.9rem;opacity:0.95;font-style:italic;">A family-run local business you can trust, here long before the sale and long after.</p>
     <div style="margin-top:0.75rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-map-marker-alt"></i> Based in Camberley</span>
-      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01344 777515</span>
-      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecounties.co.uk</span>
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01252 414800</span>
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecountiesltd.co.uk</span>
     </div>
     <div style="margin-top:1.25rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
       <span style="background:#fff;border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:center;height:66px;width:155px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:50px;max-width:135px;width:auto;object-fit:contain;"></span>
@@ -987,8 +987,8 @@ const Modules = {
       Start my quote <i class="fas fa-arrow-right"></i>
     </button>
     <p style="font-size:0.75rem;color:var(--text-soft);">Quoting tool URL to be confirmed.</p>`}
-    <a href="tel:01344777515" class="btn-secondary" style="font-size:0.9rem;">
-      <i class="fas fa-phone"></i> Or call us: 01344 777515
+    <a href="tel:01252414800" class="btn-secondary" style="font-size:0.9rem;">
+      <i class="fas fa-phone"></i> Or call us: 01252 414800
     </a>
   </div>
   <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">

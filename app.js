@@ -338,7 +338,7 @@ const App = {
                 <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-sterling-sign"></i></div><div><h4>Buy Now Pay Later</h4><p>Flexible finance across our entire range.</p></div></div>
                 <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-certificate"></i></div><div><h4>10 Year Guarantee</h4><p>Real peace of mind, subject to terms.</p></div></div>
                 <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-check-circle"></i></div><div><h4>FENSA &amp; GGF Members</h4><p>Fully accredited and registered for your protection.</p></div></div>
-                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-phone"></i></div><div><h4>01344 777515</h4><p>Give us a call — we're always happy to help.</p></div></div>
+                <div class="usp-row"><div class="usp-icon-box"><i class="fas fa-phone"></i></div><div><h4>01252 414800</h4><p>Give us a call — we're always happy to help.</p></div></div>
               </div>
             </div>
           </div>`;
@@ -415,7 +415,7 @@ const App = {
             <div class="calc-disclaimer">
               <i class="fas fa-info-circle"></i>
               <span>Specific membership numbers and registration details are available on request.
-              Please call <strong>01344 777515</strong> or visit <strong>threecounties.co.uk</strong>.</span>
+              Please call <strong>01252 414800</strong> or visit <strong>threecountiesltd.co.uk</strong>.</span>
             </div>
           </div>`;
         break;
@@ -631,8 +631,8 @@ const App = {
             <img src="logo.png" alt="Three Counties" style="height:50px;" />
             <h2 style="color:#E87722;font-size:1.3rem;">Deck Not Found</h2>
             <p style="color:#666;font-size:0.9rem;">This link may have expired or been removed.</p>
-            <p style="color:#2D6A2F;font-weight:700;font-size:1rem;">📞 01344 777515</p>
-            <p style="color:#999;font-size:0.8rem;">threecounties.co.uk</p>
+            <p style="color:#2D6A2F;font-weight:700;font-size:1rem;">📞 01252 414800</p>
+            <p style="color:#999;font-size:0.8rem;">threecountiesltd.co.uk</p>
           </div>`;
         return;
       }

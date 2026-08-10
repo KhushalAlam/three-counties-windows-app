@@ -294,7 +294,7 @@ const Admin = {
         </div>
         <div class="admin-field">
           <label>Phone Number</label>
-          <input type="text" class="admin-input" id="hub-phone" value="${escHtml(Admin._getHubSetting('phone', '01344 777515'))}" />
+          <input type="text" class="admin-input" id="hub-phone" value="${escHtml(Admin._getHubSetting('phone', '01252 414800'))}" />
         </div>
         <div class="admin-save-btn-row">
           <button class="btn-primary" onclick="Admin.saveHubSettings()">
