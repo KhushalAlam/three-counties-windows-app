@@ -64,6 +64,7 @@ const Modules = {
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-star"></i> 1,500+ Reviews</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-certificate"></i> FENSA Registered</div>
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-phone"></i> 01252 414800</div>
+    <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.85rem 1.25rem;font-size:0.8rem;color:var(--green);font-weight:600;"><i class="fas fa-envelope"></i> info@threecountiesltd.co.uk</div>
   </div>
   <div style="margin-top:1.75rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
     <span style="background:#fff;border-radius:10px;padding:10px 16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);height:72px;width:170px;"><img src="fensa-logo.jpg" alt="FENSA Registered" style="max-height:56px;max-width:150px;width:auto;object-fit:contain;"></span>
@@ -699,6 +700,7 @@ const Modules = {
     <div style="margin-top:0.75rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-map-marker-alt"></i> Based in Camberley</span>
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-phone"></i> 01252 414800</span>
+      <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-envelope"></i> info@threecountiesltd.co.uk</span>
       <span style="font-size:0.8rem;opacity:0.85;"><i class="fas fa-globe"></i> threecountiesltd.co.uk</span>
     </div>
     <div style="margin-top:1.25rem;display:flex;gap:1.25rem;justify-content:center;align-items:center;flex-wrap:wrap;">
@@ -989,6 +991,9 @@ const Modules = {
     <p style="font-size:0.75rem;color:var(--text-soft);">Quoting tool URL to be confirmed.</p>`}
     <a href="tel:01252414800" class="btn-secondary" style="font-size:0.9rem;">
       <i class="fas fa-phone"></i> Or call us: 01252 414800
+    </a>
+    <a href="mailto:info@threecountiesltd.co.uk" class="btn-secondary" style="font-size:0.9rem;">
+      <i class="fas fa-envelope"></i> Or email us: info@threecountiesltd.co.uk
     </a>
   </div>
   <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
