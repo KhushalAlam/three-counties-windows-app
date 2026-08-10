@@ -933,7 +933,7 @@ const Modules = {
         <div class="fin-sect">Your budget could fund…</div>
         <div class="fin-aff-wrap" id="fin-affres">${Modules._finAffHTML()}</div>
       </div>
-      <div class="fin-summary"><h3>Why this way round?</h3><p class="fin-ph" style="color:#e2eeda">Most people think in monthly budgets, not project totals. Start from what feels comfortable each month, and we will show what is possible — often more than you would expect, especially on interest-free credit with the Eco+ range.</p></div>
+      <div class="fin-summary"><h3>Why this way round?</h3><p class="fin-ph" style="color:#e2eeda">Most people think in monthly budgets, not project totals. Start from what feels comfortable each month, and we will show what is possible — often more than you would expect. Buy now pay later is available across our entire range, and interest-free credit is available on the Eco+ range.</p></div>
     </div>
   </div>
   <div class="calc-disclaimer"><i class="fas fa-circle-info"></i><span>${escHtml(disclaimer)} ${escHtml(fcaLine)}</span></div>
