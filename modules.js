@@ -989,12 +989,14 @@ const Modules = {
       Start my quote <i class="fas fa-arrow-right"></i>
     </button>
     <p style="font-size:0.75rem;color:var(--text-soft);">Quoting tool URL to be confirmed.</p>`}
-    <a href="tel:01252414800" class="btn-secondary" style="font-size:0.9rem;">
-      <i class="fas fa-phone"></i> Or call us: 01252 414800
-    </a>
-    <a href="mailto:info@threecountiesltd.co.uk" class="btn-secondary" style="font-size:0.9rem;">
-      <i class="fas fa-envelope"></i> Or email us: info@threecountiesltd.co.uk
-    </a>
+    <div style="display:flex;gap:1rem;justify-content:center;align-items:stretch;flex-wrap:wrap;width:100%;max-width:720px;">
+      <a href="tel:01252414800" class="btn-secondary" style="font-size:0.9rem;flex:1 1 0;min-width:250px;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;text-align:center;">
+        <i class="fas fa-phone"></i> Or call us: 01252 414800
+      </a>
+      <a href="mailto:info@threecountiesltd.co.uk" class="btn-secondary" style="font-size:0.9rem;flex:1 1 0;min-width:250px;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;text-align:center;">
+        <i class="fas fa-envelope"></i> Or email us: info@threecountiesltd.co.uk
+      </a>
+    </div>
   </div>
   <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
     <div style="background:var(--green-light);border-radius:var(--r-md);padding:0.75rem 1rem;font-size:0.78rem;color:var(--green);font-weight:600;"><i class="fas fa-shield-halved"></i> Zero Deposit</div>
